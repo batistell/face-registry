@@ -25,17 +25,40 @@
   margin-bottom: 2.5rem;
 }
 
-.logo-icon {
+.logo-icon-container {
   width: 44px;
   height: 44px;
-  background: linear-gradient(135deg, #0079d2 0%, #009ee3 100%);
   border-radius: 12px;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
-  color: #fff;
   box-shadow: 0 4px 10px rgba(0, 121, 210, 0.2);
+  background: #ffffff;
+  border: 1px solid #e2e2e2;
+}
+
+.sidebar-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mobile-logo-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.brand-footer {
+  color: #0079d2 !important;
+  font-weight: 700 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-bottom: 0.25rem;
 }
 
 .sidebar-header h2 {

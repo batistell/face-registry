@@ -3,12 +3,12 @@
   <!-- BARRA LATERAL (SIDEBAR) -->
   <aside class="sidebar" [class.open]="isSidebarOpen">
     <div class="sidebar-header">
-      <div class="logo-icon">
-        <i class="fa-solid fa-face-viewfinder"></i>
+      <div class="logo-icon-container">
+        <img src="assets/batistell_logo.png" alt="Batistell Labs Logo" class="sidebar-logo-img">
       </div>
       <div class="header-title-wrapper">
-        <h2>Face Registry</h2>
-        <span class="badge-status"><span class="dot"></span> Online</span>
+        <h2>Batistell Labs</h2>
+        <span class="badge-status"><span class="dot"></span> FaceRegistry</span>
       </div>
       <button class="btn-close-sidebar" (click)="closeSidebar()" title="Fechar Menu">
         <i class="fa-solid fa-xmark"></i>
@@ -35,8 +35,8 @@
     </nav>
 
     <div class="sidebar-footer">
-      <p>Desafio Desenvolvedor Full Stack</p>
-      <span>Java 21 & Angular 17</span>
+      <p class="brand-footer"><i class="fa-solid fa-flask-vial"></i> Batistell Labs</p>
+      <span>Biometria & Confiança Digital</span>
     </div>
   </aside>
 
@@ -52,8 +52,8 @@
         <i class="fa-solid fa-bars"></i>
       </button>
       <div class="mobile-logo">
-        <i class="fa-solid fa-face-viewfinder"></i>
-        <span>Face Registry</span>
+        <img src="assets/batistell_logo.png" alt="Batistell Labs Logo" class="mobile-logo-img">
+        <span>Batistell Labs</span>
       </div>
     </header>
     
