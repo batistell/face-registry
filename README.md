@@ -30,7 +30,7 @@ graph TD
     A[Usuário / Navegador] -->|HTTPS / WSS| B[Nginx Reverse Proxy / SSL Port 8000]
     B -->|Base: /face-registry/| C[Frontend Angular 17 Container]
     B -->|API: /api/*| D[Backend Spring Boot Container]
-    D -->|JPA / REAL[] column| E[PostgreSQL Container]
+    D -->|JPA / REAL array column| E[PostgreSQL Container]
     D -->|JNI C++ Inference| F[DJL Engine - PyTorch native]
     F -->|RetinaFace + FaceNet| D
 ```
