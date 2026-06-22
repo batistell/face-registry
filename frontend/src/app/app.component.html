@@ -1,0 +1,631 @@
+<div class="dashboard-container">
+  
+  <!-- BARRA LATERAL (SIDEBAR) -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-icon">
+        <i class="fa-solid fa-face-viewfinder"></i>
+      </div>
+      <div>
+        <h2>Face Registry</h2>
+        <span class="badge-status"><span class="dot"></span> Online</span>
+      </div>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <button [class.active]="activeTab === 'list'" (click)="changeTab('list')">
+        <i class="fa-solid fa-users"></i> Listar Usuários
+      </button>
+      <button [class.active]="activeTab === 'form' && !isEditMode" (click)="changeTab('form')">
+        <i class="fa-solid fa-user-plus"></i> Cadastrar Usuário
+      </button>
+      <button [class.active]="activeTab === 'batch'" (click)="changeTab('batch')">
+        <i class="fa-solid fa-bolt"></i> Envio em Lote (Batch)
+      </button>
+      <div class="nav-divider">BIOMETRIA FACIAL</div>
+      <button [class.active]="activeTab === 'verify'" (click)="changeTab('verify')">
+        <i class="fa-solid fa-user-shield"></i> Verificação (1:1)
+      </button>
+      <button [class.active]="activeTab === 'identify'" (click)="changeTab('identify')">
+        <i class="fa-solid fa-magnifying-glass-location"></i> Identificação (1:n)
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <p>Desafio Desenvolvedor Full Stack</p>
+      <span>Java 21 & Angular 17</span>
+    </div>
+  </aside>
+
+  <!-- ÁREA DE CONTEÚDO PRINCIPAL -->
+  <main class="main-content">
+    
+    <!-- NOTIFICAÇÕES (MENSAGENS DE SUCESSO/ERRO) -->
+    <div class="toast-container">
+      <div class="toast success" *ngIf="successMsg" (click)="successMsg = ''">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>{{ successMsg }}</span>
+      </div>
+      <div class="toast error" *ngIf="errorMsg" (click)="errorMsg = ''">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span>{{ errorMsg }}</span>
+      </div>
+    </div>
+
+    <!-- TELA 1: LISTAGEM DE USUÁRIOS (CRUD) -->
+    <section class="content-section" *ngIf="activeTab === 'list'">
+      <div class="section-header">
+        <div>
+          <h1>Base de Usuários Cadastrados</h1>
+          <p>Visualize, atualize, remova e gerencie biometrias salvas no banco de dados.</p>
+        </div>
+        <button class="btn btn-primary" (click)="changeTab('form')">
+          <i class="fa-solid fa-user-plus"></i> Novo Usuário
+        </button>
+      </div>
+
+      <!-- Barra de Busca -->
+      <div class="search-bar-container">
+        <div class="search-input-wrapper">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input 
+            type="text" 
+            placeholder="Pesquisar por nome ou CPF..." 
+            [(ngModel)]="searchTerm" 
+            class="search-input">
+        </div>
+        <div class="user-count">
+          <span>{{ filteredUsers.length }} usuário(s) encontrado(s)</span>
+        </div>
+      </div>
+
+      <!-- Loader da Listagem -->
+      <div class="loader-container" *ngIf="isLoading">
+        <div class="spinner"></div>
+        <p>Carregando registros do banco...</p>
+      </div>
+
+      <!-- Grid de Cartões de Usuários -->
+      <div class="users-grid" *ngIf="!isLoading && filteredUsers.length > 0">
+        <div class="user-card" *ngFor="let user of filteredUsers" (click)="selectUser(user)">
+          <div class="user-card-photo-wrapper">
+            <img [src]="'data:image/jpeg;base64,' + user.photoBase64" alt="Face" class="user-card-photo">
+            <div class="user-card-badge">512-D</div>
+          </div>
+          <div class="user-card-info">
+            <h3>{{ user.name }}</h3>
+            <p class="user-cpf"><i class="fa-regular fa-id-card"></i> {{ user.cpf | slice:0:3 }}.{{ user.cpf | slice:3:6 }}.{{ user.cpf | slice:6:9 }}-{{ user.cpf | slice:9:11 }}</p>
+            <span class="user-date">Cadastrado em: {{ formatDate(user.createdAt) }}</span>
+          </div>
+          <div class="user-card-actions">
+            <button class="btn-action edit" (click)="editUser(user); $event.stopPropagation()" title="Editar Usuário">
+              <i class="fa-solid fa-pen"></i>
+            </button>
+            <button class="btn-action delete" (click)="deleteUser(user.cpf, $event)" title="Excluir Usuário" [disabled]="isActionLoading">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lista Vazia -->
+      <div class="empty-state" *ngIf="!isLoading && filteredUsers.length === 0">
+        <i class="fa-solid fa-face-rolling-eyes"></i>
+        <h3>Nenhum usuário registrado</h3>
+        <p>Cadastre um novo usuário com biometria facial para começar.</p>
+        <button class="btn btn-secondary" (click)="changeTab('form')">Cadastrar Primeiro Usuário</button>
+      </div>
+    </section>
+
+    <!-- TELA 2: FORMULÁRIO DE CADASTRO/EDIÇÃO (CRUD) -->
+    <section class="content-section" *ngIf="activeTab === 'form'">
+      <div class="section-header">
+        <div>
+          <h1>{{ isEditMode ? 'Atualizar Cadastro' : 'Cadastrar Novo Usuário' }}</h1>
+          <p>{{ isEditMode ? 'Atualize as informações cadastrais e re-calcule o template biológico do rosto.' : 'Preencha os dados e anexe uma foto nítida de rosto.' }}</p>
+        </div>
+        <button class="btn btn-secondary" (click)="changeTab('list')">
+          <i class="fa-solid fa-arrow-left"></i> Voltar à Lista
+        </button>
+      </div>
+
+      <div class="form-container">
+        <div class="form-card">
+          <!-- Inputs de Dados -->
+          <div class="form-group">
+            <label for="name">Nome Completo</label>
+            <input 
+              type="text" 
+              id="name" 
+              placeholder="Digite o nome completo do usuário" 
+              [(ngModel)]="userForm.name" 
+              class="form-control"
+              [disabled]="isActionLoading">
+          </div>
+
+          <div class="form-group">
+            <label for="cpf">CPF (Somente Números)</label>
+            <input 
+              type="text" 
+              id="cpf" 
+              placeholder="Ex: 12345678901" 
+              maxlength="11"
+              [(ngModel)]="userForm.cpf" 
+              class="form-control"
+              [disabled]="isEditMode || isActionLoading">
+            <small class="form-help" *ngIf="isEditMode">* O CPF não pode ser alterado no modo de edição.</small>
+          </div>
+
+          <div class="form-actions-row">
+            <button 
+              class="btn btn-secondary btn-full" 
+              (click)="resetForm()" 
+              *ngIf="!isEditMode" 
+              [disabled]="isActionLoading">
+              Limpar Campos
+            </button>
+            <button 
+              class="btn btn-primary btn-full" 
+              (click)="saveUser()" 
+              [disabled]="isActionLoading">
+              <span class="spinner-small" *ngIf="isActionLoading"></span>
+              {{ isEditMode ? 'Salvar Alterações' : 'Finalizar Cadastro' }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Dropzone de Imagem & Câmera -->
+        <div class="photo-upload-card">
+          <label>Biometria Facial (Foto do Rosto)</label>
+          
+          <!-- Box de Upload -->
+          <div class="upload-box" *ngIf="!userForm.previewUrl">
+            <i class="fa-solid fa-camera-retro upload-icon"></i>
+            <p>Selecione um arquivo de foto ou capture agora</p>
+            <div class="upload-buttons">
+              <button class="btn btn-secondary btn-sm" (click)="fileInput.click()" [disabled]="isActionLoading">
+                <i class="fa-solid fa-folder-open"></i> Arquivo
+              </button>
+              <button class="btn btn-accent btn-sm" (click)="startWebcam('form')" [disabled]="isActionLoading">
+                <i class="fa-solid fa-video"></i> Câmera
+              </button>
+            </div>
+            <input 
+              type="file" 
+              #fileInput 
+              style="display: none" 
+              accept="image/*" 
+              (change)="onFileSelected($event, 'form')">
+          </div>
+
+          <!-- Preview da Imagem Selecionada -->
+          <div class="preview-box" *ngIf="userForm.previewUrl">
+            <img [src]="userForm.previewUrl" alt="Preview da Foto" class="preview-img">
+            <div class="preview-overlay">
+              <button class="btn btn-danger btn-sm" (click)="userForm.previewUrl = null; userForm.photoFile = null" [disabled]="isActionLoading">
+                <i class="fa-solid fa-trash"></i> Remover Foto
+              </button>
+            </div>
+          </div>
+
+          <div class="upload-instructions">
+            <h4>💡 Diretrizes para foto biométrica:</h4>
+            <ul>
+              <li>O rosto deve estar totalmente visível e de frente.</li>
+              <li>Evite óculos de sol, bonés ou acessórios cobrindo os olhos.</li>
+              <li>Apenas 1 pessoa deve estar visível na imagem.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA 3: CADASTRO EM LOTE (BATCH - CONCORRÊNCIA) -->
+    <section class="content-section" *ngIf="activeTab === 'batch'">
+      <div class="section-header">
+        <div>
+          <h1>Envio de Usuários em Lote</h1>
+          <p>Cadastre múltiplos usuários simultaneamente. O processamento das imagens e IA é concorrido via threads dedicadas.</p>
+        </div>
+        <div class="batch-header-actions">
+          <button class="btn btn-secondary" (click)="addBatchRow()" [disabled]="isActionLoading">
+            <i class="fa-solid fa-plus"></i> Adicionar Usuário
+          </button>
+        </div>
+      </div>
+
+      <div class="batch-container">
+        <!-- Lista de Usuários do Lote -->
+        <div class="batch-list-wrapper">
+          <table class="batch-table">
+            <thead>
+              <tr>
+                <th width="30%">Nome Completo</th>
+                <th width="20%">CPF (11 dígitos)</th>
+                <th width="35%">Foto Biométrica</th>
+                <th width="15%" class="text-center">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of batchList; let idx = index">
+                <td>
+                  <input 
+                    type="text" 
+                    placeholder="Nome do Usuário" 
+                    [(ngModel)]="item.name" 
+                    class="form-control table-input"
+                    [disabled]="isActionLoading">
+                </td>
+                <td>
+                  <input 
+                    type="text" 
+                    placeholder="Ex: 12345678901" 
+                    maxlength="11" 
+                    [(ngModel)]="item.cpf" 
+                    class="form-control table-input"
+                    [disabled]="isActionLoading">
+                </td>
+                <td>
+                  <div class="batch-photo-cell">
+                    <!-- Botões de ação se não tiver foto -->
+                    <div class="batch-photo-buttons" *ngIf="!item.previewUrl">
+                      <button class="btn btn-secondary btn-xs" (click)="batchFileInput.click()" [disabled]="isActionLoading">
+                        <i class="fa-solid fa-folder-open"></i> Arquivo
+                      </button>
+                      <button class="btn btn-accent btn-xs" (click)="startWebcam(idx)" [disabled]="isActionLoading">
+                        <i class="fa-solid fa-video"></i> Capturar
+                      </button>
+                      <input 
+                        type="file" 
+                        #batchFileInput 
+                        style="display: none;" 
+                        accept="image/*" 
+                        (change)="onFileSelected($event, idx)">
+                    </div>
+                    <!-- Preview se tiver foto -->
+                    <div class="batch-photo-preview" *ngIf="item.previewUrl">
+                      <img [src]="item.previewUrl" alt="Foto Lote" class="batch-preview-thumbnail">
+                      <span class="batch-filename">foto_selecionada.jpg</span>
+                      <button class="btn-clear-photo" (click)="item.previewUrl = null; item.photoFile = null" [disabled]="isActionLoading">
+                        <i class="fa-solid fa-xmark"></i>
+                      </button>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-center">
+                  <button class="btn-action delete" (click)="removeBatchRow(idx)" title="Remover da lista" [disabled]="isActionLoading">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Rodapé do Lote -->
+        <div class="batch-footer-bar">
+          <div class="batch-info-summary">
+            <i class="fa-solid fa-circle-info"></i>
+            <span>{{ batchList.length }} usuário(s) preparados no lote. Processamento atômico (tudo ou nada).</span>
+          </div>
+          <button class="btn btn-primary" (click)="sendBatch()" [disabled]="isActionLoading">
+            <span class="spinner-small" *ngIf="isActionLoading"></span>
+            <i class="fa-solid fa-rocket" *ngIf="!isActionLoading"></i> Enviar Lote Concorrente
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA 4: VERIFICAÇÃO FACIAL (1:1) -->
+    <section class="content-section" *ngIf="activeTab === 'verify'">
+      <div class="section-header">
+        <div>
+          <h1>Verificação Facial (Match 1:1)</h1>
+          <p>Compara uma foto de rosto com a biometria cadastrada para um CPF específico.</p>
+        </div>
+      </div>
+
+      <div class="biometric-flow-container">
+        
+        <!-- Form de Verificação -->
+        <div class="biometric-input-card">
+          <h3>Dados para Verificação</h3>
+          <div class="form-group">
+            <label for="verifyCpf">CPF do Usuário Alvo</label>
+            <input 
+              type="text" 
+              id="verifyCpf" 
+              placeholder="Ex: 12345678901" 
+              maxlength="11" 
+              [(ngModel)]="verifyForm.cpf" 
+              class="form-control"
+              [disabled]="isActionLoading">
+          </div>
+
+          <label>Foto Atual do Rosto</label>
+          <!-- Upload Box -->
+          <div class="upload-box min-height-upload" *ngIf="!verifyForm.previewUrl">
+            <i class="fa-solid fa-user-lock upload-icon"></i>
+            <p>Selecione ou capture a foto para comparar</p>
+            <div class="upload-buttons">
+              <button class="btn btn-secondary btn-sm" (click)="verifyFileInput.click()" [disabled]="isActionLoading">
+                <i class="fa-solid fa-folder-open"></i> Arquivo
+              </button>
+              <button class="btn btn-accent btn-sm" (click)="startWebcam('verify')" [disabled]="isActionLoading">
+                <i class="fa-solid fa-video"></i> Câmera
+              </button>
+            </div>
+            <input 
+              type="file" 
+              #verifyFileInput 
+              style="display: none" 
+              accept="image/*" 
+              (change)="onFileSelected($event, 'verify')">
+          </div>
+
+          <!-- Preview da Foto -->
+          <div class="preview-box min-height-upload" *ngIf="verifyForm.previewUrl">
+            <img [src]="verifyForm.previewUrl" alt="Foto Verificação" class="preview-img">
+            <div class="preview-overlay">
+              <button class="btn btn-danger btn-sm" (click)="verifyForm.previewUrl = null; verifyForm.photoFile = null" [disabled]="isActionLoading">
+                <i class="fa-solid fa-trash"></i> Remover
+              </button>
+            </div>
+          </div>
+
+          <button class="btn btn-primary btn-full margin-top-md" (click)="verifyFace()" [disabled]="isActionLoading">
+            <span class="spinner-small" *ngIf="isActionLoading"></span>
+            <i class="fa-solid fa-user-shield" *ngIf="!isActionLoading"></i> Executar Verificação 1:1
+          </button>
+        </div>
+
+        <!-- Resultado da Verificação -->
+        <div class="biometric-result-card" [class.success]="verifyResult && verifyResult.match" [class.error]="verifyResult && !verifyResult.match">
+          <div class="result-placeholder" *ngIf="!verifyResult && !isActionLoading">
+            <i class="fa-solid fa-face-viewfinder result-placeholder-icon"></i>
+            <h3>Aguardando Biometria</h3>
+            <p>Selecione um CPF e envie a imagem para verificar a autenticidade.</p>
+          </div>
+
+          <div class="result-placeholder" *ngIf="isActionLoading">
+            <div class="scanner-anim"></div>
+            <h3>Processando Imagem...</h3>
+            <p>Buscando usuário, gerando embedding de 512-D e calculando similaridade...</p>
+          </div>
+
+          <div class="result-content" *ngIf="verifyResult && !isActionLoading">
+            <div class="result-header">
+              <div class="result-badge" [class.match]="verifyResult.match" [class.no-match]="!verifyResult.match">
+                <i class="fa-solid" [class.fa-check-double]="verifyResult.match" [class.fa-xmark]="!verifyResult.match"></i>
+                {{ verifyResult.match ? 'IDENTIDADE CONFIRMADA' : 'IDENTIDADE REJEITADA' }}
+              </div>
+            </div>
+
+            <!-- Gauge de Similaridade -->
+            <div class="gauge-container">
+              <div class="score-circle" [style.border-color]="verifyResult.match ? '#10b981' : '#ef4444'">
+                <span class="score-value">{{ (verifyResult.similarity * 100) | number:'1.1-2' }}%</span>
+                <span class="score-label">Similaridade</span>
+              </div>
+            </div>
+
+            <!-- Dados Técnicos -->
+            <div class="result-details-table">
+              <div class="details-row">
+                <span>Resultado:</span>
+                <strong>{{ verifyResult.match ? 'Correspondência Aceita' : 'Correspondência Recusada' }}</strong>
+              </div>
+              <div class="details-row">
+                <span>Similaridade do Cosseno:</span>
+                <code>{{ verifyResult.similarity | number:'1.4-4' }}</code>
+              </div>
+              <div class="details-row">
+                <span>Limiar Mínimo (Threshold):</span>
+                <code>{{ verifyResult.threshold | number:'1.2-2' }}</code>
+              </div>
+            </div>
+            
+            <div class="result-alert-box" [class.alert-success]="verifyResult.match" [class.alert-danger]="!verifyResult.match">
+              <i class="fa-solid" [class.fa-circle-check]="verifyResult.match" [class.fa-circle-xmark]="!verifyResult.match"></i>
+              <span>
+                {{ verifyResult.match 
+                  ? 'A foto enviada pertence à mesma pessoa do CPF fornecido (acima do limiar).' 
+                  : 'A foto NÃO pertence à pessoa do CPF informado (abaixo do limiar).' }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA 5: IDENTIFICAÇÃO FACIAL (1:N) -->
+    <section class="content-section" *ngIf="activeTab === 'identify'">
+      <div class="section-header">
+        <div>
+          <h1>Identificação Facial (Match 1:n)</h1>
+          <p>Envia uma foto de rosto sem identificação e o backend busca o usuário correspondente no banco em paralelo.</p>
+        </div>
+      </div>
+
+      <div class="biometric-flow-container">
+        
+        <!-- Form de Identificação -->
+        <div class="biometric-input-card">
+          <h3>Capturar/Enviar Rosto</h3>
+          <p class="card-intro">Envie uma foto para pesquisar na base de dados biométricos cadastrados.</p>
+
+          <!-- Upload Box -->
+          <div class="upload-box min-height-upload" *ngIf="!identifyForm.previewUrl">
+            <i class="fa-solid fa-fingerprint upload-icon"></i>
+            <p>Selecione ou capture a foto para identificação</p>
+            <div class="upload-buttons">
+              <button class="btn btn-secondary btn-sm" (click)="identifyFileInput.click()" [disabled]="isActionLoading">
+                <i class="fa-solid fa-folder-open"></i> Arquivo
+              </button>
+              <button class="btn btn-accent btn-sm" (click)="startWebcam('identify')" [disabled]="isActionLoading">
+                <i class="fa-solid fa-video"></i> Câmera
+              </button>
+            </div>
+            <input 
+              type="file" 
+              #identifyFileInput 
+              style="display: none" 
+              accept="image/*" 
+              (change)="onFileSelected($event, 'identify')">
+          </div>
+
+          <!-- Preview da Foto -->
+          <div class="preview-box min-height-upload" *ngIf="identifyForm.previewUrl">
+            <img [src]="identifyForm.previewUrl" alt="Foto Identificação" class="preview-img">
+            <div class="preview-overlay">
+              <button class="btn btn-danger btn-sm" (click)="identifyForm.previewUrl = null; identifyForm.photoFile = null" [disabled]="isActionLoading">
+                <i class="fa-solid fa-trash"></i> Remover
+              </button>
+            </div>
+          </div>
+
+          <button class="btn btn-primary btn-full margin-top-md" (click)="identifyFace()" [disabled]="isActionLoading">
+            <span class="spinner-small" *ngIf="isActionLoading"></span>
+            <i class="fa-solid fa-magnifying-glass-location" *ngIf="!isActionLoading"></i> Buscar no Banco (1:n)
+          </button>
+        </div>
+
+        <!-- Resultado da Identificação -->
+        <div class="biometric-result-card" [class.success]="identifyResult && identifyResult.identified" [class.error]="identifyResult && !identifyResult.identified">
+          <div class="result-placeholder" *ngIf="!identifyResult && !isActionLoading">
+            <i class="fa-solid fa-id-badge result-placeholder-icon"></i>
+            <h3>Aguardando Biometria</h3>
+            <p>Envie a imagem para varrer o banco de dados e identificar o indivíduo.</p>
+          </div>
+
+          <div class="result-placeholder" *ngIf="isActionLoading">
+            <div class="scanner-anim"></div>
+            <h3>Comparando em Paralelo...</h3>
+            <p>Processando imagem e executando similaridade concorrente no banco de dados...</p>
+          </div>
+
+          <div class="result-content" *ngIf="identifyResult && !isActionLoading">
+            <div class="result-header">
+              <div class="result-badge" [class.match]="identifyResult.identified" [class.no-match]="!identifyResult.identified">
+                <i class="fa-solid" [class.fa-id-card]="identifyResult.identified" [class.fa-user-slash]="!identifyResult.identified"></i>
+                {{ identifyResult.identified ? 'USUÁRIO RECONHECIDO' : 'USUÁRIO NÃO RECONHECIDO' }}
+              </div>
+            </div>
+
+            <!-- Exibição de Usuário Encontrado -->
+            <div class="matched-user-wrapper" *ngIf="identifyResult.identified">
+              <div class="matched-user-avatar">
+                <img [src]="'data:image/jpeg;base64,' + identifyResult.photoBase64" alt="Matched Face">
+              </div>
+              <div class="matched-user-details">
+                <h3>{{ identifyResult.name }}</h3>
+                <p class="user-cpf"><i class="fa-solid fa-id-card-clip"></i> CPF: {{ identifyResult.cpf }}</p>
+              </div>
+            </div>
+
+            <!-- Gauge de Similaridade -->
+            <div class="gauge-container">
+              <div class="score-circle" [style.border-color]="identifyResult.identified ? '#10b981' : '#ef4444'">
+                <span class="score-value">{{ (identifyResult.similarity * 100) | number:'1.1-2' }}%</span>
+                <span class="score-label">Similaridade</span>
+              </div>
+            </div>
+
+            <!-- Dados Técnicos -->
+            <div class="result-details-table">
+              <div class="details-row">
+                <span>Resultado:</span>
+                <strong>{{ identifyResult.identified ? 'Sucesso (Acima do Threshold)' : 'Sem Correspondência Suficiente' }}</strong>
+              </div>
+              <div class="details-row">
+                <span>Similaridade do Cosseno:</span>
+                <code>{{ identifyResult.similarity | number:'1.4-4' }}</code>
+              </div>
+              <div class="details-row">
+                <span>Limiar Mínimo (Threshold):</span>
+                <code>{{ identifyResult.threshold | number:'1.2-2' }}</code>
+              </div>
+            </div>
+            
+            <div class="result-alert-box" [class.alert-success]="identifyResult.identified" [class.alert-danger]="!identifyResult.identified">
+              <i class="fa-solid" [class.fa-circle-check]="identifyResult.identified" [class.fa-triangle-exclamation]="!identifyResult.identified"></i>
+              <span>
+                {{ identifyResult.identified 
+                  ? 'A face bateu com o registro biométrico de ' + identifyResult.name + ' no banco.'
+                  : 'Nenhuma face no banco de dados atingiu o limiar de similaridade de ' + (identifyResult.threshold * 100) + '%.' }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- CAPTURA WEBCAM DIALOG OVERLAY (MODAL FLUTUANTE) -->
+<div class="webcam-modal-overlay" *ngIf="isWebcamActive" (click)="stopWebcam()">
+  <div class="webcam-modal-content" (click)="$event.stopPropagation()">
+    <div class="webcam-modal-header">
+      <h3><i class="fa-solid fa-video"></i> Capturar Biometria</h3>
+      <button class="btn-close-modal" (click)="stopWebcam()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    
+    <div class="webcam-stream-container">
+      <video id="webcamVideo" autoplay playsinline muted></video>
+      <div class="webcam-scan-line"></div>
+      <div class="webcam-scan-overlay"></div>
+      <div class="webcam-error-msg" *ngIf="webcamError">{{ webcamError }}</div>
+    </div>
+    
+    <div class="webcam-modal-footer">
+      <button class="btn btn-secondary" (click)="stopWebcam()">Cancelar</button>
+      <button class="btn btn-accent" (click)="captureFrame()" [disabled]="!!webcamError">
+        <i class="fa-solid fa-circle-dot"></i> Capturar Foto
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DE DETALHES DO USUÁRIO (CRUD) -->
+<div class="modal-backdrop" *ngIf="selectedUser" (click)="closeDetails()">
+  <div class="modal-details" (click)="$event.stopPropagation()">
+    <div class="modal-details-header">
+      <h2>Detalhes do Usuário</h2>
+      <button class="btn-close" (click)="closeDetails()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    
+    <div class="modal-details-body">
+      <div class="detail-avatar-container">
+        <img [src]="'data:image/jpeg;base64,' + selectedUser.photoBase64" alt="Face" class="detail-avatar">
+      </div>
+      <div class="detail-info-container">
+        <div class="detail-field">
+          <label>Nome Completo</label>
+          <p>{{ selectedUser.name }}</p>
+        </div>
+        <div class="detail-field">
+          <label>CPF</label>
+          <p class="detail-cpf-text">{{ selectedUser.cpf | slice:0:3 }}.{{ selectedUser.cpf | slice:3:6 }}.{{ selectedUser.cpf | slice:6:9 }}-{{ selectedUser.cpf | slice:9:11 }}</p>
+        </div>
+        <div class="detail-field">
+          <label>Identificador Interno (UUID)</label>
+          <code>{{ selectedUser.id }}</code>
+        </div>
+        <div class="detail-field">
+          <label>Data de Cadastro</label>
+          <p>{{ formatDate(selectedUser.createdAt) }}</p>
+        </div>
+        <div class="detail-field">
+          <label>Template Facial</label>
+          <span class="template-badge"><i class="fa-solid fa-vector-square"></i> Embedding 512-D Salvo</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal-details-footer">
+      <button class="btn btn-secondary" (click)="closeDetails()">Fechar</button>
+      <button class="btn btn-primary" (click)="editUser(selectedUser); closeDetails()">Editar Usuário</button>
+    </div>
+  </div>
+</div>
