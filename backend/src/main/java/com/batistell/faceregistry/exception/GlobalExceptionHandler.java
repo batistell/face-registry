@@ -47,6 +47,11 @@ public class GlobalExceptionHandler {
         return buildResponse(HttpStatus.CONFLICT, ex.getMessage());
     }
 
+    @ExceptionHandler(DuplicateFaceException.class)
+    public ResponseEntity<ErrorPayload> handleDuplicateFace(DuplicateFaceException ex) {
+        return buildResponse(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
     @ExceptionHandler(InvalidCpfException.class)
     public ResponseEntity<ErrorPayload> handleInvalidCpf(InvalidCpfException ex) {
         return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());

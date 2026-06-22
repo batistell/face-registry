@@ -39,6 +39,7 @@ public class UserService {
         }
 
         float[] embedding = faceBiometricsService.extractFaceEmbedding(photo, filename);
+        checkForDuplicateFace(embedding, null);
 
         User user = User.builder()
                 .cpf(cleanCpf)
@@ -66,8 +67,9 @@ public class UserService {
         }
 
         if (photo != null && photo.length > 0) {
-            user.setPhoto(photo);
             float[] embedding = faceBiometricsService.extractFaceEmbedding(photo, filename);
+            checkForDuplicateFace(embedding, cleanCpf);
+            user.setPhoto(photo);
             user.setEmbedding(embedding);
         }
 
@@ -125,6 +127,7 @@ public class UserService {
                     }
 
                     float[] embedding = faceBiometricsService.extractFaceEmbedding(req.photo(), req.filename());
+                    checkForDuplicateFace(embedding, cleanCpf);
 
                     User user = User.builder()
                             .cpf(cleanCpf)
@@ -149,6 +152,20 @@ public class UserService {
                 throw (RuntimeException) cause;
             }
             throw new RuntimeException("Erro ao processar o lote de cadastro.", e);
+        }
+
+        // Verifica duplicidade facial dentro do próprio lote
+        for (int i = 0; i < usersToSave.size(); i++) {
+            User u1 = usersToSave.get(i);
+            for (int j = i + 1; j < usersToSave.size(); j++) {
+                User u2 = usersToSave.get(j);
+                double similarity = faceBiometricsService.calculateCosineSimilarity(u1.getEmbedding(), u2.getEmbedding());
+                if (faceBiometricsService.isMatch(similarity)) {
+                    throw new DuplicateFaceException("Duplicidade detectada no lote de envio: As faces de '" 
+                            + u1.getName() + "' (CPF: " + formatCpf(u1.getCpf()) + ") e '" 
+                            + u2.getName() + "' (CPF: " + formatCpf(u2.getCpf()) + ") pertencem à mesma pessoa.");
+                }
+            }
         }
 
         // Salva todos no banco de forma atômica (se der erro em um, o Spring rola de volta a transação inteira)
@@ -273,6 +290,52 @@ public class UserService {
         }
 
         return cleanCpf;
+    }
+
+    @Transactional(readOnly = true)
+    public List<DuplicatePairResponse> findDuplicateUsers() {
+        List<User> allUsers = userRepository.findAll();
+        List<DuplicatePairResponse> duplicates = new java.util.ArrayList<>();
+        double threshold = faceBiometricsService.getThreshold();
+
+        for (int i = 0; i < allUsers.size(); i++) {
+            User u1 = allUsers.get(i);
+            for (int j = i + 1; j < allUsers.size(); j++) {
+                User u2 = allUsers.get(j);
+                double similarity = faceBiometricsService.calculateCosineSimilarity(u1.getEmbedding(), u2.getEmbedding());
+                if (similarity >= threshold) {
+                    duplicates.add(new DuplicatePairResponse(toResponse(u1), toResponse(u2), similarity));
+                }
+            }
+        }
+        return duplicates;
+    }
+
+    private void checkForDuplicateFace(float[] embedding, String excludeCpf) {
+        List<User> allUsers = userRepository.findAll();
+        if (allUsers.isEmpty()) {
+            return;
+        }
+
+        Optional<MatchResult> duplicateMatch = allUsers.parallelStream()
+                .filter(user -> excludeCpf == null || !user.getCpf().equals(excludeCpf))
+                .map(user -> {
+                    double similarity = faceBiometricsService.calculateCosineSimilarity(embedding, user.getEmbedding());
+                    return new MatchResult(user, similarity);
+                })
+                .filter(result -> faceBiometricsService.isMatch(result.similarity()))
+                .max(Comparator.comparingDouble(MatchResult::similarity));
+
+        if (duplicateMatch.isPresent()) {
+            User matchedUser = duplicateMatch.get().user();
+            throw new DuplicateFaceException("Esta face já está cadastrada no sistema sob o CPF: " 
+                    + formatCpf(matchedUser.getCpf()) + " (Nome: " + matchedUser.getName() + ").");
+        }
+    }
+
+    private String formatCpf(String cpf) {
+        if (cpf == null || cpf.length() != 11) return cpf;
+        return cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." + cpf.substring(6, 9) + "-" + cpf.substring(9, 11);
     }
 
     private record MatchResult(User user, double similarity) {}

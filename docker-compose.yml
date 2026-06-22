@@ -43,13 +43,18 @@ services:
     container_name: face-registry-frontend
     ports:
       - "4200:80"
+      - "8000:443"
     depends_on:
       - backend
 
   tunnel:
     image: cloudflare/cloudflared:latest
     container_name: face-registry-tunnel
-    command: tunnel --no-autoupdate --url http://frontend:80
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    command: tunnel --no-autoupdate run
+    extra_hosts:
+      - "localhost:host-gateway"
     depends_on:
       - frontend
 

@@ -35,4 +35,10 @@ public class UserDTOs {
             byte[] photo,
             String filename
     ) {}
+
+    public record DuplicatePairResponse(
+            UserResponse user1,
+            UserResponse user2,
+            double similarity
+    ) {}
 }

@@ -46,4 +46,11 @@ public class CustomExceptions {
             super(message);
         }
     }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public static class DuplicateFaceException extends RuntimeException {
+        public DuplicateFaceException(String message) {
+            super(message);
+        }
+    }
 }

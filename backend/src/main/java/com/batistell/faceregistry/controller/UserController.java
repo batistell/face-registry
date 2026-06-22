@@ -94,6 +94,16 @@ public class UserController {
     }
 
     /**
+     * Busca por rostos duplicados no banco de dados.
+     */
+    @GetMapping("/duplicates")
+    public ResponseEntity<List<DuplicatePairResponse>> getDuplicateUsers() {
+        log.info("Recebida busca por rostos duplicados no banco.");
+        List<DuplicatePairResponse> response = userService.findDuplicateUsers();
+        return ResponseEntity.ok(response);
+    }
+
+    /**
      * Cadastro concorrente em lote (Batch Upload).
      */
     @PostMapping(value = "/batch", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

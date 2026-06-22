@@ -43,7 +43,7 @@ interface BatchItem {
 export class AppComponent implements OnInit, OnDestroy {
   private apiUrl = window.location.hostname === 'localhost' && window.location.port === '4200'
     ? 'http://localhost:8080/api/users'
-    : '/api/users';
+    : 'api/users';
 
   // Navegação
   activeTab: 'list' | 'form' | 'batch' | 'verify' | 'identify' = 'list';
