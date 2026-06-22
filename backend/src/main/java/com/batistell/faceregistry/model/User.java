@@ -31,7 +31,7 @@ public class User {
     @Column(nullable = false)
     private String name;
 
-    @Column(name = "photo", nullable = false)
+    @Column(name = "photo", nullable = false, length = 10485760)
     private byte[] photo;
 
     // Guardaremos o vetor de características (embedding) formatado como String (float;float;...)

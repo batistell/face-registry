@@ -41,10 +41,13 @@ interface BatchItem {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  private apiUrl = 'http://localhost:8080/api/users';
+  private apiUrl = window.location.hostname === 'localhost' && window.location.port === '4200'
+    ? 'http://localhost:8080/api/users'
+    : '/api/users';
 
   // Navegação
   activeTab: 'list' | 'form' | 'batch' | 'verify' | 'identify' = 'list';
+  isSidebarOpen = false;
 
   // Estado Geral
   users: UserResponse[] = [];
@@ -313,6 +316,11 @@ export class AppComponent implements OnInit, OnDestroy {
     this.isWebcamActive = true;
     this.webcamError = '';
 
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      this.webcamError = 'Câmera indisponível. Para usar a câmera, acesse este site através de uma conexão segura (HTTPS).';
+      return;
+    }
+
     navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } })
       .then((stream) => {
         this.webcamStream = stream;
@@ -363,10 +371,19 @@ export class AppComponent implements OnInit, OnDestroy {
     this.webcamTarget = null;
   }
 
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  closeSidebar() {
+    this.isSidebarOpen = false;
+  }
+
   // --- Navegação e Gerenciamento de Lote ---
 
   changeTab(tab: 'list' | 'form' | 'batch' | 'verify' | 'identify') {
     this.activeTab = tab;
+    this.isSidebarOpen = false;
     this.errorMsg = '';
     this.successMsg = '';
     this.stopWebcam();

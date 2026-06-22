@@ -1,0 +1,5 @@
+#surefire_0
+#Mon Jun 22 19:20:46 GMT 2026
+basedir=/app
+localRepository=/root/.m2/repository
+test=BiometricsVerificationTest

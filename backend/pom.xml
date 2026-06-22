@@ -85,6 +85,12 @@
             <artifactId>api</artifactId>
         </dependency>
 
+        <!-- DJL Model Zoo -->
+        <dependency>
+            <groupId>ai.djl</groupId>
+            <artifactId>model-zoo</artifactId>
+        </dependency>
+
         <!-- PyTorch Engine adapter -->
         <dependency>
             <groupId>ai.djl.pytorch</groupId>
@@ -97,6 +103,21 @@
         <dependency>
             <groupId>ai.djl.pytorch</groupId>
             <artifactId>pytorch-model-zoo</artifactId>
+            <version>${djl.version}</version>
+        </dependency>
+
+        <!-- MXNet Engine adapter -->
+        <dependency>
+            <groupId>ai.djl.mxnet</groupId>
+            <artifactId>mxnet-engine</artifactId>
+            <version>${djl.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- MXNet Model Zoo -->
+        <dependency>
+            <groupId>ai.djl.mxnet</groupId>
+            <artifactId>mxnet-model-zoo</artifactId>
             <version>${djl.version}</version>
         </dependency>
 

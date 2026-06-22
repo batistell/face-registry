@@ -20,6 +20,7 @@ import ai.djl.modality.cv.Image;
 import ai.djl.modality.cv.ImageFactory;
 import ai.djl.modality.cv.output.BoundingBox;
 import ai.djl.modality.cv.output.DetectedObjects;
+import ai.djl.modality.cv.translator.ImageFeatureExtractorFactory;
 import ai.djl.repository.zoo.Criteria;
 import ai.djl.repository.zoo.ModelZoo;
 import ai.djl.repository.zoo.ZooModel;
@@ -33,38 +34,47 @@ public class FaceBiometricsService {
     @Value("${face.recognition.threshold:0.60}")
     private double threshold;
 
+    @Value("${face.biometrics.mock:false}")
+    private boolean mockConfig;
+
     private ZooModel<Image, DetectedObjects> detectionModel;
     private ZooModel<Image, float[]> recognitionModel;
     private boolean useMockMode = false;
 
     @PostConstruct
     public void init() {
+        if (mockConfig) {
+            this.useMockMode = true;
+            log.info("Motor biométrico inicializado no modo simulado (Mock Mode) via configuração.");
+            return;
+        }
+
         try {
-            log.info("Inicializando modelos DJL para detecção e reconhecimento facial...");
+            log.info("Inicializando modelos DJL REAIS para detecção e reconhecimento facial (PyTorch)...");
             
-            // Critérios para detecção facial (ex: RetinaFace ou LightFace)
+            // Critérios para detecção facial (RetinaFace do PyTorch Model Zoo)
             Criteria<Image, DetectedObjects> detectionCriteria = Criteria.builder()
                     .setTypes(Image.class, DetectedObjects.class)
-                    .optFilter("flavor", "fast") // Preferência pelo detector lightweight
+                    .optModelUrls("djl://ai.djl.zoo/retinaface/0.0.1")
+                    .optEngine("PyTorch")
                     .build();
             
-            // Critérios para extração de embedding (FaceNet/ArcFace)
+            // Critérios para extração de embedding (FaceNet/ArcFace do PyTorch Model Zoo)
             Criteria<Image, float[]> recognitionCriteria = Criteria.builder()
                     .setTypes(Image.class, float[].class)
-                    .optFilter("flavor", "mobilefacenet") // Preferência pelo MobileFaceNet
+                    .optModelUrls("https://resources.djl.ai/test-models/pytorch/face_feature.zip")
+                    .optModelName("face_feature")
+                    .optEngine("PyTorch")
+                    .optTranslatorFactory(new ImageFeatureExtractorFactory())
                     .build();
 
-            // Descomente as linhas abaixo para tentar carregar em produção se os pesos estiverem acessíveis
-            // this.detectionModel = ModelZoo.loadModel(detectionCriteria);
-            // this.recognitionModel = ModelZoo.loadModel(recognitionCriteria);
-            
-            // Forçamos o modo mock por padrão para garantir que o ambiente local execute
-            // sem necessidade de download de gigabytes de engines nativos JNI C++ durante a avaliação do desafio.
-            this.useMockMode = true;
-            log.info("Motor biométrico inicializado no modo simulado (Mock Mode) para garantir inicialização limpa.");
+            this.detectionModel = ModelZoo.loadModel(detectionCriteria);
+            this.recognitionModel = ModelZoo.loadModel(recognitionCriteria);
+            this.useMockMode = false;
+            log.info("Motor biométrico com Modelos Reais DJL (RetinaFace e FaceNet/PyTorch) carregados com sucesso!");
         } catch (Exception e) {
             this.useMockMode = true;
-            log.warn("Erro ao carregar modelos DJL reais. Usando fallback Mock. Motivo: {}", e.getMessage());
+            log.warn("Erro ao carregar modelos DJL reais. Usando fallback Mock. Motivo: {}", e.getMessage(), e);
         }
     }
 

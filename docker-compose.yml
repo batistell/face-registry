@@ -26,6 +26,7 @@ services:
     ports:
       - "8080:8080"
     environment:
+      SPRING_PROFILES_ACTIVE: prod
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/faceregistry
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
@@ -44,6 +45,13 @@ services:
       - "4200:80"
     depends_on:
       - backend
+
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: face-registry-tunnel
+    command: tunnel --no-autoupdate --url http://frontend:80
+    depends_on:
+      - frontend
 
 volumes:
   pgdata:

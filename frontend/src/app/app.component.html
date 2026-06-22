@@ -1,15 +1,18 @@
 <div class="dashboard-container">
   
   <!-- BARRA LATERAL (SIDEBAR) -->
-  <aside class="sidebar">
+  <aside class="sidebar" [class.open]="isSidebarOpen">
     <div class="sidebar-header">
       <div class="logo-icon">
         <i class="fa-solid fa-face-viewfinder"></i>
       </div>
-      <div>
+      <div class="header-title-wrapper">
         <h2>Face Registry</h2>
         <span class="badge-status"><span class="dot"></span> Online</span>
       </div>
+      <button class="btn-close-sidebar" (click)="closeSidebar()" title="Fechar Menu">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
     </div>
     
     <nav class="sidebar-nav">
@@ -37,8 +40,22 @@
     </div>
   </aside>
 
+  <!-- BACKDROP OVERLAY PARA FECHAR SIDEBAR NO MOBILE -->
+  <div class="sidebar-backdrop" [class.show]="isSidebarOpen" (click)="closeSidebar()"></div>
+
   <!-- ÁREA DE CONTEÚDO PRINCIPAL -->
   <main class="main-content">
+    
+    <!-- HEADER PARA MOBILE COM BOTÃO DE MENU -->
+    <header class="mobile-header">
+      <button class="btn-toggle-sidebar" (click)="toggleSidebar()" title="Abrir Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <div class="mobile-logo">
+        <i class="fa-solid fa-face-viewfinder"></i>
+        <span>Face Registry</span>
+      </div>
+    </header>
     
     <!-- NOTIFICAÇÕES (MENSAGENS DE SUCESSO/ERRO) -->
     <div class="toast-container">
