@@ -25,9 +25,10 @@ import ai.djl.repository.zoo.ModelZoo;
 import ai.djl.repository.zoo.ZooModel;
 import ai.djl.inference.Predictor;
 
-@Slf4j
 @Service
 public class FaceBiometricsService {
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FaceBiometricsService.class);
 
     @Value("${face.recognition.threshold:0.60}")
     private double threshold;
@@ -102,13 +103,15 @@ public class FaceBiometricsService {
             }
 
             // Recorta o primeiro rosto detectado
-            DetectedObjects.DetectedObject face = detections.items().get(0);
+            ai.djl.modality.Classifications.Classification classification = detections.items().get(0);
+            DetectedObjects.DetectedObject face = (DetectedObjects.DetectedObject) classification;
             BoundingBox box = face.getBoundingBox();
+            ai.djl.modality.cv.output.Rectangle rect = box.getBounds();
             
-            int x = Math.max(0, (int) (box.getX() * image.getWidth()));
-            int y = Math.max(0, (int) (box.getY() * image.getHeight()));
-            int w = Math.min(image.getWidth() - x, (int) (box.getWidth() * image.getWidth()));
-            int h = Math.min(image.getHeight() - y, (int) (box.getHeight() * image.getHeight()));
+            int x = Math.max(0, (int) (rect.getX() * image.getWidth()));
+            int y = Math.max(0, (int) (rect.getY() * image.getHeight()));
+            int w = Math.min(image.getWidth() - x, (int) (rect.getWidth() * image.getWidth()));
+            int h = Math.min(image.getHeight() - y, (int) (rect.getHeight() * image.getHeight()));
             
             Image croppedFace = image.getSubImage(x, y, w, h);
             return recognizer.predict(croppedFace);

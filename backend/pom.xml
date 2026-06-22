@@ -69,6 +69,8 @@
             <scope>runtime</scope>
         </dependency>
 
+
+
         <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -87,14 +89,6 @@
         <dependency>
             <groupId>ai.djl.pytorch</groupId>
             <artifactId>pytorch-engine</artifactId>
-            <version>${djl.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <!-- PyTorch Native Auto-installer -->
-        <dependency>
-            <groupId>ai.djl.pytorch</groupId>
-            <artifactId>pytorch-native-auto</artifactId>
             <version>${djl.version}</version>
             <scope>runtime</scope>
         </dependency>
