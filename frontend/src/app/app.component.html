@@ -165,8 +165,8 @@
             <input 
               type="text" 
               id="cpf" 
-              placeholder="Ex: 12345678901" 
-              maxlength="11"
+              placeholder="Ex: 123.456.789-01" 
+              maxlength="14"
               [(ngModel)]="userForm.cpf" 
               class="form-control"
               [disabled]="isEditMode || isActionLoading">
@@ -211,7 +211,7 @@
               type="file" 
               #fileInput 
               style="display: none" 
-              accept="image/*" 
+              accept=".jpg,.jpeg,.png" 
               (change)="onFileSelected($event, 'form')">
           </div>
 
@@ -276,8 +276,8 @@
                 <td>
                   <input 
                     type="text" 
-                    placeholder="Ex: 12345678901" 
-                    maxlength="11" 
+                    placeholder="Ex: 123.456.789-01" 
+                    maxlength="14" 
                     [(ngModel)]="item.cpf" 
                     class="form-control table-input"
                     [disabled]="isActionLoading">
@@ -296,7 +296,7 @@
                         type="file" 
                         #batchFileInput 
                         style="display: none;" 
-                        accept="image/*" 
+                        accept=".jpg,.jpeg,.png" 
                         (change)="onFileSelected($event, idx)">
                     </div>
                     <!-- Preview se tiver foto -->
@@ -352,8 +352,8 @@
             <input 
               type="text" 
               id="verifyCpf" 
-              placeholder="Ex: 12345678901" 
-              maxlength="11" 
+              placeholder="Ex: 123.456.789-01" 
+              maxlength="14" 
               [(ngModel)]="verifyForm.cpf" 
               class="form-control"
               [disabled]="isActionLoading">
@@ -376,7 +376,7 @@
               type="file" 
               #verifyFileInput 
               style="display: none" 
-              accept="image/*" 
+              accept=".jpg,.jpeg,.png" 
               (change)="onFileSelected($event, 'verify')">
           </div>
 
@@ -487,7 +487,7 @@
               type="file" 
               #identifyFileInput 
               style="display: none" 
-              accept="image/*" 
+              accept=".jpg,.jpeg,.png" 
               (change)="onFileSelected($event, 'identify')">
           </div>
 

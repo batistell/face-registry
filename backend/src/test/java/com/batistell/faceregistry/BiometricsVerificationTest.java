@@ -49,7 +49,7 @@ public class BiometricsVerificationTest {
         }
 
         // Register the user
-        String cpf = "12345678901";
+        String cpf = "92479121305";
         String name = "Test Subject";
         userService.createUser(cpf, name, registerBytes, "register.jpg");
 
@@ -95,11 +95,11 @@ public class BiometricsVerificationTest {
     @Test
     public void testBiometricsMatchFamousPeople() throws Exception {
         Object[][] famousPairs = {
-            {"Barack Obama", "22222222222", "examples/obama1.jpg", "examples/obama2.jpg", 0.60},
-            {"Joe Biden", "33333333333", "examples/biden.jpg", "examples/biden1.jpg", 0.60},
-            {"Elon Musk", "55555555555", "examples/musk1.jpg", "examples/musk2.jpg", 0.60},
-            {"Lionel Messi", "66666666666", "examples/messi1.jpg", "examples/messi2.jpg", 0.60},
-            {"Kana", "11111111111", "examples/kana1.jpg", "examples/kana2.jpg", 0.50}
+            {"Barack Obama", "64657075942", "examples/obama1.jpg", "examples/obama2.jpg", 0.60},
+            {"Joe Biden", "21603180001", "examples/biden.jpg", "examples/biden1.jpg", 0.60},
+            {"Elon Musk", "92230775596", "examples/musk1.jpg", "examples/musk2.jpg", 0.60},
+            {"Lionel Messi", "74394356644", "examples/messi1.jpg", "examples/messi2.jpg", 0.60},
+            {"Kana", "62079744844", "examples/kana1.jpg", "examples/kana2.jpg", 0.50}
         };
 
         for (Object[] pair : famousPairs) {

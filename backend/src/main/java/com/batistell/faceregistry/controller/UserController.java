@@ -37,6 +37,7 @@ public class UserController {
         if (photoFile == null || photoFile.isEmpty()) {
             throw new InvalidImageException("A foto de perfil é obrigatória no cadastro.");
         }
+        validateFileFormat(photoFile);
 
         UserResponse response = userService.createUser(
                 cpf, name, photoFile.getBytes(), photoFile.getOriginalFilename()
@@ -54,6 +55,7 @@ public class UserController {
             @RequestParam(value = "photo", required = false) MultipartFile photoFile) throws IOException {
         
         log.info("Recebida requisição para atualizar usuário CPF: {}", cpf);
+        validateFileFormat(photoFile);
         byte[] photoBytes = (photoFile != null && !photoFile.isEmpty()) ? photoFile.getBytes() : null;
         String filename = photoFile != null ? photoFile.getOriginalFilename() : null;
 
@@ -106,6 +108,10 @@ public class UserController {
             throw new IllegalArgumentException("A quantidade de CPFs, Nomes e Fotos deve ser idêntica.");
         }
 
+        for (MultipartFile file : photoFiles) {
+            validateFileFormat(file);
+        }
+
         List<UserBatchRequest> requests = new ArrayList<>();
         for (int i = 0; i < cpfs.size(); i++) {
             MultipartFile file = photoFiles.get(i);
@@ -137,6 +143,7 @@ public class UserController {
         if (photoFile == null || photoFile.isEmpty()) {
             throw new InvalidImageException("A foto a ser verificada é obrigatória.");
         }
+        validateFileFormat(photoFile);
 
         VerificationResponse response = userService.verifyFace(
                 cpf, photoFile.getBytes(), photoFile.getOriginalFilename()
@@ -155,10 +162,29 @@ public class UserController {
         if (photoFile == null || photoFile.isEmpty()) {
             throw new InvalidImageException("A foto a ser identificada é obrigatória.");
         }
+        validateFileFormat(photoFile);
 
         IdentificationResponse response = userService.identifyFace(
                 photoFile.getBytes(), photoFile.getOriginalFilename()
         );
         return ResponseEntity.ok(response);
+    }
+
+    private void validateFileFormat(MultipartFile file) {
+        if (file == null || file.isEmpty()) {
+            return;
+        }
+        String filename = file.getOriginalFilename();
+        if (filename == null) {
+            throw new InvalidImageException("Nome do arquivo inválido.");
+        }
+        String lowerFilename = filename.toLowerCase();
+        if (!lowerFilename.endsWith(".jpg") && !lowerFilename.endsWith(".jpeg") && !lowerFilename.endsWith(".png")) {
+            throw new InvalidImageException("Tipo de arquivo não permitido (" + filename + "). Apenas imagens JPG, JPEG e PNG são aceitas.");
+        }
+        String contentType = file.getContentType();
+        if (contentType != null && !contentType.equals("image/jpeg") && !contentType.equals("image/png") && !contentType.equals("image/jpg")) {
+            throw new InvalidImageException("Tipo de conteúdo de imagem inválido (" + contentType + "). Apenas JPG, JPEG e PNG são aceitas.");
+        }
     }
 }

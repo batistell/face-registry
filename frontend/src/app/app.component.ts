@@ -123,8 +123,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   saveUser() {
     if (!this.userForm.name.trim()) return this.showError('O nome é obrigatório.');
-    if (!this.isEditMode && !this.userForm.cpf.trim()) return this.showError('O CPF é obrigatório.');
-    if (!this.isEditMode && this.userForm.cpf.length !== 11) return this.showError('O CPF deve conter exatamente 11 dígitos.');
+    if (!this.isEditMode) {
+      if (!this.userForm.cpf.trim()) return this.showError('O CPF é obrigatório.');
+      if (!this.isValidCpf(this.userForm.cpf)) return this.showError('CPF inválido. Insira um CPF válido com 11 dígitos.');
+      this.userForm.cpf = this.userForm.cpf.replace(/\D/g, '');
+    }
     if (!this.isEditMode && !this.userForm.photoFile) return this.showError('A foto é obrigatória para o cadastro.');
 
     this.isActionLoading = true;
@@ -199,9 +202,10 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.batchList.length === 0) return this.showError('Adicione pelo menos 1 usuário no lote.');
     for (let i = 0; i < this.batchList.length; i++) {
       const item = this.batchList[i];
-      if (!item.cpf || item.cpf.length !== 11) return this.showError(`CPF inválido no item ${i + 1}. Deve ter 11 dígitos.`);
+      if (!item.cpf || !this.isValidCpf(item.cpf)) return this.showError(`CPF inválido no item ${i + 1}. Insira um CPF válido com 11 dígitos.`);
       if (!item.name.trim()) return this.showError(`Nome vazio no item ${i + 1}.`);
       if (!item.photoFile) return this.showError(`A foto é obrigatória para todos os itens do lote (Item ${i + 1}).`);
+      item.cpf = item.cpf.replace(/\D/g, '');
     }
 
     this.isActionLoading = true;
@@ -235,6 +239,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   verifyFace() {
     if (!this.verifyForm.cpf.trim()) return this.showError('Insira o CPF do usuário a ser verificado.');
+    if (!this.isValidCpf(this.verifyForm.cpf)) return this.showError('CPF do usuário alvo inválido. Insira um CPF válido com 11 dígitos.');
+    this.verifyForm.cpf = this.verifyForm.cpf.replace(/\D/g, '');
     if (!this.verifyForm.photoFile) return this.showError('Faça o upload ou capture a foto para verificação.');
 
     this.isActionLoading = true;
@@ -284,6 +290,13 @@ export class AppComponent implements OnInit, OnDestroy {
   onFileSelected(event: any, target: 'form' | 'verify' | 'identify' | number) {
     const file = event.target.files[0] as File;
     if (file) {
+      const allowedExtensions = ['jpg', 'jpeg', 'png'];
+      const fileExtension = file.name.split('.').pop()?.toLowerCase();
+      if (!fileExtension || !allowedExtensions.includes(fileExtension)) {
+        this.showError('Tipo de arquivo não permitido. Apenas imagens JPG, JPEG e PNG são aceitas.');
+        event.target.value = '';
+        return;
+      }
       this.processSelectedFile(file, target);
     }
   }
@@ -473,6 +486,29 @@ export class AppComponent implements OnInit, OnDestroy {
     } catch {
       return dateStr;
     }
+  }
+
+  isValidCpf(cpf: string): boolean {
+    if (!cpf) return false;
+    const cleanCpf = cpf.replace(/\D/g, '');
+    if (cleanCpf.length !== 11) return false;
+    if (/^(\d)\1{10}$/.test(cleanCpf)) return false;
+
+    let sum = 0;
+    for (let i = 0; i < 9; i++) {
+      sum += parseInt(cleanCpf.charAt(i)) * (10 - i);
+    }
+    let rev = 11 - (sum % 11);
+    if (rev === 10 || rev === 11) rev = 0;
+    if (parseInt(cleanCpf.charAt(9)) !== rev) return false;
+
+    sum = 0;
+    for (let i = 0; i < 10; i++) {
+      sum += parseInt(cleanCpf.charAt(i)) * (11 - i);
+    }
+    rev = 11 - (sum % 11);
+    if (rev === 10 || rev === 11) rev = 0;
+    return parseInt(cleanCpf.charAt(10)) === rev;
   }
 }
 

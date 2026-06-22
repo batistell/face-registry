@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.batistell.faceregistry.UserControllerTest" time="3.397" tests="11" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.batistell.faceregistry.UserControllerTest" time="3.355" tests="12" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -14,7 +14,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="/opt/java/openjdk/lib"/>
-    <property name="sun.java.command" value="/app/target/surefire/surefirebooter-20260622195839295_3.jar /app/target/surefire 2026-06-22T19-58-38_866-jvmRun1 surefire-20260622195839295_1tmp surefire_0-20260622195839295_2tmp"/>
+    <property name="sun.java.command" value="/app/target/surefire/surefirebooter-20260622211117002_3.jar /app/target/surefire 2026-06-22T21-11-16_420-jvmRun1 surefire-20260622211117002_1tmp surefire_0-20260622211117002_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/app/target/test-classes:/app/target/classes:/root/.m2/repository/org/springframework/boot/spring-boot-starter-web/3.2.4/spring-boot-starter-web-3.2.4.jar:/root/.m2/repository/org/springframework/boot/spring-boot-starter/3.2.4/spring-boot-starter-3.2.4.jar:/root/.m2/repository/org/springframework/boot/spring-boot/3.2.4/spring-boot-3.2.4.jar:/root/.m2/repository/org/springframework/boot/spring-boot-autoconfigure/3.2.4/spring-boot-autoconfigure-3.2.4.jar:/root/.m2/repository/org/springframework/boot/spring-boot-starter-logging/3.2.4/spring-boot-starter-logging-3.2.4.jar:/root/.m2/repository/ch/qos/logback/logback-classic/1.4.14/logback-classic-1.4.14.jar:/root/.m2/repository/ch/qos/logback/logback-core/1.4.14/logback-core-1.4.14.jar:/root/.m2/repository/org/apache/logging/log4j/log4j-to-slf4j/2.21.1/log4j-to-slf4j-2.21.1.jar:/root/.m2/repository/org/apache/logging/log4j/log4j-api/2.21.1/log4j-api-2.21.1.jar:/root/.m2/repository/org/slf4j/jul-to-slf4j/2.0.12/jul-to-slf4j-2.0.12.jar:/root/.m2/repository/jakarta/annotation/jakarta.annotation-api/2.1.1/jakarta.annotation-api-2.1.1.jar:/root/.m2/repository/org/yaml/snakeyaml/2.2/snakeyaml-2.2.jar:/root/.m2/repository/org/springframework/boot/spring-boot-starter-json/3.2.4/spring-boot-starter-json-3.2.4.jar:/root/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.15.4/jackson-databind-2.15.4.jar:/root/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.15.4/jackson-annotations-2.15.4.jar:/root/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.15.4/jackson-core-2.15.4.jar:/root/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.15.4/jackson-datatype-jdk8-2.15.4.jar:/root/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.15.4/jackson-datatype-jsr310-2.15.4.jar:/root/.m2/repository/com/fasterxml/jackson/module/jackson-module-parameter-names/2.15.4/jackson-module-parameter-names-2.15.4.jar:/root/.m2/repository/org/springframework/boot/spring-boot-starter-tomcat/3.2.4/spring-boot-starter-tomcat-3.2.4.jar:/root/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.19/tomcat-embed-core-10.1.19.jar:/root/.m2/repository/org/apache/tomcat/embed/tomcat-embed-websocket/10.1.19/tomcat-embed-websocket-10.1.19.jar:/root/.m2/repository/org/springframework/spring-web/6.1.5/spring-web-6.1.5.jar:/root/.m2/repository/org/springframework/spring-beans/6.1.5/spring-beans-6.1.5.jar:/root/.m2/repository/io/micrometer/micrometer-observation/1.12.4/micrometer-observation-1.12.4.jar:/root/.m2/repository/io/micrometer/micrometer-commons/1.12.4/micrometer-commons-1.12.4.jar:/root/.m2/repository/org/springframework/spring-webmvc/6.1.5/spring-webmvc-6.1.5.jar:/root/.m2/repository/org/springframework/spring-aop/6.1.5/spring-aop-6.1.5.jar:/root/.m2/repository/org/springframework/spring-context/6.1.5/spring-context-6.1.5.jar:/root/.m2/repository/org/springframework/spring-expression/6.1.5/spring-expression-6.1.5.jar:/root/.m2/repository/org/springframework/boot/spring-boot-starter-data-jpa/3.2.4/spring-boot-starter-data-jpa-3.2.4.jar:/root/.m2/repository/org/springframework/boot/spring-boot-starter-aop/3.2.4/spring-boot-starter-aop-3.2.4.jar:/root/.m2/repository/org/aspectj/aspectjweaver/1.9.21/aspectjweaver-1.9.21.jar:/root/.m2/repository/org/springframework/boot/spring-boot-starter-jdbc/3.2.4/spring-boot-starter-jdbc-3.2.4.jar:/root/.m2/repository/com/zaxxer/HikariCP/5.0.1/HikariCP-5.0.1.jar:/root/.m2/repository/org/springframework/spring-jdbc/6.1.5/spring-jdbc-6.1.5.jar:/root/.m2/repository/org/hibernate/orm/hibernate-core/6.4.4.Final/hibernate-core-6.4.4.Final.jar:/root/.m2/repository/jakarta/persistence/jakarta.persistence-api/3.1.0/jakarta.persistence-api-3.1.0.jar:/root/.m2/repository/jakarta/transaction/jakarta.transaction-api/2.0.1/jakarta.transaction-api-2.0.1.jar:/root/.m2/repository/org/jboss/logging/jboss-logging/3.5.3.Final/jboss-logging-3.5.3.Final.jar:/root/.m2/repository/org/hibernate/common/hibernate-commons-annotations/6.0.6.Final/hibernate-commons-annotations-6.0.6.Final.jar:/root/.m2/repository/io/smallrye/jandex/3.1.2/jandex-3.1.2.jar:/root/.m2/repository/com/fasterxml/classmate/1.6.0/classmate-1.6.0.jar:/root/.m2/repository/net/bytebuddy/byte-buddy/1.14.12/byte-buddy-1.14.12.jar:/root/.m2/repository/org/glassfish/jaxb/jaxb-runtime/4.0.5/jaxb-runtime-4.0.5.jar:/root/.m2/repository/org/glassfish/jaxb/jaxb-core/4.0.5/jaxb-core-4.0.5.jar:/root/.m2/repository/org/eclipse/angus/angus-activation/2.0.2/angus-activation-2.0.2.jar:/root/.m2/repository/org/glassfish/jaxb/txw2/4.0.5/txw2-4.0.5.jar:/root/.m2/repository/com/sun/istack/istack-commons-runtime/4.1.2/istack-commons-runtime-4.1.2.jar:/root/.m2/repository/jakarta/inject/jakarta.inject-api/2.0.1/jakarta.inject-api-2.0.1.jar:/root/.m2/repository/org/antlr/antlr4-runtime/4.13.0/antlr4-runtime-4.13.0.jar:/root/.m2/repository/org/springframework/data/spring-data-jpa/3.2.4/spring-data-jpa-3.2.4.jar:/root/.m2/repository/org/springframework/data/spring-data-commons/3.2.4/spring-data-commons-3.2.4.jar:/root/.m2/repository/org/springframework/spring-orm/6.1.5/spring-orm-6.1.5.jar:/root/.m2/repository/org/springframework/spring-tx/6.1.5/spring-tx-6.1.5.jar:/root/.m2/repository/org/springframework/spring-aspects/6.1.5/spring-aspects-6.1.5.jar:/root/.m2/repository/org/springframework/boot/spring-boot-starter-validation/3.2.4/spring-boot-starter-validation-3.2.4.jar:/root/.m2/repository/org/apache/tomcat/embed/tomcat-embed-el/10.1.19/tomcat-embed-el-10.1.19.jar:/root/.m2/repository/org/hibernate/validator/hibernate-validator/8.0.1.Final/hibernate-validator-8.0.1.Final.jar:/root/.m2/repository/jakarta/validation/jakarta.validation-api/3.0.2/jakarta.validation-api-3.0.2.jar:/root/.m2/repository/org/postgresql/postgresql/42.6.2/postgresql-42.6.2.jar:/root/.m2/repository/org/checkerframework/checker-qual/3.31.0/checker-qual-3.31.0.jar:/root/.m2/repository/com/h2database/h2/2.2.224/h2-2.2.224.jar:/root/.m2/repository/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar:/root/.m2/repository/ai/djl/api/0.28.0/api-0.28.0.jar:/root/.m2/repository/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar:/root/.m2/repository/net/java/dev/jna/jna/5.14.0/jna-5.14.0.jar:/root/.m2/repository/org/apache/commons/commons-compress/1.26.1/commons-compress-1.26.1.jar:/root/.m2/repository/commons-codec/commons-codec/1.16.1/commons-codec-1.16.1.jar:/root/.m2/repository/commons-io/commons-io/2.15.1/commons-io-2.15.1.jar:/root/.m2/repository/org/slf4j/slf4j-api/2.0.12/slf4j-api-2.0.12.jar:/root/.m2/repository/ai/djl/model-zoo/0.28.0/model-zoo-0.28.0.jar:/root/.m2/repository/ai/djl/pytorch/pytorch-engine/0.28.0/pytorch-engine-0.28.0.jar:/root/.m2/repository/ai/djl/pytorch/pytorch-model-zoo/0.28.0/pytorch-model-zoo-0.28.0.jar:/root/.m2/repository/ai/djl/mxnet/mxnet-engine/0.28.0/mxnet-engine-0.28.0.jar:/root/.m2/repository/ai/djl/mxnet/mxnet-model-zoo/0.28.0/mxnet-model-zoo-0.28.0.jar:/root/.m2/repository/org/springdoc/springdoc-openapi-starter-webmvc-ui/2.5.0/springdoc-openapi-starter-webmvc-ui-2.5.0.jar:/root/.m2/repository/org/springdoc/springdoc-openapi-starter-webmvc-api/2.5.0/springdoc-openapi-starter-webmvc-api-2.5.0.jar:/root/.m2/repository/org/springdoc/springdoc-openapi-starter-common/2.5.0/springdoc-openapi-starter-common-2.5.0.jar:/root/.m2/repository/io/swagger/core/v3/swagger-core-jakarta/2.2.21/swagger-core-jakarta-2.2.21.jar:/root/.m2/repository/org/apache/commons/commons-lang3/3.13.0/commons-lang3-3.13.0.jar:/root/.m2/repository/io/swagger/core/v3/swagger-annotations-jakarta/2.2.21/swagger-annotations-jakarta-2.2.21.jar:/root/.m2/repository/io/swagger/core/v3/swagger-models-jakarta/2.2.21/swagger-models-jakarta-2.2.21.jar:/root/.m2/repository/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.15.4/jackson-dataformat-yaml-2.15.4.jar:/root/.m2/repository/org/webjars/swagger-ui/5.13.0/swagger-ui-5.13.0.jar:/root/.m2/repository/org/springframework/boot/spring-boot-starter-test/3.2.4/spring-boot-starter-test-3.2.4.jar:/root/.m2/repository/org/springframework/boot/spring-boot-test/3.2.4/spring-boot-test-3.2.4.jar:/root/.m2/repository/org/springframework/boot/spring-boot-test-autoconfigure/3.2.4/spring-boot-test-autoconfigure-3.2.4.jar:/root/.m2/repository/com/jayway/jsonpath/json-path/2.9.0/json-path-2.9.0.jar:/root/.m2/repository/jakarta/xml/bind/jakarta.xml.bind-api/4.0.2/jakarta.xml.bind-api-4.0.2.jar:/root/.m2/repository/jakarta/activation/jakarta.activation-api/2.1.3/jakarta.activation-api-2.1.3.jar:/root/.m2/repository/net/minidev/json-smart/2.5.0/json-smart-2.5.0.jar:/root/.m2/repository/net/minidev/accessors-smart/2.5.0/accessors-smart-2.5.0.jar:/root/.m2/repository/org/ow2/asm/asm/9.3/asm-9.3.jar:/root/.m2/repository/org/assertj/assertj-core/3.24.2/assertj-core-3.24.2.jar:/root/.m2/repository/org/awaitility/awaitility/4.2.0/awaitility-4.2.0.jar:/root/.m2/repository/org/hamcrest/hamcrest/2.2/hamcrest-2.2.jar:/root/.m2/repository/org/junit/jupiter/junit-jupiter/5.10.2/junit-jupiter-5.10.2.jar:/root/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.10.2/junit-jupiter-api-5.10.2.jar:/root/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/root/.m2/repository/org/junit/platform/junit-platform-commons/1.10.2/junit-platform-commons-1.10.2.jar:/root/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/root/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.10.2/junit-jupiter-params-5.10.2.jar:/root/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.10.2/junit-jupiter-engine-5.10.2.jar:/root/.m2/repository/org/junit/platform/junit-platform-engine/1.10.2/junit-platform-engine-1.10.2.jar:/root/.m2/repository/org/mockito/mockito-core/5.7.0/mockito-core-5.7.0.jar:/root/.m2/repository/net/bytebuddy/byte-buddy-agent/1.14.12/byte-buddy-agent-1.14.12.jar:/root/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/root/.m2/repository/org/mockito/mockito-junit-jupiter/5.7.0/mockito-junit-jupiter-5.7.0.jar:/root/.m2/repository/org/skyscreamer/jsonassert/1.5.1/jsonassert-1.5.1.jar:/root/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar:/root/.m2/repository/org/springframework/spring-core/6.1.5/spring-core-6.1.5.jar:/root/.m2/repository/org/springframework/spring-jcl/6.1.5/spring-jcl-6.1.5.jar:/root/.m2/repository/org/springframework/spring-test/6.1.5/spring-test-6.1.5.jar:/root/.m2/repository/org/xmlunit/xmlunit-core/2.9.1/xmlunit-core-2.9.1.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -31,7 +31,7 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="FILE_LOG_CHARSET" value="UTF-8"/>
     <property name="java.awt.headless" value="true"/>
-    <property name="surefire.real.class.path" value="/app/target/surefire/surefirebooter-20260622195839295_3.jar"/>
+    <property name="surefire.real.class.path" value="/app/target/surefire/surefirebooter-20260622211117002_3.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.3+9-LTS"/>
     <property name="user.name" value="root"/>
@@ -40,7 +40,7 @@
     <property name="os.version" value="6.6.87.2-microsoft-standard-WSL2"/>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="file.encoding" value="UTF-8"/>
-    <property name="jnidispatch.path" value="/root/.cache/JNA/temp/jna6887386161554666997.tmp"/>
+    <property name="jnidispatch.path" value="/root/.cache/JNA/temp/jna9458928177045320441.tmp"/>
     <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
     <property name="jna.platform.library.path" value="/usr/lib/x86_64-linux-gnu:/lib/x86_64-linux-gnu:/usr/lib64:/lib64:/usr/lib:/lib:/opt/java/openjdk/lib:/opt/java/openjdk/lib/server"/>
     <property name="java.vendor.version" value="Temurin-21.0.3+9"/>
@@ -53,7 +53,7 @@
     <property name="user.dir" value="/app"/>
     <property name="os.arch" value="amd64"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="PID" value="83"/>
+    <property name="PID" value="87"/>
     <property name="CONSOLE_LOG_CHARSET" value="UTF-8"/>
     <property name="native.encoding" value="UTF-8"/>
     <property name="java.library.path" value="/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib"/>
@@ -65,9 +65,9 @@
     <property name="apple.awt.UIElement" value="true"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="testVerifyFaceSuccess" classname="com.batistell.faceregistry.UserControllerTest" time="0.907">
-    <system-out><![CDATA[2026-06-22T19:59:45.917Z  INFO 83 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.batistell.faceregistry.UserControllerTest]: UserControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2026-06-22T19:59:45.937Z  INFO 83 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.batistell.faceregistry.FaceRegistryApplication for test class com.batistell.faceregistry.UserControllerTest
+  <testcase name="testVerifyFaceSuccess" classname="com.batistell.faceregistry.UserControllerTest" time="0.931">
+    <system-out><![CDATA[2026-06-22T21:13:15.999Z  INFO 87 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.batistell.faceregistry.UserControllerTest]: UserControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-06-22T21:13:16.015Z  INFO 87 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.batistell.faceregistry.FaceRegistryApplication for test class com.batistell.faceregistry.UserControllerTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -77,32 +77,32 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.2.4)
 
-2026-06-22T19:59:46.058Z  INFO 83 --- [           main] c.b.faceregistry.UserControllerTest      : Starting UserControllerTest using Java 21.0.3 with PID 83 (started by root in /app)
-2026-06-22T19:59:46.058Z  INFO 83 --- [           main] c.b.faceregistry.UserControllerTest      : The following 1 profile is active: "local"
-2026-06-22T19:59:47.177Z  INFO 83 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-06-22T19:59:47.324Z  INFO 83 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 146 ms. Found 1 JPA repository interface.
-2026-06-22T19:59:47.490Z  INFO 83 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-06-22T19:59:47.534Z  INFO 83 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2026-06-22T19:59:47.590Z  INFO 83 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-06-22T19:59:47.599Z  INFO 83 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
-2026-06-22T19:59:47.601Z  INFO 83 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection conn20: url=jdbc:h2:mem:faceregistry user=SA
-2026-06-22T19:59:47.601Z  INFO 83 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
-2026-06-22T19:59:47.602Z  WARN 83 --- [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-06-22T19:59:47.753Z  INFO 83 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-22T21:13:16.129Z  INFO 87 --- [           main] c.b.faceregistry.UserControllerTest      : Starting UserControllerTest using Java 21.0.3 with PID 87 (started by root in /app)
+2026-06-22T21:13:16.129Z  INFO 87 --- [           main] c.b.faceregistry.UserControllerTest      : The following 1 profile is active: "local"
+2026-06-22T21:13:17.244Z  INFO 87 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-22T21:13:17.392Z  INFO 87 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 148 ms. Found 1 JPA repository interface.
+2026-06-22T21:13:17.555Z  INFO 87 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-06-22T21:13:17.597Z  INFO 87 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-06-22T21:13:17.649Z  INFO 87 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-22T21:13:17.659Z  INFO 87 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2026-06-22T21:13:17.660Z  INFO 87 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection conn20: url=jdbc:h2:mem:faceregistry user=SA
+2026-06-22T21:13:17.660Z  INFO 87 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2026-06-22T21:13:17.661Z  WARN 87 --- [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-22T21:13:17.801Z  INFO 87 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 Hibernate: 
     alter table if exists users 
        drop constraint if exists idx_users_cpf
 Hibernate: 
     alter table if exists users 
        add constraint idx_users_cpf unique (cpf)
-2026-06-22T19:59:47.756Z  INFO 83 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-06-22T19:59:47.800Z  INFO 83 --- [           main] c.b.f.service.FaceBiometricsService      : Motor biométrico inicializado no modo simulado (Mock Mode) via configuração.
-2026-06-22T19:59:47.870Z  WARN 83 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-06-22T19:59:48.062Z  INFO 83 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:faceregistry'
-2026-06-22T19:59:48.118Z  INFO 83 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2026-06-22T19:59:48.119Z  INFO 83 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2026-06-22T19:59:48.120Z  INFO 83 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
-2026-06-22T19:59:48.133Z  INFO 83 --- [           main] c.b.faceregistry.UserControllerTest      : Started UserControllerTest in 2.185 seconds (process running for 68.512)
+2026-06-22T21:13:17.804Z  INFO 87 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-22T21:13:17.843Z  INFO 87 --- [           main] c.b.f.service.FaceBiometricsService      : Motor biométrico inicializado no modo simulado (Mock Mode) via configuração.
+2026-06-22T21:13:17.881Z  WARN 87 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-22T21:13:18.062Z  INFO 87 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:faceregistry'
+2026-06-22T21:13:18.117Z  INFO 87 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-06-22T21:13:18.118Z  INFO 87 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-06-22T21:13:18.119Z  INFO 87 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-06-22T21:13:18.129Z  INFO 87 --- [           main] c.b.faceregistry.UserControllerTest      : Started UserControllerTest in 2.103 seconds (process running for 120.765)
 Hibernate: 
     select
         u1_0.id,
@@ -119,7 +119,7 @@ Hibernate:
         users 
     where
         id=?
-2026-06-22T19:59:48.405Z  INFO 83 --- [           main] c.b.f.controller.UserController          : Recebida requisição para cadastrar usuário. CPF: 33333333333, Nome: Charlie
+2026-06-22T21:13:18.389Z  INFO 87 --- [           main] c.b.f.controller.UserController          : Recebida requisição para cadastrar usuário. CPF: 53141746001, Nome: Charlie
 Hibernate: 
     select
         u1_0.id 
@@ -136,7 +136,7 @@ Hibernate:
         (cpf, created_at, embedding, name, photo, id) 
     values
         (?, ?, ?, ?, ?, ?)
-2026-06-22T19:59:48.738Z  INFO 83 --- [           main] c.b.f.controller.UserController          : Recebida verificação facial (1:1) para o CPF: 33333333333
+2026-06-22T21:13:18.742Z  INFO 87 --- [           main] c.b.f.controller.UserController          : Recebida verificação facial (1:1) para o CPF: 53141746001
 Hibernate: 
     select
         u1_0.id,
@@ -151,7 +151,7 @@ Hibernate:
         u1_0.cpf=?
 ]]></system-out>
   </testcase>
-  <testcase name="testGetUserByCpfSuccess" classname="com.batistell.faceregistry.UserControllerTest" time="0.019">
+  <testcase name="testGetUserByCpfSuccess" classname="com.batistell.faceregistry.UserControllerTest" time="0.022">
     <system-out><![CDATA[Hibernate: 
     select
         u1_0.id,
@@ -168,7 +168,7 @@ Hibernate:
         users 
     where
         id=?
-2026-06-22T19:59:49.052Z  INFO 83 --- [           main] c.b.f.controller.UserController          : Recebida requisição para cadastrar usuário. CPF: 98765432100, Nome: John Doe
+2026-06-22T21:13:19.070Z  INFO 87 --- [           main] c.b.f.controller.UserController          : Recebida requisição para cadastrar usuário. CPF: 74394356644, Nome: John Doe
 Hibernate: 
     select
         u1_0.id 
@@ -185,7 +185,7 @@ Hibernate:
         (cpf, created_at, embedding, name, photo, id) 
     values
         (?, ?, ?, ?, ?, ?)
-2026-06-22T19:59:49.060Z  INFO 83 --- [           main] c.b.f.controller.UserController          : Recebida busca por CPF: 98765432100
+2026-06-22T21:13:19.078Z  INFO 87 --- [           main] c.b.f.controller.UserController          : Recebida busca por CPF: 74394356644
 Hibernate: 
     select
         u1_0.id,
@@ -200,7 +200,7 @@ Hibernate:
         u1_0.cpf=?
 ]]></system-out>
   </testcase>
-  <testcase name="testGetUserByCpfNotFound" classname="com.batistell.faceregistry.UserControllerTest" time="0.043">
+  <testcase name="testGetUserByCpfNotFound" classname="com.batistell.faceregistry.UserControllerTest" time="0.042">
     <system-out><![CDATA[Hibernate: 
     select
         u1_0.id,
@@ -217,7 +217,7 @@ Hibernate:
         users 
     where
         id=?
-2026-06-22T19:59:49.073Z  INFO 83 --- [           main] c.b.f.controller.UserController          : Recebida busca por CPF: 00000000000
+2026-06-22T21:13:19.092Z  INFO 87 --- [           main] c.b.f.controller.UserController          : Recebida busca por CPF: 62079744844
 Hibernate: 
     select
         u1_0.id,
@@ -232,7 +232,7 @@ Hibernate:
         u1_0.cpf=?
 ]]></system-out>
   </testcase>
-  <testcase name="testCreateUserMultipleFacesFailure" classname="com.batistell.faceregistry.UserControllerTest" time="0.011">
+  <testcase name="testCreateUserMultipleFacesFailure" classname="com.batistell.faceregistry.UserControllerTest" time="0.012">
     <system-out><![CDATA[Hibernate: 
     select
         u1_0.id,
@@ -243,7 +243,7 @@ Hibernate:
         u1_0.photo 
     from
         users u1_0
-2026-06-22T19:59:49.115Z  INFO 83 --- [           main] c.b.f.controller.UserController          : Recebida requisição para cadastrar usuário. CPF: 77766655544, Nome: Group Person
+2026-06-22T21:13:19.135Z  INFO 87 --- [           main] c.b.f.controller.UserController          : Recebida requisição para cadastrar usuário. CPF: 92230775596, Nome: Group Person
 Hibernate: 
     select
         u1_0.id 
@@ -255,7 +255,7 @@ Hibernate:
         first ? rows only
 ]]></system-out>
   </testcase>
-  <testcase name="testUpdateUserSuccess" classname="com.batistell.faceregistry.UserControllerTest" time="0.024">
+  <testcase name="testCreateUserInvalidCpfFailure" classname="com.batistell.faceregistry.UserControllerTest" time="0.009">
     <system-out><![CDATA[Hibernate: 
     select
         u1_0.id,
@@ -266,7 +266,21 @@ Hibernate:
         u1_0.photo 
     from
         users u1_0
-2026-06-22T19:59:49.128Z  INFO 83 --- [           main] c.b.f.controller.UserController          : Recebida requisição para cadastrar usuário. CPF: 55555555555, Nome: Initial Name
+2026-06-22T21:13:19.148Z  INFO 87 --- [           main] c.b.f.controller.UserController          : Recebida requisição para cadastrar usuário. CPF: 11111111111, Nome: Invalid CPF Person
+]]></system-out>
+  </testcase>
+  <testcase name="testUpdateUserSuccess" classname="com.batistell.faceregistry.UserControllerTest" time="0.029">
+    <system-out><![CDATA[Hibernate: 
+    select
+        u1_0.id,
+        u1_0.cpf,
+        u1_0.created_at,
+        u1_0.embedding,
+        u1_0.name,
+        u1_0.photo 
+    from
+        users u1_0
+2026-06-22T21:13:19.157Z  INFO 87 --- [           main] c.b.f.controller.UserController          : Recebida requisição para cadastrar usuário. CPF: 83992409821, Nome: Initial Name
 Hibernate: 
     select
         u1_0.id 
@@ -283,7 +297,7 @@ Hibernate:
         (cpf, created_at, embedding, name, photo, id) 
     values
         (?, ?, ?, ?, ?, ?)
-2026-06-22T19:59:49.138Z  INFO 83 --- [           main] c.b.f.controller.UserController          : Recebida requisição para atualizar usuário CPF: 55555555555
+2026-06-22T21:13:19.169Z  INFO 87 --- [           main] c.b.f.controller.UserController          : Recebida requisição para atualizar usuário CPF: 83992409821
 Hibernate: 
     select
         u1_0.id,
@@ -326,7 +340,7 @@ Hibernate:
         users 
     where
         id=?
-2026-06-22T19:59:49.154Z  INFO 83 --- [           main] c.b.f.controller.UserController          : Recebida requisição para cadastrar usuário. CPF: 99988877766, Nome: No Face Person
+2026-06-22T21:13:19.189Z  INFO 87 --- [           main] c.b.f.controller.UserController          : Recebida requisição para cadastrar usuário. CPF: 21603180001, Nome: No Face Person
 Hibernate: 
     select
         u1_0.id 
@@ -349,7 +363,7 @@ Hibernate:
         u1_0.photo 
     from
         users u1_0
-2026-06-22T19:59:49.166Z  INFO 83 --- [           main] c.b.f.controller.UserController          : Recebida requisição para cadastrar usuário. CPF: 44444444444, Nome: Delete Me
+2026-06-22T21:13:19.203Z  INFO 87 --- [           main] c.b.f.controller.UserController          : Recebida requisição para cadastrar usuário. CPF: 13859287605, Nome: Delete Me
 Hibernate: 
     select
         u1_0.id 
@@ -366,7 +380,7 @@ Hibernate:
         (cpf, created_at, embedding, name, photo, id) 
     values
         (?, ?, ?, ?, ?, ?)
-2026-06-22T19:59:49.174Z  INFO 83 --- [           main] c.b.f.controller.UserController          : Recebida requisição para excluir usuário CPF: 44444444444
+2026-06-22T21:13:19.211Z  INFO 87 --- [           main] c.b.f.controller.UserController          : Recebida requisição para excluir usuário CPF: 13859287605
 Hibernate: 
     select
         u1_0.id,
@@ -385,7 +399,7 @@ Hibernate:
         users 
     where
         id=?
-2026-06-22T19:59:49.180Z  INFO 83 --- [           main] c.b.f.controller.UserController          : Recebida busca por CPF: 44444444444
+2026-06-22T21:13:19.218Z  INFO 87 --- [           main] c.b.f.controller.UserController          : Recebida busca por CPF: 13859287605
 Hibernate: 
     select
         u1_0.id,
@@ -400,7 +414,7 @@ Hibernate:
         u1_0.cpf=?
 ]]></system-out>
   </testcase>
-  <testcase name="testIdentifyFaceSuccess" classname="com.batistell.faceregistry.UserControllerTest" time="0.022">
+  <testcase name="testIdentifyFaceSuccess" classname="com.batistell.faceregistry.UserControllerTest" time="0.024">
     <system-out><![CDATA[Hibernate: 
     select
         u1_0.id,
@@ -411,7 +425,7 @@ Hibernate:
         u1_0.photo 
     from
         users u1_0
-2026-06-22T19:59:49.193Z  INFO 83 --- [           main] c.b.f.controller.UserController          : Recebida requisição para cadastrar usuário. CPF: 22222222222, Nome: John Identification
+2026-06-22T21:13:19.230Z  INFO 87 --- [           main] c.b.f.controller.UserController          : Recebida requisição para cadastrar usuário. CPF: 10200172956, Nome: John Identification
 Hibernate: 
     select
         u1_0.id 
@@ -428,7 +442,7 @@ Hibernate:
         (cpf, created_at, embedding, name, photo, id) 
     values
         (?, ?, ?, ?, ?, ?)
-2026-06-22T19:59:49.200Z  INFO 83 --- [           main] c.b.f.controller.UserController          : Recebida identificação facial (1:n) a partir de nova foto.
+2026-06-22T21:13:19.237Z  INFO 87 --- [           main] c.b.f.controller.UserController          : Recebida identificação facial (1:n) a partir de nova foto.
 Hibernate: 
     select
         u1_0.id,
@@ -441,7 +455,7 @@ Hibernate:
         users u1_0
 ]]></system-out>
   </testcase>
-  <testcase name="testBatchUploadSuccess" classname="com.batistell.faceregistry.UserControllerTest" time="0.043">
+  <testcase name="testBatchUploadSuccess" classname="com.batistell.faceregistry.UserControllerTest" time="0.046">
     <system-out><![CDATA[Hibernate: 
     select
         u1_0.id,
@@ -458,10 +472,10 @@ Hibernate:
         users 
     where
         id=?
-2026-06-22T19:59:49.219Z  INFO 83 --- [           main] c.b.f.controller.UserController          : Recebido lote para processamento concorrente. Quantidade: 2
-2026-06-22T19:59:49.219Z  INFO 83 --- [           main] c.b.faceregistry.service.UserService     : Iniciando processamento em lote para 2 usuários...
-2026-06-22T19:59:49.225Z  INFO 83 --- [               ] c.b.faceregistry.service.UserService     : [Thread: ] Processando biometria do CPF 88888888801
-2026-06-22T19:59:49.225Z  INFO 83 --- [               ] c.b.faceregistry.service.UserService     : [Thread: ] Processando biometria do CPF 88888888802
+2026-06-22T21:13:19.258Z  INFO 87 --- [           main] c.b.f.controller.UserController          : Recebido lote para processamento concorrente. Quantidade: 2
+2026-06-22T21:13:19.259Z  INFO 87 --- [           main] c.b.faceregistry.service.UserService     : Iniciando processamento em lote para 2 usuários...
+2026-06-22T21:13:19.265Z  INFO 87 --- [               ] c.b.faceregistry.service.UserService     : [Thread: ] Processando biometria do CPF 64428618484
+2026-06-22T21:13:19.265Z  INFO 87 --- [               ] c.b.faceregistry.service.UserService     : [Thread: ] Processando biometria do CPF 42463341890
 Hibernate: 
     select
         u1_0.id 
@@ -480,7 +494,7 @@ Hibernate:
         u1_0.cpf=? 
     fetch
         first ? rows only
-2026-06-22T19:59:49.234Z  INFO 83 --- [           main] c.b.faceregistry.service.UserService     : Lote de 2 cadastros persistido com sucesso.
+2026-06-22T21:13:19.273Z  INFO 87 --- [           main] c.b.faceregistry.service.UserService     : Lote de 2 cadastros persistido com sucesso.
 Hibernate: 
     insert 
     into
@@ -497,7 +511,7 @@ Hibernate:
         (?, ?, ?, ?, ?, ?)
 ]]></system-out>
   </testcase>
-  <testcase name="testCreateUserSuccess" classname="com.batistell.faceregistry.UserControllerTest" time="0.022">
+  <testcase name="testCreateUserSuccess" classname="com.batistell.faceregistry.UserControllerTest" time="0.02">
     <system-out><![CDATA[Hibernate: 
     select
         u1_0.id,
@@ -520,7 +534,7 @@ Hibernate:
         users 
     where
         id=?
-2026-06-22T19:59:49.264Z  INFO 83 --- [           main] c.b.f.controller.UserController          : Recebida requisição para cadastrar usuário. CPF: 12345678901, Nome: Alice Test
+2026-06-22T21:13:19.305Z  INFO 87 --- [           main] c.b.f.controller.UserController          : Recebida requisição para cadastrar usuário. CPF: 92479121305, Nome: Alice Test
 Hibernate: 
     select
         u1_0.id 
@@ -539,7 +553,7 @@ Hibernate:
         (?, ?, ?, ?, ?, ?)
 ]]></system-out>
   </testcase>
-  <testcase name="testCreateUserDuplicateCpfFailure" classname="com.batistell.faceregistry.UserControllerTest" time="0.024">
+  <testcase name="testCreateUserDuplicateCpfFailure" classname="com.batistell.faceregistry.UserControllerTest" time="0.026">
     <system-out><![CDATA[Hibernate: 
     select
         u1_0.id,
@@ -556,7 +570,7 @@ Hibernate:
         users 
     where
         id=?
-2026-06-22T19:59:49.285Z  INFO 83 --- [           main] c.b.f.controller.UserController          : Recebida requisição para cadastrar usuário. CPF: 11122233344, Nome: Bob
+2026-06-22T21:13:19.324Z  INFO 87 --- [           main] c.b.f.controller.UserController          : Recebida requisição para cadastrar usuário. CPF: 64657075942, Nome: Bob
 Hibernate: 
     select
         u1_0.id 
@@ -573,7 +587,7 @@ Hibernate:
         (cpf, created_at, embedding, name, photo, id) 
     values
         (?, ?, ?, ?, ?, ?)
-2026-06-22T19:59:49.292Z  INFO 83 --- [           main] c.b.f.controller.UserController          : Recebida requisição para cadastrar usuário. CPF: 11122233344, Nome: Duplicate Bob
+2026-06-22T21:13:19.331Z  INFO 87 --- [           main] c.b.f.controller.UserController          : Recebida requisição para cadastrar usuário. CPF: 64657075942, Nome: Duplicate Bob
 Hibernate: 
     select
         u1_0.id 

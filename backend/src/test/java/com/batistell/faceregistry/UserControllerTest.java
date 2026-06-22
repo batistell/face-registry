@@ -55,10 +55,10 @@ public class UserControllerTest {
 
         mockMvc.perform(multipart("/api/users")
                 .file(photoPart)
-                .param("cpf", "12345678901")
+                .param("cpf", "92479121305")
                 .param("name", "Alice Test"))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.cpf", is("12345678901")))
+                .andExpect(jsonPath("$.cpf", is("92479121305")))
                 .andExpect(jsonPath("$.name", is("Alice Test")))
                 .andExpect(jsonPath("$.photoBase64", notNullValue()));
     }
@@ -75,14 +75,14 @@ public class UserControllerTest {
         // Primeiro cadastro
         mockMvc.perform(multipart("/api/users")
                 .file(photoPart)
-                .param("cpf", "11122233344")
+                .param("cpf", "64657075942")
                 .param("name", "Bob"))
                 .andExpect(status().isCreated());
 
         // Segundo cadastro com mesmo CPF
         mockMvc.perform(multipart("/api/users")
                 .file(photoPart)
-                .param("cpf", "11122233344")
+                .param("cpf", "64657075942")
                 .param("name", "Duplicate Bob"))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.message", containsString("já cadastrado")));
@@ -100,7 +100,7 @@ public class UserControllerTest {
 
         mockMvc.perform(multipart("/api/users")
                 .file(photoPart)
-                .param("cpf", "99988877766")
+                .param("cpf", "21603180001")
                 .param("name", "No Face Person"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message", containsString("rosto detectado")));
@@ -118,7 +118,7 @@ public class UserControllerTest {
 
         mockMvc.perform(multipart("/api/users")
                 .file(photoPart)
-                .param("cpf", "77766655544")
+                .param("cpf", "92230775596")
                 .param("name", "Group Person"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message", containsString("Múltiplos rostos detectados")));
@@ -135,19 +135,19 @@ public class UserControllerTest {
 
         mockMvc.perform(multipart("/api/users")
                 .file(photoPart)
-                .param("cpf", "98765432100")
+                .param("cpf", "74394356644")
                 .param("name", "John Doe"))
                 .andExpect(status().isCreated());
 
-        mockMvc.perform(get("/api/users/98765432100"))
+        mockMvc.perform(get("/api/users/74394356644"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.cpf", is("98765432100")))
+                .andExpect(jsonPath("$.cpf", is("74394356644")))
                 .andExpect(jsonPath("$.name", is("John Doe")));
     }
 
     @Test
     public void testGetUserByCpfNotFound() throws Exception {
-        mockMvc.perform(get("/api/users/00000000000"))
+        mockMvc.perform(get("/api/users/62079744844"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message", containsString("não encontrado")));
     }
@@ -163,12 +163,12 @@ public class UserControllerTest {
 
         mockMvc.perform(multipart("/api/users")
                 .file(photoPart)
-                .param("cpf", "55555555555")
+                .param("cpf", "83992409821")
                 .param("name", "Initial Name"))
                 .andExpect(status().isCreated());
 
         // Update name
-        mockMvc.perform(multipart("/api/users/55555555555")
+        mockMvc.perform(multipart("/api/users/83992409821")
                 .param("name", "Updated Name")
                 .with(request -> { request.setMethod("PUT"); return request; }))
                 .andExpect(status().isOk())
@@ -186,15 +186,15 @@ public class UserControllerTest {
 
         mockMvc.perform(multipart("/api/users")
                 .file(photoPart)
-                .param("cpf", "44444444444")
+                .param("cpf", "13859287605")
                 .param("name", "Delete Me"))
                 .andExpect(status().isCreated());
 
-        mockMvc.perform(delete("/api/users/44444444444"))
+        mockMvc.perform(delete("/api/users/13859287605"))
                 .andExpect(status().isNoContent());
 
         // Confirm it's gone
-        mockMvc.perform(get("/api/users/44444444444"))
+        mockMvc.perform(get("/api/users/13859287605"))
                 .andExpect(status().isNotFound());
     }
 
@@ -210,14 +210,14 @@ public class UserControllerTest {
 
         mockMvc.perform(multipart("/api/users")
                 .file(photoPartA)
-                .param("cpf", "33333333333")
+                .param("cpf", "53141746001")
                 .param("name", "Charlie"))
                 .andExpect(status().isCreated());
 
         // Faz verificação 1:1 com exatamente a mesma foto (deve ter similaridade 1.0)
         mockMvc.perform(multipart("/api/users/verify")
                 .file(photoPartA)
-                .param("cpf", "33333333333"))
+                .param("cpf", "53141746001"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.match", is(true)))
                 .andExpect(jsonPath("$.similarity", greaterThanOrEqualTo(0.99)));
@@ -235,7 +235,7 @@ public class UserControllerTest {
 
         mockMvc.perform(multipart("/api/users")
                 .file(photoPart)
-                .param("cpf", "22222222222")
+                .param("cpf", "10200172956")
                 .param("name", "John Identification"))
                 .andExpect(status().isCreated());
 
@@ -244,7 +244,7 @@ public class UserControllerTest {
                 .file(photoPart))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.identified", is(true)))
-                .andExpect(jsonPath("$.cpf", is("22222222222")))
+                .andExpect(jsonPath("$.cpf", is("10200172956")))
                 .andExpect(jsonPath("$.name", is("John Identification")));
     }
 
@@ -256,11 +256,28 @@ public class UserControllerTest {
         mockMvc.perform(multipart("/api/users/batch")
                 .file(photo1)
                 .file(photo2)
-                .param("cpfs", "88888888801", "88888888802")
+                .param("cpfs", "64428618484", "42463341890")
                 .param("names", "Batch User 1", "Batch User 2"))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].cpf", is("88888888801")))
-                .andExpect(jsonPath("$[1].cpf", is("88888888802")));
+                .andExpect(jsonPath("$[0].cpf", is("64428618484")))
+                .andExpect(jsonPath("$[1].cpf", is("42463341890")));
+    }
+
+    @Test
+    public void testCreateUserInvalidCpfFailure() throws Exception {
+        MockMultipartFile photoPart = new MockMultipartFile(
+                "photo",
+                "face_photo.png",
+                MediaType.IMAGE_PNG_VALUE,
+                tinyPngBytes
+        );
+
+        mockMvc.perform(multipart("/api/users")
+                .file(photoPart)
+                .param("cpf", "11111111111")
+                .param("name", "Invalid CPF Person"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message", containsString("CPF inválido")));
     }
 }

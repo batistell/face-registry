@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.batistell.faceregistry.BiometricsVerificationTest" time="115.696" tests="2" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.batistell.faceregistry.BiometricsVerificationTest" time="113.95" tests="2" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -14,9 +14,8 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="/opt/java/openjdk/lib"/>
-    <property name="sun.java.command" value="/app/target/surefire/surefirebooter-20260622202141618_3.jar /app/target/surefire 2026-06-22T20-21-41_152-jvmRun1 surefire-20260622202141618_1tmp surefire_0-20260622202141618_2tmp"/>
+    <property name="sun.java.command" value="/app/target/surefire/surefirebooter-20260622211117002_3.jar /app/target/surefire 2026-06-22T21-11-16_420-jvmRun1 surefire-20260622211117002_1tmp surefire_0-20260622211117002_2tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="test" value="BiometricsVerificationTest"/>
     <property name="surefire.test.class.path" value="/app/target/test-classes:/app/target/classes:/root/.m2/repository/org/springframework/boot/spring-boot-starter-web/3.2.4/spring-boot-starter-web-3.2.4.jar:/root/.m2/repository/org/springframework/boot/spring-boot-starter/3.2.4/spring-boot-starter-3.2.4.jar:/root/.m2/repository/org/springframework/boot/spring-boot/3.2.4/spring-boot-3.2.4.jar:/root/.m2/repository/org/springframework/boot/spring-boot-autoconfigure/3.2.4/spring-boot-autoconfigure-3.2.4.jar:/root/.m2/repository/org/springframework/boot/spring-boot-starter-logging/3.2.4/spring-boot-starter-logging-3.2.4.jar:/root/.m2/repository/ch/qos/logback/logback-classic/1.4.14/logback-classic-1.4.14.jar:/root/.m2/repository/ch/qos/logback/logback-core/1.4.14/logback-core-1.4.14.jar:/root/.m2/repository/org/apache/logging/log4j/log4j-to-slf4j/2.21.1/log4j-to-slf4j-2.21.1.jar:/root/.m2/repository/org/apache/logging/log4j/log4j-api/2.21.1/log4j-api-2.21.1.jar:/root/.m2/repository/org/slf4j/jul-to-slf4j/2.0.12/jul-to-slf4j-2.0.12.jar:/root/.m2/repository/jakarta/annotation/jakarta.annotation-api/2.1.1/jakarta.annotation-api-2.1.1.jar:/root/.m2/repository/org/yaml/snakeyaml/2.2/snakeyaml-2.2.jar:/root/.m2/repository/org/springframework/boot/spring-boot-starter-json/3.2.4/spring-boot-starter-json-3.2.4.jar:/root/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.15.4/jackson-databind-2.15.4.jar:/root/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.15.4/jackson-annotations-2.15.4.jar:/root/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.15.4/jackson-core-2.15.4.jar:/root/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.15.4/jackson-datatype-jdk8-2.15.4.jar:/root/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.15.4/jackson-datatype-jsr310-2.15.4.jar:/root/.m2/repository/com/fasterxml/jackson/module/jackson-module-parameter-names/2.15.4/jackson-module-parameter-names-2.15.4.jar:/root/.m2/repository/org/springframework/boot/spring-boot-starter-tomcat/3.2.4/spring-boot-starter-tomcat-3.2.4.jar:/root/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.19/tomcat-embed-core-10.1.19.jar:/root/.m2/repository/org/apache/tomcat/embed/tomcat-embed-websocket/10.1.19/tomcat-embed-websocket-10.1.19.jar:/root/.m2/repository/org/springframework/spring-web/6.1.5/spring-web-6.1.5.jar:/root/.m2/repository/org/springframework/spring-beans/6.1.5/spring-beans-6.1.5.jar:/root/.m2/repository/io/micrometer/micrometer-observation/1.12.4/micrometer-observation-1.12.4.jar:/root/.m2/repository/io/micrometer/micrometer-commons/1.12.4/micrometer-commons-1.12.4.jar:/root/.m2/repository/org/springframework/spring-webmvc/6.1.5/spring-webmvc-6.1.5.jar:/root/.m2/repository/org/springframework/spring-aop/6.1.5/spring-aop-6.1.5.jar:/root/.m2/repository/org/springframework/spring-context/6.1.5/spring-context-6.1.5.jar:/root/.m2/repository/org/springframework/spring-expression/6.1.5/spring-expression-6.1.5.jar:/root/.m2/repository/org/springframework/boot/spring-boot-starter-data-jpa/3.2.4/spring-boot-starter-data-jpa-3.2.4.jar:/root/.m2/repository/org/springframework/boot/spring-boot-starter-aop/3.2.4/spring-boot-starter-aop-3.2.4.jar:/root/.m2/repository/org/aspectj/aspectjweaver/1.9.21/aspectjweaver-1.9.21.jar:/root/.m2/repository/org/springframework/boot/spring-boot-starter-jdbc/3.2.4/spring-boot-starter-jdbc-3.2.4.jar:/root/.m2/repository/com/zaxxer/HikariCP/5.0.1/HikariCP-5.0.1.jar:/root/.m2/repository/org/springframework/spring-jdbc/6.1.5/spring-jdbc-6.1.5.jar:/root/.m2/repository/org/hibernate/orm/hibernate-core/6.4.4.Final/hibernate-core-6.4.4.Final.jar:/root/.m2/repository/jakarta/persistence/jakarta.persistence-api/3.1.0/jakarta.persistence-api-3.1.0.jar:/root/.m2/repository/jakarta/transaction/jakarta.transaction-api/2.0.1/jakarta.transaction-api-2.0.1.jar:/root/.m2/repository/org/jboss/logging/jboss-logging/3.5.3.Final/jboss-logging-3.5.3.Final.jar:/root/.m2/repository/org/hibernate/common/hibernate-commons-annotations/6.0.6.Final/hibernate-commons-annotations-6.0.6.Final.jar:/root/.m2/repository/io/smallrye/jandex/3.1.2/jandex-3.1.2.jar:/root/.m2/repository/com/fasterxml/classmate/1.6.0/classmate-1.6.0.jar:/root/.m2/repository/net/bytebuddy/byte-buddy/1.14.12/byte-buddy-1.14.12.jar:/root/.m2/repository/org/glassfish/jaxb/jaxb-runtime/4.0.5/jaxb-runtime-4.0.5.jar:/root/.m2/repository/org/glassfish/jaxb/jaxb-core/4.0.5/jaxb-core-4.0.5.jar:/root/.m2/repository/org/eclipse/angus/angus-activation/2.0.2/angus-activation-2.0.2.jar:/root/.m2/repository/org/glassfish/jaxb/txw2/4.0.5/txw2-4.0.5.jar:/root/.m2/repository/com/sun/istack/istack-commons-runtime/4.1.2/istack-commons-runtime-4.1.2.jar:/root/.m2/repository/jakarta/inject/jakarta.inject-api/2.0.1/jakarta.inject-api-2.0.1.jar:/root/.m2/repository/org/antlr/antlr4-runtime/4.13.0/antlr4-runtime-4.13.0.jar:/root/.m2/repository/org/springframework/data/spring-data-jpa/3.2.4/spring-data-jpa-3.2.4.jar:/root/.m2/repository/org/springframework/data/spring-data-commons/3.2.4/spring-data-commons-3.2.4.jar:/root/.m2/repository/org/springframework/spring-orm/6.1.5/spring-orm-6.1.5.jar:/root/.m2/repository/org/springframework/spring-tx/6.1.5/spring-tx-6.1.5.jar:/root/.m2/repository/org/springframework/spring-aspects/6.1.5/spring-aspects-6.1.5.jar:/root/.m2/repository/org/springframework/boot/spring-boot-starter-validation/3.2.4/spring-boot-starter-validation-3.2.4.jar:/root/.m2/repository/org/apache/tomcat/embed/tomcat-embed-el/10.1.19/tomcat-embed-el-10.1.19.jar:/root/.m2/repository/org/hibernate/validator/hibernate-validator/8.0.1.Final/hibernate-validator-8.0.1.Final.jar:/root/.m2/repository/jakarta/validation/jakarta.validation-api/3.0.2/jakarta.validation-api-3.0.2.jar:/root/.m2/repository/org/postgresql/postgresql/42.6.2/postgresql-42.6.2.jar:/root/.m2/repository/org/checkerframework/checker-qual/3.31.0/checker-qual-3.31.0.jar:/root/.m2/repository/com/h2database/h2/2.2.224/h2-2.2.224.jar:/root/.m2/repository/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar:/root/.m2/repository/ai/djl/api/0.28.0/api-0.28.0.jar:/root/.m2/repository/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar:/root/.m2/repository/net/java/dev/jna/jna/5.14.0/jna-5.14.0.jar:/root/.m2/repository/org/apache/commons/commons-compress/1.26.1/commons-compress-1.26.1.jar:/root/.m2/repository/commons-codec/commons-codec/1.16.1/commons-codec-1.16.1.jar:/root/.m2/repository/commons-io/commons-io/2.15.1/commons-io-2.15.1.jar:/root/.m2/repository/org/slf4j/slf4j-api/2.0.12/slf4j-api-2.0.12.jar:/root/.m2/repository/ai/djl/model-zoo/0.28.0/model-zoo-0.28.0.jar:/root/.m2/repository/ai/djl/pytorch/pytorch-engine/0.28.0/pytorch-engine-0.28.0.jar:/root/.m2/repository/ai/djl/pytorch/pytorch-model-zoo/0.28.0/pytorch-model-zoo-0.28.0.jar:/root/.m2/repository/ai/djl/mxnet/mxnet-engine/0.28.0/mxnet-engine-0.28.0.jar:/root/.m2/repository/ai/djl/mxnet/mxnet-model-zoo/0.28.0/mxnet-model-zoo-0.28.0.jar:/root/.m2/repository/org/springdoc/springdoc-openapi-starter-webmvc-ui/2.5.0/springdoc-openapi-starter-webmvc-ui-2.5.0.jar:/root/.m2/repository/org/springdoc/springdoc-openapi-starter-webmvc-api/2.5.0/springdoc-openapi-starter-webmvc-api-2.5.0.jar:/root/.m2/repository/org/springdoc/springdoc-openapi-starter-common/2.5.0/springdoc-openapi-starter-common-2.5.0.jar:/root/.m2/repository/io/swagger/core/v3/swagger-core-jakarta/2.2.21/swagger-core-jakarta-2.2.21.jar:/root/.m2/repository/org/apache/commons/commons-lang3/3.13.0/commons-lang3-3.13.0.jar:/root/.m2/repository/io/swagger/core/v3/swagger-annotations-jakarta/2.2.21/swagger-annotations-jakarta-2.2.21.jar:/root/.m2/repository/io/swagger/core/v3/swagger-models-jakarta/2.2.21/swagger-models-jakarta-2.2.21.jar:/root/.m2/repository/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.15.4/jackson-dataformat-yaml-2.15.4.jar:/root/.m2/repository/org/webjars/swagger-ui/5.13.0/swagger-ui-5.13.0.jar:/root/.m2/repository/org/springframework/boot/spring-boot-starter-test/3.2.4/spring-boot-starter-test-3.2.4.jar:/root/.m2/repository/org/springframework/boot/spring-boot-test/3.2.4/spring-boot-test-3.2.4.jar:/root/.m2/repository/org/springframework/boot/spring-boot-test-autoconfigure/3.2.4/spring-boot-test-autoconfigure-3.2.4.jar:/root/.m2/repository/com/jayway/jsonpath/json-path/2.9.0/json-path-2.9.0.jar:/root/.m2/repository/jakarta/xml/bind/jakarta.xml.bind-api/4.0.2/jakarta.xml.bind-api-4.0.2.jar:/root/.m2/repository/jakarta/activation/jakarta.activation-api/2.1.3/jakarta.activation-api-2.1.3.jar:/root/.m2/repository/net/minidev/json-smart/2.5.0/json-smart-2.5.0.jar:/root/.m2/repository/net/minidev/accessors-smart/2.5.0/accessors-smart-2.5.0.jar:/root/.m2/repository/org/ow2/asm/asm/9.3/asm-9.3.jar:/root/.m2/repository/org/assertj/assertj-core/3.24.2/assertj-core-3.24.2.jar:/root/.m2/repository/org/awaitility/awaitility/4.2.0/awaitility-4.2.0.jar:/root/.m2/repository/org/hamcrest/hamcrest/2.2/hamcrest-2.2.jar:/root/.m2/repository/org/junit/jupiter/junit-jupiter/5.10.2/junit-jupiter-5.10.2.jar:/root/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.10.2/junit-jupiter-api-5.10.2.jar:/root/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/root/.m2/repository/org/junit/platform/junit-platform-commons/1.10.2/junit-platform-commons-1.10.2.jar:/root/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/root/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.10.2/junit-jupiter-params-5.10.2.jar:/root/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.10.2/junit-jupiter-engine-5.10.2.jar:/root/.m2/repository/org/junit/platform/junit-platform-engine/1.10.2/junit-platform-engine-1.10.2.jar:/root/.m2/repository/org/mockito/mockito-core/5.7.0/mockito-core-5.7.0.jar:/root/.m2/repository/net/bytebuddy/byte-buddy-agent/1.14.12/byte-buddy-agent-1.14.12.jar:/root/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/root/.m2/repository/org/mockito/mockito-junit-jupiter/5.7.0/mockito-junit-jupiter-5.7.0.jar:/root/.m2/repository/org/skyscreamer/jsonassert/1.5.1/jsonassert-1.5.1.jar:/root/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar:/root/.m2/repository/org/springframework/spring-core/6.1.5/spring-core-6.1.5.jar:/root/.m2/repository/org/springframework/spring-jcl/6.1.5/spring-jcl-6.1.5.jar:/root/.m2/repository/org/springframework/spring-test/6.1.5/spring-test-6.1.5.jar:/root/.m2/repository/org/xmlunit/xmlunit-core/2.9.1/xmlunit-core-2.9.1.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="/root"/>
@@ -32,7 +31,7 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="FILE_LOG_CHARSET" value="UTF-8"/>
     <property name="java.awt.headless" value="true"/>
-    <property name="surefire.real.class.path" value="/app/target/surefire/surefirebooter-20260622202141618_3.jar"/>
+    <property name="surefire.real.class.path" value="/app/target/surefire/surefirebooter-20260622211117002_3.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.3+9-LTS"/>
     <property name="user.name" value="root"/>
@@ -41,7 +40,7 @@
     <property name="os.version" value="6.6.87.2-microsoft-standard-WSL2"/>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="file.encoding" value="UTF-8"/>
-    <property name="jnidispatch.path" value="/root/.cache/JNA/temp/jna13300933532083737419.tmp"/>
+    <property name="jnidispatch.path" value="/root/.cache/JNA/temp/jna9458928177045320441.tmp"/>
     <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
     <property name="jna.platform.library.path" value="/usr/lib/x86_64-linux-gnu:/lib/x86_64-linux-gnu:/usr/lib64:/lib64:/usr/lib:/lib:/opt/java/openjdk/lib:/opt/java/openjdk/lib/server"/>
     <property name="java.vendor.version" value="Temurin-21.0.3+9"/>
@@ -54,7 +53,7 @@
     <property name="user.dir" value="/app"/>
     <property name="os.arch" value="amd64"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="PID" value="90"/>
+    <property name="PID" value="87"/>
     <property name="CONSOLE_LOG_CHARSET" value="UTF-8"/>
     <property name="native.encoding" value="UTF-8"/>
     <property name="java.library.path" value="/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib"/>
@@ -66,9 +65,9 @@
     <property name="apple.awt.UIElement" value="true"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="testBiometricsMatchFamousPeople" classname="com.batistell.faceregistry.BiometricsVerificationTest" time="55.842">
-    <system-out><![CDATA[20:21:44.565 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.batistell.faceregistry.BiometricsVerificationTest]: BiometricsVerificationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-20:21:45.029 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.batistell.faceregistry.FaceRegistryApplication for test class com.batistell.faceregistry.BiometricsVerificationTest
+  <testcase name="testBiometricsMatchFamousPeople" classname="com.batistell.faceregistry.BiometricsVerificationTest" time="58.624">
+    <system-out><![CDATA[21:11:20.184 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.batistell.faceregistry.BiometricsVerificationTest]: BiometricsVerificationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+21:11:20.621 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.batistell.faceregistry.FaceRegistryApplication for test class com.batistell.faceregistry.BiometricsVerificationTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -78,19 +77,19 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.2.4)
 
-2026-06-22T20:21:46.979Z  INFO 90 --- [           main] c.b.f.BiometricsVerificationTest         : Starting BiometricsVerificationTest using Java 21.0.3 with PID 90 (started by root in /app)
-2026-06-22T20:21:46.982Z  INFO 90 --- [           main] c.b.f.BiometricsVerificationTest         : The following 1 profile is active: "local"
-2026-06-22T20:21:50.038Z  INFO 90 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-06-22T20:21:50.352Z  INFO 90 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 279 ms. Found 1 JPA repository interface.
-2026-06-22T20:21:51.998Z  INFO 90 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-06-22T20:21:52.419Z  INFO 90 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
-2026-06-22T20:21:52.625Z  INFO 90 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2026-06-22T20:21:54.013Z  INFO 90 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-06-22T20:21:54.187Z  INFO 90 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-06-22T20:21:55.172Z  INFO 90 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:faceregistry user=SA
-2026-06-22T20:21:55.194Z  INFO 90 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-06-22T20:21:55.334Z  WARN 90 --- [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-06-22T20:21:59.751Z  INFO 90 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-22T21:11:22.694Z  INFO 87 --- [           main] c.b.f.BiometricsVerificationTest         : Starting BiometricsVerificationTest using Java 21.0.3 with PID 87 (started by root in /app)
+2026-06-22T21:11:22.696Z  INFO 87 --- [           main] c.b.f.BiometricsVerificationTest         : The following 1 profile is active: "local"
+2026-06-22T21:11:25.808Z  INFO 87 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-22T21:11:26.132Z  INFO 87 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 290 ms. Found 1 JPA repository interface.
+2026-06-22T21:11:27.814Z  INFO 87 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-06-22T21:11:28.238Z  INFO 87 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-06-22T21:11:28.453Z  INFO 87 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-06-22T21:11:29.907Z  INFO 87 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-22T21:11:30.090Z  INFO 87 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-22T21:11:31.112Z  INFO 87 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:faceregistry user=SA
+2026-06-22T21:11:31.124Z  INFO 87 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-22T21:11:31.264Z  WARN 87 --- [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-22T21:11:36.119Z  INFO 87 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 Hibernate: 
     create table users (
         id uuid not null,
@@ -107,21 +106,21 @@ Hibernate:
 Hibernate: 
     alter table if exists users 
        add constraint idx_users_cpf unique (cpf)
-2026-06-22T20:22:00.042Z  INFO 90 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-06-22T20:22:01.242Z  INFO 90 --- [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2026-06-22T20:22:02.574Z  INFO 90 --- [           main] c.b.f.service.FaceBiometricsService      : Inicializando modelos DJL REAIS para detecção e reconhecimento facial (PyTorch)...
-2026-06-22T20:22:10.680Z  INFO 90 --- [           main] ai.djl.pytorch.jni.LibUtils              : Downloading https://publish.djl.ai/pytorch/2.2.2/cpu/linux-x86_64/native/lib/libc10.so.gz ...
-2026-06-22T20:22:10.772Z  INFO 90 --- [           main] ai.djl.pytorch.jni.LibUtils              : Downloading https://publish.djl.ai/pytorch/2.2.2/cpu/linux-x86_64/native/lib/libtorch_cpu.so.gz ...
-2026-06-22T20:22:20.061Z  INFO 90 --- [           main] ai.djl.pytorch.jni.LibUtils              : Downloading https://publish.djl.ai/pytorch/2.2.2/cpu/linux-x86_64/native/lib/libgomp-98b21ff3.so.1.gz ...
-2026-06-22T20:22:20.090Z  INFO 90 --- [           main] ai.djl.pytorch.jni.LibUtils              : Downloading https://publish.djl.ai/pytorch/2.2.2/cpu/linux-x86_64/native/lib/libtorch.so.gz ...
-2026-06-22T20:22:20.358Z  INFO 90 --- [           main] ai.djl.pytorch.jni.LibUtils              : Downloading jni https://publish.djl.ai/pytorch/2.2.2/jnilib/0.28.0/linux-x86_64/cpu/libdjl_torch.so to cache ...
-2026-06-22T20:22:20.698Z  INFO 90 --- [           main] ai.djl.pytorch.engine.PtEngine           : PyTorch graph executor optimizer is enabled, this may impact your inference latency and throughput. See: https://docs.djl.ai/docs/development/inference_performance_optimization.html#graph-executor-optimization
-2026-06-22T20:22:20.701Z  INFO 90 --- [           main] ai.djl.pytorch.engine.PtEngine           : Number of inter-op threads is 16
-2026-06-22T20:22:20.702Z  INFO 90 --- [           main] ai.djl.pytorch.engine.PtEngine           : Number of intra-op threads is 8
-2026-06-22T20:22:28.741Z  INFO 90 --- [           main] c.b.f.service.FaceBiometricsService      : Motor biométrico com Modelos Reais DJL (RetinaFace e FaceNet/PyTorch) carregados com sucesso!
-2026-06-22T20:22:29.525Z  WARN 90 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-06-22T20:22:31.193Z  INFO 90 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:faceregistry'
-2026-06-22T20:22:31.326Z  INFO 90 --- [           main] c.b.f.BiometricsVerificationTest         : Started BiometricsVerificationTest in 45.576 seconds (process running for 49.368)
+2026-06-22T21:11:36.445Z  INFO 87 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-22T21:11:37.858Z  INFO 87 --- [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-22T21:11:39.665Z  INFO 87 --- [           main] c.b.f.service.FaceBiometricsService      : Inicializando modelos DJL REAIS para detecção e reconhecimento facial (PyTorch)...
+2026-06-22T21:11:44.901Z  INFO 87 --- [           main] ai.djl.pytorch.jni.LibUtils              : Downloading https://publish.djl.ai/pytorch/2.2.2/cpu/linux-x86_64/native/lib/libc10.so.gz ...
+2026-06-22T21:11:44.969Z  INFO 87 --- [           main] ai.djl.pytorch.jni.LibUtils              : Downloading https://publish.djl.ai/pytorch/2.2.2/cpu/linux-x86_64/native/lib/libtorch_cpu.so.gz ...
+2026-06-22T21:11:50.871Z  INFO 87 --- [           main] ai.djl.pytorch.jni.LibUtils              : Downloading https://publish.djl.ai/pytorch/2.2.2/cpu/linux-x86_64/native/lib/libgomp-98b21ff3.so.1.gz ...
+2026-06-22T21:11:50.899Z  INFO 87 --- [           main] ai.djl.pytorch.jni.LibUtils              : Downloading https://publish.djl.ai/pytorch/2.2.2/cpu/linux-x86_64/native/lib/libtorch.so.gz ...
+2026-06-22T21:11:51.183Z  INFO 87 --- [           main] ai.djl.pytorch.jni.LibUtils              : Downloading jni https://publish.djl.ai/pytorch/2.2.2/jnilib/0.28.0/linux-x86_64/cpu/libdjl_torch.so to cache ...
+2026-06-22T21:11:51.550Z  INFO 87 --- [           main] ai.djl.pytorch.engine.PtEngine           : PyTorch graph executor optimizer is enabled, this may impact your inference latency and throughput. See: https://docs.djl.ai/docs/development/inference_performance_optimization.html#graph-executor-optimization
+2026-06-22T21:11:51.553Z  INFO 87 --- [           main] ai.djl.pytorch.engine.PtEngine           : Number of inter-op threads is 16
+2026-06-22T21:11:51.554Z  INFO 87 --- [           main] ai.djl.pytorch.engine.PtEngine           : Number of intra-op threads is 8
+2026-06-22T21:11:59.182Z  INFO 87 --- [           main] c.b.f.service.FaceBiometricsService      : Motor biométrico com Modelos Reais DJL (RetinaFace e FaceNet/PyTorch) carregados com sucesso!
+2026-06-22T21:12:00.087Z  WARN 87 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-22T21:12:01.971Z  INFO 87 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:faceregistry'
+2026-06-22T21:12:02.094Z  INFO 87 --- [           main] c.b.f.BiometricsVerificationTest         : Started BiometricsVerificationTest in 40.733 seconds (process running for 44.728)
 Hibernate: 
     select
         u1_0.id,
@@ -144,7 +143,7 @@ WARNING: If a serviceability tool is not in use, please run with -Djdk.instrumen
 WARNING: Dynamic loading of agents will be disallowed by default in a future release
 ]]></system-err>
   </testcase>
-  <testcase name="testBiometricsMatchAcrossCustomExamples" classname="com.batistell.faceregistry.BiometricsVerificationTest" time="12.416">
+  <testcase name="testBiometricsMatchAcrossCustomExamples" classname="com.batistell.faceregistry.BiometricsVerificationTest" time="12.708">
     <system-out><![CDATA[Hibernate: 
     select
         u1_0.id,

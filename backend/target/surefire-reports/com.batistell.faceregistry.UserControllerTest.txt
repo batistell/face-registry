@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.batistell.faceregistry.UserControllerTest
 -------------------------------------------------------------------------------
-Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.397 s -- in com.batistell.faceregistry.UserControllerTest
+Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.355 s -- in com.batistell.faceregistry.UserControllerTest

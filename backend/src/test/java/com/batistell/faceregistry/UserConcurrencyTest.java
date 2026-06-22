@@ -46,7 +46,7 @@ public class UserConcurrencyTest {
     @Test
     public void testConcurrentUpdatesOnSameUser() throws InterruptedException, ExecutionException {
         // First register the user
-        String cpf = "99999999999";
+        String cpf = "83992409821";
         userService.createUser(cpf, "Original Name", tinyPngBytes, "face.png");
 
         int numThreads = 10;
@@ -75,7 +75,7 @@ public class UserConcurrencyTest {
 
     @Test
     public void testConcurrentRegistrationDuplicateCpf() throws InterruptedException {
-        String cpf = "88888888888";
+        String cpf = "13859287605";
         int numThreads = 5;
         ExecutorService executor = Executors.newFixedThreadPool(numThreads);
         CountDownLatch latch = new CountDownLatch(1);
