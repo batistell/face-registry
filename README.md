@@ -98,13 +98,34 @@ Os arquivos estão nomeados contendo o nome e o CPF cadastrado da respectiva cel
 ### Requisitos Prévios
 - Docker e Docker Compose instalados.
 
-### Inicialização Rápida
-Execute o comando na raiz do projeto para compilar o backend, buildar o frontend Angular e subir o banco de dados PostgreSQL automaticamente:
-```bash
-docker compose up --build
-```
+### Opção A: Executar usando os arquivos pré-compilados (`.tar`) [Recomendado]
+Se você possui os arquivos `.tar` exportados na raiz do projeto, você pode importar as imagens diretamente para o seu daemon do Docker local (evitando o tempo de compilação do Angular/Maven):
 
-Após o build e a inicialização de todos os containers da stack:
+1. **Importar as imagens salvadas**:
+   ```bash
+   docker load -i face-registry-backend.tar
+   docker load -i face-registry-frontend.tar
+   ```
+
+2. **Iniciar a stack do Docker Compose**:
+   ```bash
+   docker compose up -d
+   ```
+
+---
+
+### Opção B: Compilar e Executar a partir do Código Fonte
+Caso queira compilar a aplicação localmente e gerar novas imagens Docker a partir dos fontes:
+
+1. **Buildar e rodar o ambiente**:
+   ```bash
+   docker compose up --build -d
+   ```
+
+---
+
+### 🌐 Acesso à Aplicação
+Após a inicialização (seja via Opção A ou B):
 - **Painel Frontend (Nginx/HTTPS):** Disponível em [https://localhost:8000/face-registry/](https://localhost:8000/face-registry/)
 - **Documentação REST API (Swagger UI):** Disponível em [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
-- **API REST Backend:** Rodando localmente na porta `8080` (ex: [http://localhost:8080/api/users](http://localhost:8080/api/users)).
+- **API REST Backend:** Rodando na porta `8080` (ex: [http://localhost:8080/api/users](http://localhost:8080/api/users)).
