@@ -20,7 +20,6 @@ import ai.djl.modality.cv.Image;
 import ai.djl.modality.cv.ImageFactory;
 import ai.djl.modality.cv.output.BoundingBox;
 import ai.djl.modality.cv.output.DetectedObjects;
-import ai.djl.modality.cv.translator.ImageFeatureExtractorFactory;
 import ai.djl.repository.zoo.Criteria;
 import ai.djl.repository.zoo.ModelZoo;
 import ai.djl.repository.zoo.ZooModel;
@@ -53,19 +52,41 @@ public class FaceBiometricsService {
             log.info("Inicializando modelos DJL REAIS para detecção e reconhecimento facial (PyTorch)...");
             
             // Critérios para detecção facial (RetinaFace do PyTorch Model Zoo)
+            double confThresh = 0.85f;
+            double nmsThresh = 0.45f;
+            double[] variance = {0.1f, 0.2f};
+            int topK = 5000;
+            int[][] scales = {{16, 32}, {64, 128}, {256, 512}};
+            int[] steps = {8, 16, 32};
+            FaceDetectionTranslator translator =
+                    new FaceDetectionTranslator(confThresh, nmsThresh, variance, topK, scales, steps);
+
             Criteria<Image, DetectedObjects> detectionCriteria = Criteria.builder()
                     .setTypes(Image.class, DetectedObjects.class)
-                    .optModelUrls("djl://ai.djl.zoo/retinaface/0.0.1")
+                    .optModelUrls("https://resources.djl.ai/test-models/pytorch/retinaface.zip")
+                    .optModelName("retinaface") // specify model file prefix
+                    .optTranslator(translator)
                     .optEngine("PyTorch")
                     .build();
             
             // Critérios para extração de embedding (FaceNet/ArcFace do PyTorch Model Zoo)
+            java.util.List<Float> meanList = java.util.Arrays.asList(
+                    127.5f / 255.0f,
+                    127.5f / 255.0f,
+                    127.5f / 255.0f,
+                    128.0f / 255.0f,
+                    128.0f / 255.0f,
+                    128.0f / 255.0f);
+            String normalize = meanList.stream().map(Object::toString).collect(java.util.stream.Collectors.joining(","));
+
+            FaceFeatureTranslator recognitionTranslator = new FaceFeatureTranslator();
+
             Criteria<Image, float[]> recognitionCriteria = Criteria.builder()
                     .setTypes(Image.class, float[].class)
                     .optModelUrls("https://resources.djl.ai/test-models/pytorch/face_feature.zip")
                     .optModelName("face_feature")
                     .optEngine("PyTorch")
-                    .optTranslatorFactory(new ImageFeatureExtractorFactory())
+                    .optTranslator(recognitionTranslator)
                     .build();
 
             this.detectionModel = ModelZoo.loadModel(detectionCriteria);

@@ -1,8 +1,10 @@
+/app/src/main/java/com/batistell/faceregistry/service/FaceFeatureTranslator.java
 /app/src/main/java/com/batistell/faceregistry/dto/UserDTOs.java
 /app/src/main/java/com/batistell/faceregistry/FaceRegistryApplication.java
 /app/src/main/java/com/batistell/faceregistry/service/UserService.java
 /app/src/main/java/com/batistell/faceregistry/service/FaceBiometricsService.java
 /app/src/main/java/com/batistell/faceregistry/model/User.java
+/app/src/main/java/com/batistell/faceregistry/service/FaceDetectionTranslator.java
 /app/src/main/java/com/batistell/faceregistry/exception/GlobalExceptionHandler.java
 /app/src/main/java/com/batistell/faceregistry/controller/UserController.java
 /app/src/main/java/com/batistell/faceregistry/exception/CustomExceptions.java

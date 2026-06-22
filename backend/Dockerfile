@@ -1,5 +1,5 @@
 # Use Maven to build the project
-FROM maven:3.9.6-eclipse-temurin-21-alpine AS builder
+FROM maven:3.9.6-eclipse-temurin-21 AS builder
 
 WORKDIR /app
 
@@ -13,7 +13,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Use a JRE 21 image for the runtime
-FROM eclipse-temurin:21-jre-alpine
+FROM eclipse-temurin:21-jre
 
 WORKDIR /root/
 
