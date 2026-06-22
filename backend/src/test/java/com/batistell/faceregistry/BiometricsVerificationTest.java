@@ -91,4 +91,50 @@ public class BiometricsVerificationTest {
             assertTrue(isMatch, "Photo " + photoPath + " should match the registered user (similarity: " + similarity + ", threshold: " + faceBiometricsService.getThreshold() + ")");
         }
     }
+
+    @Test
+    public void testBiometricsMatchFamousPeople() throws Exception {
+        Object[][] famousPairs = {
+            {"Barack Obama", "22222222222", "examples/obama1.jpg", "examples/obama2.jpg", 0.60},
+            {"Joe Biden", "33333333333", "examples/biden.jpg", "examples/biden1.jpg", 0.60},
+            {"Elon Musk", "55555555555", "examples/musk1.jpg", "examples/musk2.jpg", 0.60},
+            {"Lionel Messi", "66666666666", "examples/messi1.jpg", "examples/messi2.jpg", 0.60},
+            {"Kana", "11111111111", "examples/kana1.jpg", "examples/kana2.jpg", 0.50}
+        };
+
+        for (Object[] pair : famousPairs) {
+            String name = (String) pair[0];
+            String cpf = (String) pair[1];
+            String photo1Path = (String) pair[2];
+            String photo2Path = (String) pair[3];
+            double expectedThreshold = (Double) pair[4];
+
+            byte[] photo1Bytes;
+            try (InputStream is = getClass().getClassLoader().getResourceAsStream(photo1Path)) {
+                assertNotNull(is, "Photo 1 not found in classpath: " + photo1Path);
+                photo1Bytes = is.readAllBytes();
+            }
+
+            byte[] photo2Bytes;
+            try (InputStream is = getClass().getClassLoader().getResourceAsStream(photo2Path)) {
+                assertNotNull(is, "Photo 2 not found in classpath: " + photo2Path);
+                photo2Bytes = is.readAllBytes();
+            }
+
+            float[] emb1 = faceBiometricsService.extractFaceEmbedding(photo1Bytes, photo1Path);
+            float[] emb2 = faceBiometricsService.extractFaceEmbedding(photo2Bytes, photo2Path);
+
+            assertNotNull(emb1);
+            assertNotNull(emb2);
+            assertEquals(512, emb1.length);
+            assertEquals(512, emb2.length);
+
+            double similarity = faceBiometricsService.calculateCosineSimilarity(emb1, emb2);
+            boolean isMatch = similarity >= expectedThreshold;
+
+            System.out.println("Famous Person Match [" + name + "]: similarity = " + similarity + ", expectedThreshold = " + expectedThreshold + ", isMatch = " + isMatch);
+
+            assertTrue(isMatch, "Photos for " + name + " should match (similarity: " + similarity + ", expected threshold: " + expectedThreshold + ")");
+        }
+    }
 }

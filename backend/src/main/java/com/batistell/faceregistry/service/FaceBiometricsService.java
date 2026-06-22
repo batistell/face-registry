@@ -127,10 +127,10 @@ public class FaceBiometricsService {
             
             int faceCount = detections.getNumberOfObjects();
             if (faceCount == 0) {
-                throw new NoFaceDetectedException("Nenhum rosto foi detectado na imagem.");
+                throw new NoFaceDetectedException("Nenhum rosto foi detectado na imagem. Certifique-se de que a foto está bem iluminada, o rosto está de frente e centralizado, e remova acessórios como óculos escuros, bonés ou máscaras.");
             }
             if (faceCount > 1) {
-                throw new MultipleFacesDetectedException("Múltiplos rostos detectados (" + faceCount + "). Envie uma foto com apenas 1 rosto.");
+                throw new MultipleFacesDetectedException("Múltiplos rostos detectados (" + faceCount + "). Envie uma foto com apenas 1 rosto visível.");
             }
 
             // Recorta o primeiro rosto detectado
@@ -138,6 +138,21 @@ public class FaceBiometricsService {
             DetectedObjects.DetectedObject face = (DetectedObjects.DetectedObject) classification;
             BoundingBox box = face.getBoundingBox();
             ai.djl.modality.cv.output.Rectangle rect = box.getBounds();
+            
+            // Validações adicionais de enquadramento e tamanho
+            double faceRatioW = rect.getWidth();
+            double faceRatioH = rect.getHeight();
+            if (faceRatioW < 0.15 || faceRatioH < 0.15) {
+                throw new InvalidImageException("O rosto detectado está muito pequeno ou distante. Aproxime-se mais da câmera ou reenquadre a foto.");
+            }
+
+            double xMin = rect.getX();
+            double yMin = rect.getY();
+            double xMax = xMin + rect.getWidth();
+            double yMax = yMin + rect.getHeight();
+            if (xMin < 0.02 || yMin < 0.02 || xMax > 0.98 || yMax > 0.98) {
+                throw new InvalidImageException("O rosto está muito próximo das bordas ou parcialmente cortado. Centralize o rosto e deixe uma margem ao redor da cabeça.");
+            }
             
             int x = Math.max(0, (int) (rect.getX() * image.getWidth()));
             int y = Math.max(0, (int) (rect.getY() * image.getHeight()));
@@ -147,6 +162,8 @@ public class FaceBiometricsService {
             Image croppedFace = image.getSubImage(x, y, w, h);
             return recognizer.predict(croppedFace);
 
+        } catch (NoFaceDetectedException | MultipleFacesDetectedException | InvalidImageException e) {
+            throw e;
         } catch (Exception e) {
             log.error("Erro no pipeline de IA da DJL: {}", e.getMessage(), e);
             // Em caso de qualquer erro de execução de IA real (ex: falta de memória), usamos o fallback mock

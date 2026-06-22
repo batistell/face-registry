@@ -39,4 +39,11 @@ public class CustomExceptions {
             super(message);
         }
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public static class InvalidCpfException extends RuntimeException {
+        public InvalidCpfException(String message) {
+            super(message);
+        }
+    }
 }
