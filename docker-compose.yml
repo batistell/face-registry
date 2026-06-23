@@ -19,6 +19,7 @@ services:
       retries: 5
 
   backend:
+    image: ghcr.io/batistell/face-registry/backend:latest
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -50,6 +51,7 @@ services:
         condition: service_healthy
 
   frontend:
+    image: ghcr.io/batistell/face-registry/frontend:latest
     build:
       context: ./frontend
       dockerfile: Dockerfile
