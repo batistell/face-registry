@@ -92,6 +92,7 @@ export class AppComponent implements OnInit, OnDestroy {
   webcamStream: MediaStream | null = null;
   webcamTarget: 'form' | 'verify' | 'identify' | number | null = null;
   webcamError = '';
+  webcamZoom = 1.0;
 
   // Zoom & Pan State for Previews
   zoomState = {
@@ -365,6 +366,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.webcamTarget = target;
     this.isWebcamActive = true;
     this.webcamError = '';
+    this.webcamZoom = 1.0;
 
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
       this.webcamError = 'Câmera indisponível. Para usar a câmera, acesse este site através de uma conexão segura (HTTPS).';
@@ -391,12 +393,21 @@ export class AppComponent implements OnInit, OnDestroy {
     if (!video) return;
 
     const canvas = document.createElement('canvas');
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
+    const videoWidth = video.videoWidth;
+    const videoHeight = video.videoHeight;
+    const S = this.webcamZoom || 1.0;
+
+    const subWidth = videoWidth / S;
+    const subHeight = videoHeight / S;
+    const sx = (videoWidth - subWidth) / 2;
+    const sy = (videoHeight - subHeight) / 2;
+
+    canvas.width = subWidth;
+    canvas.height = subHeight;
 
     const ctx = canvas.getContext('2d');
     if (ctx) {
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      ctx.drawImage(video, sx, sy, subWidth, subHeight, 0, 0, subWidth, subHeight);
       const dataUrl = canvas.toDataURL('image/jpeg');
 
       // Converte dataUrl base64 para arquivo binário
@@ -419,6 +430,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
     this.isWebcamActive = false;
     this.webcamTarget = null;
+    this.webcamZoom = 1.0;
   }
 
   toggleSidebar() {
