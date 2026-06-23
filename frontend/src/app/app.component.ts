@@ -93,6 +93,17 @@ export class AppComponent implements OnInit, OnDestroy {
   webcamTarget: 'form' | 'verify' | 'identify' | number | null = null;
   webcamError = '';
 
+  // Zoom & Pan State for Previews
+  zoomState = {
+    form: { zoom: 1, panX: 0, panY: 0, originalFile: null as File | null, originalUrl: null as string | null },
+    verify: { zoom: 1, panX: 0, panY: 0, originalFile: null as File | null, originalUrl: null as string | null },
+    identify: { zoom: 1, panX: 0, panY: 0, originalFile: null as File | null, originalUrl: null as string | null }
+  };
+
+  isDragging = false;
+  dragStart = { x: 0, y: 0 };
+  dragTarget: 'form' | 'verify' | 'identify' | null = null;
+
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
@@ -121,7 +132,7 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
-  saveUser() {
+  async saveUser() {
     if (!this.userForm.name.trim()) return this.showError('O nome é obrigatório.');
     if (!this.isEditMode) {
       if (!this.userForm.cpf.trim()) return this.showError('O CPF é obrigatório.');
@@ -138,7 +149,14 @@ export class AppComponent implements OnInit, OnDestroy {
     formData.append('name', this.userForm.name);
 
     if (this.userForm.photoFile) {
-      formData.append('photo', this.userForm.photoFile);
+      try {
+        const processedPhoto = await this.getProcessedFile('form');
+        formData.append('photo', processedPhoto);
+      } catch (e) {
+        this.showError('Erro ao processar imagem para envio.');
+        this.isActionLoading = false;
+        return;
+      }
     }
 
     if (this.isEditMode) {
@@ -237,7 +255,7 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
-  verifyFace() {
+  async verifyFace() {
     if (!this.verifyForm.cpf.trim()) return this.showError('Insira o CPF do usuário a ser verificado.');
     if (!this.isValidCpf(this.verifyForm.cpf)) return this.showError('CPF do usuário alvo inválido. Insira um CPF válido com 11 dígitos.');
     this.verifyForm.cpf = this.verifyForm.cpf.replace(/\D/g, '');
@@ -249,7 +267,15 @@ export class AppComponent implements OnInit, OnDestroy {
 
     const formData = new FormData();
     formData.append('cpf', this.verifyForm.cpf);
-    formData.append('photo', this.verifyForm.photoFile);
+    
+    try {
+      const processedPhoto = await this.getProcessedFile('verify');
+      formData.append('photo', processedPhoto);
+    } catch (e) {
+      this.showError('Erro ao processar imagem para verificação.');
+      this.isActionLoading = false;
+      return;
+    }
 
     this.http.post<VerificationResponse>(`${this.apiUrl}/verify`, formData).subscribe({
       next: (res) => {
@@ -263,7 +289,7 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
-  identifyFace() {
+  async identifyFace() {
     if (!this.identifyForm.photoFile) return this.showError('Faça o upload ou capture a foto para identificação.');
 
     this.isActionLoading = true;
@@ -271,7 +297,15 @@ export class AppComponent implements OnInit, OnDestroy {
     this.identifyResult = null;
 
     const formData = new FormData();
-    formData.append('photo', this.identifyForm.photoFile);
+    
+    try {
+      const processedPhoto = await this.getProcessedFile('identify');
+      formData.append('photo', processedPhoto);
+    } catch (e) {
+      this.showError('Erro ao processar imagem para identificação.');
+      this.isActionLoading = false;
+      return;
+    }
 
     this.http.post<IdentificationResponse>(`${this.apiUrl}/identify`, formData).subscribe({
       next: (res) => {
@@ -308,12 +342,15 @@ export class AppComponent implements OnInit, OnDestroy {
       if (target === 'form') {
         this.userForm.photoFile = file;
         this.userForm.previewUrl = url;
+        this.resetZoomState('form', file, url);
       } else if (target === 'verify') {
         this.verifyForm.photoFile = file;
         this.verifyForm.previewUrl = url;
+        this.resetZoomState('verify', file, url);
       } else if (target === 'identify') {
         this.identifyForm.photoFile = file;
         this.identifyForm.previewUrl = url;
+        this.resetZoomState('identify', file, url);
       } else if (typeof target === 'number') {
         this.batchList[target].photoFile = file;
         this.batchList[target].previewUrl = url;
@@ -415,12 +452,15 @@ export class AppComponent implements OnInit, OnDestroy {
   editUser(user: UserResponse) {
     this.changeTab('form');
     this.isEditMode = true;
+    const file = this.base64ToFile(user.photoBase64, 'foto_atual.jpg');
+    const url = 'data:image/jpeg;base64,' + user.photoBase64;
     this.userForm = {
       cpf: user.cpf,
       name: user.name,
-      photoFile: null,
-      previewUrl: 'data:image/jpeg;base64,' + user.photoBase64
+      photoFile: file,
+      previewUrl: url
     };
+    this.resetZoomState('form', file, url);
   }
 
   resetForm() {
@@ -509,6 +549,155 @@ export class AppComponent implements OnInit, OnDestroy {
     rev = 11 - (sum % 11);
     if (rev === 10 || rev === 11) rev = 0;
     return parseInt(cleanCpf.charAt(10)) === rev;
+  }
+
+  // --- Funções de Manipulação de Zoom e Pan ---
+
+  resetZoomState(target: 'form' | 'verify' | 'identify', file: File, url: string) {
+    this.zoomState[target] = {
+      zoom: 1,
+      panX: 0,
+      panY: 0,
+      originalFile: file,
+      originalUrl: url
+    };
+  }
+
+  clearZoomState(target: 'form' | 'verify' | 'identify') {
+    this.zoomState[target] = {
+      zoom: 1,
+      panX: 0,
+      panY: 0,
+      originalFile: null,
+      originalUrl: null
+    };
+  }
+
+  onZoomChange(target: 'form' | 'verify' | 'identify') {
+    if (this.zoomState[target].zoom === 1) {
+      this.zoomState[target].panX = 0;
+      this.zoomState[target].panY = 0;
+    }
+  }
+
+  startDrag(event: MouseEvent | TouchEvent, target: 'form' | 'verify' | 'identify') {
+    if (this.zoomState[target].zoom <= 1) return;
+    event.preventDefault();
+    this.isDragging = true;
+    this.dragTarget = target;
+    const clientX = event instanceof MouseEvent ? event.clientX : event.touches[0].clientX;
+    const clientY = event instanceof MouseEvent ? event.clientY : event.touches[0].clientY;
+    this.dragStart = {
+      x: clientX - this.zoomState[target].panX,
+      y: clientY - this.zoomState[target].panY
+    };
+  }
+
+  onDrag(event: MouseEvent | TouchEvent) {
+    if (!this.isDragging || !this.dragTarget) return;
+    event.preventDefault();
+    const clientX = event instanceof MouseEvent ? event.clientX : event.touches[0].clientX;
+    const clientY = event instanceof MouseEvent ? event.clientY : event.touches[0].clientY;
+    
+    // Simple boundary clamping to keep image visible
+    const zoom = this.zoomState[this.dragTarget].zoom;
+    const maxPan = 150 * (zoom - 1);
+    
+    let newPanX = clientX - this.dragStart.x;
+    let newPanY = clientY - this.dragStart.y;
+    
+    newPanX = Math.max(-maxPan, Math.min(maxPan, newPanX));
+    newPanY = Math.max(-maxPan, Math.min(maxPan, newPanY));
+    
+    this.zoomState[this.dragTarget].panX = newPanX;
+    this.zoomState[this.dragTarget].panY = newPanY;
+  }
+
+  endDrag() {
+    this.isDragging = false;
+    this.dragTarget = null;
+  }
+
+  base64ToFile(base64Str: string, filename: string): File {
+    const byteString = atob(base64Str);
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([ab], { type: 'image/jpeg' });
+    return new File([blob], filename, { type: 'image/jpeg' });
+  }
+
+  getProcessedFile(target: 'form' | 'verify' | 'identify'): Promise<File> {
+    const state = this.zoomState[target];
+    const file = target === 'form' ? this.userForm.photoFile :
+                 target === 'verify' ? this.verifyForm.photoFile :
+                 this.identifyForm.photoFile;
+
+    if (!file || !state.originalUrl || (state.zoom === 1 && state.panX === 0 && state.panY === 0)) {
+      return Promise.resolve(file!);
+    }
+
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.src = state.originalUrl!;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const W_i = img.naturalWidth;
+        const H_i = img.naturalHeight;
+
+        const S = state.zoom;
+        const W_sub = W_i / S;
+        const H_sub = H_i / S;
+
+        const containerWidth = 400;
+        const containerHeight = 300;
+
+        const imgRatio = W_i / H_i;
+        const containerRatio = containerWidth / containerHeight;
+
+        let displayWidth = containerWidth;
+        let displayHeight = containerHeight;
+
+        if (imgRatio > containerRatio) {
+          displayHeight = containerWidth / imgRatio;
+        } else {
+          displayWidth = containerHeight * imgRatio;
+        }
+
+        const scaleDisplay = displayWidth / W_i;
+
+        let x_crop = (W_i / 2) * (1 - 1 / S) - state.panX / (scaleDisplay * S);
+        let y_crop = (H_i / 2) * (1 - 1 / S) - state.panY / (scaleDisplay * S);
+
+        x_crop = Math.max(0, Math.min(x_crop, W_i - W_sub));
+        y_crop = Math.max(0, Math.min(y_crop, H_i - H_sub));
+
+        canvas.width = W_sub;
+        canvas.height = H_sub;
+
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          resolve(file);
+          return;
+        }
+
+        ctx.drawImage(img, x_crop, y_crop, W_sub, H_sub, 0, 0, W_sub, H_sub);
+
+        canvas.toBlob((blob) => {
+          if (blob) {
+            const croppedFile = new File([blob], file.name, { type: file.type });
+            resolve(croppedFile);
+          } else {
+            resolve(file);
+          }
+        }, file.type, 0.95);
+      };
+      img.onerror = () => {
+        resolve(file);
+      };
+    });
   }
 }
 

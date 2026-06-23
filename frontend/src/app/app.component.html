@@ -217,12 +217,45 @@
 
           <!-- Preview da Imagem Selecionada -->
           <div class="preview-box" *ngIf="userForm.previewUrl">
-            <img [src]="userForm.previewUrl" alt="Preview da Foto" class="preview-img">
+            <img 
+              [src]="userForm.previewUrl" 
+              alt="Preview da Foto" 
+              class="preview-img zoomable-img"
+              draggable="false"
+              [style.transform]="'translate(' + zoomState.form.panX + 'px, ' + zoomState.form.panY + 'px) scale(' + zoomState.form.zoom + ')'"
+              [style.cursor]="zoomState.form.zoom > 1 ? 'grab' : 'default'"
+              (mousedown)="startDrag($event, 'form')"
+              (mousemove)="onDrag($event)"
+              (mouseup)="endDrag()"
+              (mouseleave)="endDrag()"
+              (touchstart)="startDrag($event, 'form')"
+              (touchmove)="onDrag($event)"
+              (touchend)="endDrag()">
             <div class="preview-overlay">
-              <button class="btn btn-danger btn-sm" (click)="userForm.previewUrl = null; userForm.photoFile = null" [disabled]="isActionLoading">
+              <button class="btn btn-danger btn-sm" (click)="userForm.previewUrl = null; userForm.photoFile = null; clearZoomState('form')" [disabled]="isActionLoading">
                 <i class="fa-solid fa-trash"></i> Remover Foto
               </button>
             </div>
+          </div>
+
+          <!-- Controle de Zoom -->
+          <div class="zoom-slider-container" *ngIf="userForm.previewUrl">
+            <div class="zoom-slider-bar">
+              <i class="fa-solid fa-magnifying-glass-minus"></i>
+              <input 
+                type="range" 
+                min="1" 
+                max="4" 
+                step="0.05" 
+                [(ngModel)]="zoomState.form.zoom" 
+                class="zoom-input"
+                (ngModelChange)="onZoomChange('form')">
+              <i class="fa-solid fa-magnifying-glass-plus"></i>
+              <span class="zoom-badge">{{ zoomState.form.zoom | number:'1.1-2' }}x</span>
+            </div>
+            <p class="zoom-tip" *ngIf="zoomState.form.zoom > 1">
+              <i class="fa-solid fa-arrows-up-down-left-right"></i> Arraste a imagem para enquadrar o rosto
+            </p>
           </div>
 
           <div class="upload-instructions">
@@ -382,12 +415,45 @@
 
           <!-- Preview da Foto -->
           <div class="preview-box min-height-upload" *ngIf="verifyForm.previewUrl">
-            <img [src]="verifyForm.previewUrl" alt="Foto Verificação" class="preview-img">
+            <img 
+              [src]="verifyForm.previewUrl" 
+              alt="Foto Verificação" 
+              class="preview-img zoomable-img"
+              draggable="false"
+              [style.transform]="'translate(' + zoomState.verify.panX + 'px, ' + zoomState.verify.panY + 'px) scale(' + zoomState.verify.zoom + ')'"
+              [style.cursor]="zoomState.verify.zoom > 1 ? 'grab' : 'default'"
+              (mousedown)="startDrag($event, 'verify')"
+              (mousemove)="onDrag($event)"
+              (mouseup)="endDrag()"
+              (mouseleave)="endDrag()"
+              (touchstart)="startDrag($event, 'verify')"
+              (touchmove)="onDrag($event)"
+              (touchend)="endDrag()">
             <div class="preview-overlay">
-              <button class="btn btn-danger btn-sm" (click)="verifyForm.previewUrl = null; verifyForm.photoFile = null" [disabled]="isActionLoading">
+              <button class="btn btn-danger btn-sm" (click)="verifyForm.previewUrl = null; verifyForm.photoFile = null; clearZoomState('verify')" [disabled]="isActionLoading">
                 <i class="fa-solid fa-trash"></i> Remover
               </button>
             </div>
+          </div>
+
+          <!-- Controle de Zoom -->
+          <div class="zoom-slider-container" *ngIf="verifyForm.previewUrl">
+            <div class="zoom-slider-bar">
+              <i class="fa-solid fa-magnifying-glass-minus"></i>
+              <input 
+                type="range" 
+                min="1" 
+                max="4" 
+                step="0.05" 
+                [(ngModel)]="zoomState.verify.zoom" 
+                class="zoom-input"
+                (ngModelChange)="onZoomChange('verify')">
+              <i class="fa-solid fa-magnifying-glass-plus"></i>
+              <span class="zoom-badge">{{ zoomState.verify.zoom | number:'1.1-2' }}x</span>
+            </div>
+            <p class="zoom-tip" *ngIf="zoomState.verify.zoom > 1">
+              <i class="fa-solid fa-arrows-up-down-left-right"></i> Arraste a imagem para enquadrar o rosto
+            </p>
           </div>
 
           <button class="btn btn-primary btn-full margin-top-md" (click)="verifyFace()" [disabled]="isActionLoading">
@@ -493,12 +559,45 @@
 
           <!-- Preview da Foto -->
           <div class="preview-box min-height-upload" *ngIf="identifyForm.previewUrl">
-            <img [src]="identifyForm.previewUrl" alt="Foto Identificação" class="preview-img">
+            <img 
+              [src]="identifyForm.previewUrl" 
+              alt="Foto Identificação" 
+              class="preview-img zoomable-img"
+              draggable="false"
+              [style.transform]="'translate(' + zoomState.identify.panX + 'px, ' + zoomState.identify.panY + 'px) scale(' + zoomState.identify.zoom + ')'"
+              [style.cursor]="zoomState.identify.zoom > 1 ? 'grab' : 'default'"
+              (mousedown)="startDrag($event, 'identify')"
+              (mousemove)="onDrag($event)"
+              (mouseup)="endDrag()"
+              (mouseleave)="endDrag()"
+              (touchstart)="startDrag($event, 'identify')"
+              (touchmove)="onDrag($event)"
+              (touchend)="endDrag()">
             <div class="preview-overlay">
-              <button class="btn btn-danger btn-sm" (click)="identifyForm.previewUrl = null; identifyForm.photoFile = null" [disabled]="isActionLoading">
+              <button class="btn btn-danger btn-sm" (click)="identifyForm.previewUrl = null; identifyForm.photoFile = null; clearZoomState('identify')" [disabled]="isActionLoading">
                 <i class="fa-solid fa-trash"></i> Remover
               </button>
             </div>
+          </div>
+
+          <!-- Controle de Zoom -->
+          <div class="zoom-slider-container" *ngIf="identifyForm.previewUrl">
+            <div class="zoom-slider-bar">
+              <i class="fa-solid fa-magnifying-glass-minus"></i>
+              <input 
+                type="range" 
+                min="1" 
+                max="4" 
+                step="0.05" 
+                [(ngModel)]="zoomState.identify.zoom" 
+                class="zoom-input"
+                (ngModelChange)="onZoomChange('identify')">
+              <i class="fa-solid fa-magnifying-glass-plus"></i>
+              <span class="zoom-badge">{{ zoomState.identify.zoom | number:'1.1-2' }}x</span>
+            </div>
+            <p class="zoom-tip" *ngIf="zoomState.identify.zoom > 1">
+              <i class="fa-solid fa-arrows-up-down-left-right"></i> Arraste a imagem para enquadrar o rosto
+            </p>
           </div>
 
           <button class="btn btn-primary btn-full margin-top-md" (click)="identifyFace()" [disabled]="isActionLoading">
