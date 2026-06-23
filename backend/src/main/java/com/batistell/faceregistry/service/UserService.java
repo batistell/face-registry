@@ -8,7 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Comparator;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 @Slf4j
 @Service
@@ -27,6 +29,40 @@ public class UserService {
 
     // Executor usando Virtual Threads para alta performance e concorrência no processamento de imagens
     private final Executor virtualThreadExecutor = Executors.newVirtualThreadPerTaskExecutor();
+
+    // Cache biométrico em memória para alta performance (1:n e verificação)
+    private final List<UserCacheItem> userBiometricCache = new ArrayList<>();
+    private final ReentrantReadWriteLock cacheLock = new ReentrantReadWriteLock();
+
+    private record UserCacheItem(java.util.UUID id, String cpf, String name, float[] embedding) {}
+
+    @jakarta.annotation.PostConstruct
+    public void initCache() {
+        log.info("Inicializando cache biométrico em memória...");
+        List<com.batistell.faceregistry.dto.UserLightweight> lightUsers = userRepository.findAllLightweight();
+        cacheLock.writeLock().lock();
+        try {
+            userBiometricCache.clear();
+            for (com.batistell.faceregistry.dto.UserLightweight lu : lightUsers) {
+                float[] embedding = parseEmbedding(lu.embeddingString());
+                embedding = faceBiometricsService.normalize(embedding);
+                userBiometricCache.add(new UserCacheItem(lu.id(), lu.cpf(), lu.name(), embedding));
+            }
+            log.info("Cache biométrico inicializado com {} usuários.", userBiometricCache.size());
+        } finally {
+            cacheLock.writeLock().unlock();
+        }
+    }
+
+    private float[] parseEmbedding(String embStr) {
+        if (embStr == null || embStr.isEmpty()) return null;
+        String[] parts = embStr.split(";");
+        float[] emb = new float[parts.length];
+        for (int i = 0; i < parts.length; i++) {
+            emb[i] = Float.parseFloat(parts[i]);
+        }
+        return emb;
+    }
 
     /**
      * Cadastra um novo usuário no banco com biometria calculada.
@@ -49,6 +85,15 @@ public class UserService {
         user.setEmbedding(embedding);
 
         User saved = userRepository.save(user);
+
+        // Atualiza cache em memória
+        cacheLock.writeLock().lock();
+        try {
+            userBiometricCache.add(new UserCacheItem(saved.getId(), saved.getCpf(), saved.getName(), saved.getEmbedding()));
+        } finally {
+            cacheLock.writeLock().unlock();
+        }
+
         return toResponse(saved);
     }
 
@@ -74,6 +119,16 @@ public class UserService {
         }
 
         User saved = userRepository.save(user);
+
+        // Atualiza cache em memória
+        cacheLock.writeLock().lock();
+        try {
+            userBiometricCache.removeIf(item -> item.cpf().equals(cleanCpf));
+            userBiometricCache.add(new UserCacheItem(saved.getId(), saved.getCpf(), saved.getName(), saved.getEmbedding()));
+        } finally {
+            cacheLock.writeLock().unlock();
+        }
+
         return toResponse(saved);
     }
 
@@ -86,6 +141,14 @@ public class UserService {
         User user = userRepository.findByCpf(cleanCpf)
                 .orElseThrow(() -> new UserNotFoundException("Usuário com CPF " + cleanCpf + " não encontrado."));
         userRepository.delete(user);
+
+        // Remove do cache em memória
+        cacheLock.writeLock().lock();
+        try {
+            userBiometricCache.removeIf(item -> item.cpf().equals(cleanCpf));
+        } finally {
+            cacheLock.writeLock().unlock();
+        }
     }
 
     /**
@@ -100,11 +163,12 @@ public class UserService {
     }
 
     /**
-     * Lista todos os usuários cadastrados.
+     * Lista todos os usuários cadastrados (limitando a 100 para evitar OOM com 1 milhão de usuários).
      */
     @Transactional(readOnly = true)
     public List<UserResponse> getAllUsers() {
         return userRepository.findAll().stream()
+                .limit(100)
                 .map(this::toResponse)
                 .toList();
     }
@@ -171,68 +235,147 @@ public class UserService {
         // Salva todos no banco de forma atômica (se der erro em um, o Spring rola de volta a transação inteira)
         List<User> saved = userRepository.saveAll(usersToSave);
         log.info("Lote de {} cadastros persistido com sucesso.", saved.size());
+
+        // Atualiza cache em memória
+        cacheLock.writeLock().lock();
+        try {
+            for (User u : saved) {
+                userBiometricCache.removeIf(item -> item.cpf().equals(u.getCpf()));
+                userBiometricCache.add(new UserCacheItem(u.getId(), u.getCpf(), u.getName(), u.getEmbedding()));
+            }
+        } finally {
+            cacheLock.writeLock().unlock();
+        }
         
         return saved.stream().map(this::toResponse).toList();
     }
 
     /**
-     * Verificação facial 1:1.
+     * Verificação facial 1:1 otimizada usando cache.
      */
     @Transactional(readOnly = true)
     public VerificationResponse verifyFace(String cpf, byte[] photoBytes, String filename) {
         String cleanCpf = cleanAndValidateCpf(cpf);
-        User user = userRepository.findByCpf(cleanCpf)
-                .orElseThrow(() -> new UserNotFoundException("Usuário com CPF " + cleanCpf + " não cadastrado."));
-
         float[] targetEmbedding = faceBiometricsService.extractFaceEmbedding(photoBytes, filename);
-        float[] storedEmbedding = user.getEmbedding();
+        
+        UserCacheItem cachedUser = null;
+        cacheLock.readLock().lock();
+        try {
+            for (UserCacheItem item : userBiometricCache) {
+                if (item.cpf().equals(cleanCpf)) {
+                    cachedUser = item;
+                    break;
+                }
+            }
+        } finally {
+            cacheLock.readLock().unlock();
+        }
 
-        double similarity = faceBiometricsService.calculateCosineSimilarity(targetEmbedding, storedEmbedding);
+        if (cachedUser == null) {
+            throw new UserNotFoundException("Usuário com CPF " + cleanCpf + " não cadastrado.");
+        }
+
+        double similarity = faceBiometricsService.calculateDotProduct(targetEmbedding, cachedUser.embedding());
         boolean match = faceBiometricsService.isMatch(similarity);
 
         return new VerificationResponse(match, similarity, faceBiometricsService.getThreshold());
     }
 
     /**
-     * Identificação facial 1:n com processamento paralelo de similaridade.
+     * Identificação facial 1:n com busca paralela ultrarápida em cache de memória (1 milhão de usuários).
      */
     @Transactional(readOnly = true)
     public IdentificationResponse identifyFace(byte[] photoBytes, String filename) {
         float[] targetEmbedding = faceBiometricsService.extractFaceEmbedding(photoBytes, filename);
-        List<User> allUsers = userRepository.findAll();
+        return identifyFaceWithEmbedding(targetEmbedding);
+    }
 
-        if (allUsers.isEmpty()) {
+    /**
+     * Busca um embedding no cache de forma paralela usando o pool ForkJoin do Java (sem alocações por elemento).
+     */
+    public IdentificationResponse identifyFaceWithEmbedding(float[] targetEmbedding) {
+        cacheLock.readLock().lock();
+        try {
+            if (userBiometricCache.isEmpty()) {
+                return new IdentificationResponse(false, null, null, null, 0.0, faceBiometricsService.getThreshold());
+            }
+
+            int size = userBiometricCache.size();
+            
+            // Para bases pequenas, busca sequencial simples é mais rápida devido ao overhead de threads
+            if (size < 5000) {
+                UserCacheItem bestItem = null;
+                double bestSimilarity = -1.0;
+                for (UserCacheItem item : userBiometricCache) {
+                    double similarity = faceBiometricsService.calculateDotProduct(targetEmbedding, item.embedding());
+                    if (similarity > bestSimilarity) {
+                        bestSimilarity = similarity;
+                        bestItem = item;
+                    }
+                }
+                return buildIdentificationResponse(bestItem, bestSimilarity);
+            }
+
+            // Para bases grandes (ex: 1 milhão), paraleliza dividindo em fatias por processador
+            int numThreads = Runtime.getRuntime().availableProcessors();
+            int chunkSize = (size + numThreads - 1) / numThreads;
+            List<CompletableFuture<SearchResult>> futures = new ArrayList<>();
+            
+            for (int i = 0; i < numThreads; i++) {
+                final int start = i * chunkSize;
+                final int end = Math.min(start + chunkSize, size);
+                if (start >= size) break;
+                
+                futures.add(CompletableFuture.supplyAsync(() -> {
+                    UserCacheItem bestItem = null;
+                    double bestSimilarity = -1.0;
+                    for (int j = start; j < end; j++) {
+                        UserCacheItem item = userBiometricCache.get(j);
+                        double similarity = faceBiometricsService.calculateDotProduct(targetEmbedding, item.embedding());
+                        if (similarity > bestSimilarity) {
+                            bestSimilarity = similarity;
+                            bestItem = item;
+                        }
+                    }
+                    return new SearchResult(bestItem, bestSimilarity);
+                })); // Usa o pool comum ForkJoin (CPU-bound)
+            }
+
+            SearchResult bestResult = futures.stream()
+                    .map(CompletableFuture::join)
+                    .max(Comparator.comparingDouble(SearchResult::similarity))
+                    .orElse(null);
+
+            if (bestResult != null) {
+                return buildIdentificationResponse(bestResult.item(), bestResult.similarity());
+            }
+
             return new IdentificationResponse(false, null, null, null, 0.0, faceBiometricsService.getThreshold());
+        } finally {
+            cacheLock.readLock().unlock();
         }
+    }
 
-        // Compara em paralelo usando parallelStream
-        MatchResult bestMatch = allUsers.parallelStream()
-                .map(user -> {
-                    double similarity = faceBiometricsService.calculateCosineSimilarity(targetEmbedding, user.getEmbedding());
-                    return new MatchResult(user, similarity);
-                })
-                .max(Comparator.comparingDouble(MatchResult::similarity))
-                .orElse(null);
-
-        if (bestMatch != null && faceBiometricsService.isMatch(bestMatch.similarity())) {
-            User matchedUser = bestMatch.user();
+    private IdentificationResponse buildIdentificationResponse(UserCacheItem bestItem, double bestSimilarity) {
+        if (bestItem != null && faceBiometricsService.isMatch(bestSimilarity)) {
+            User matchedUser = userRepository.findById(bestItem.id())
+                    .orElseThrow(() -> new UserNotFoundException("Usuário com CPF " + bestItem.cpf() + " não encontrado no banco."));
             String base64 = Base64.getEncoder().encodeToString(matchedUser.getPhoto());
             return new IdentificationResponse(
                     true,
-                    matchedUser.getCpf(),
-                    matchedUser.getName(),
+                    bestItem.cpf(),
+                    bestItem.name(),
                     base64,
-                    bestMatch.similarity(),
+                    bestSimilarity,
                     faceBiometricsService.getThreshold()
             );
         }
-
         return new IdentificationResponse(
                 false,
                 null,
                 null,
                 null,
-                bestMatch != null ? bestMatch.similarity() : 0.0,
+                bestItem != null ? bestSimilarity : 0.0,
                 faceBiometricsService.getThreshold()
         );
     }
@@ -247,6 +390,16 @@ public class UserService {
                 user.getName(),
                 base64,
                 user.getCreatedAt()
+        );
+    }
+
+    private UserResponse toResponse(UserCacheItem item) {
+        return new UserResponse(
+                item.id(),
+                item.cpf(),
+                item.name(),
+                null, // foto nula nas duplicatas para não onerar rede
+                LocalDateTime.now()
         );
     }
 
@@ -292,17 +445,27 @@ public class UserService {
         return cleanCpf;
     }
 
+    /**
+     * Varre todos os usuários duplicados em memória via produto escalar rápido.
+     */
     @Transactional(readOnly = true)
     public List<DuplicatePairResponse> findDuplicateUsers() {
-        List<User> allUsers = userRepository.findAll();
         List<DuplicatePairResponse> duplicates = new java.util.ArrayList<>();
         double threshold = faceBiometricsService.getThreshold();
+        
+        List<UserCacheItem> items = new ArrayList<>();
+        cacheLock.readLock().lock();
+        try {
+            items.addAll(userBiometricCache);
+        } finally {
+            cacheLock.readLock().unlock();
+        }
 
-        for (int i = 0; i < allUsers.size(); i++) {
-            User u1 = allUsers.get(i);
-            for (int j = i + 1; j < allUsers.size(); j++) {
-                User u2 = allUsers.get(j);
-                double similarity = faceBiometricsService.calculateCosineSimilarity(u1.getEmbedding(), u2.getEmbedding());
+        for (int i = 0; i < items.size(); i++) {
+            UserCacheItem u1 = items.get(i);
+            for (int j = i + 1; j < items.size(); j++) {
+                UserCacheItem u2 = items.get(j);
+                double similarity = faceBiometricsService.calculateDotProduct(u1.embedding(), u2.embedding());
                 if (similarity >= threshold) {
                     duplicates.add(new DuplicatePairResponse(toResponse(u1), toResponse(u2), similarity));
                 }
@@ -311,25 +474,34 @@ public class UserService {
         return duplicates;
     }
 
+    /**
+     * Verifica se o rosto já está cadastrado em memória no cache biométrico.
+     */
     private void checkForDuplicateFace(float[] embedding, String excludeCpf) {
-        List<User> allUsers = userRepository.findAll();
-        if (allUsers.isEmpty()) {
-            return;
-        }
+        float[] normalizedEmb = faceBiometricsService.normalize(embedding);
+        
+        cacheLock.readLock().lock();
+        try {
+            if (userBiometricCache.isEmpty()) {
+                return;
+            }
 
-        Optional<MatchResult> duplicateMatch = allUsers.parallelStream()
-                .filter(user -> excludeCpf == null || !user.getCpf().equals(excludeCpf))
-                .map(user -> {
-                    double similarity = faceBiometricsService.calculateCosineSimilarity(embedding, user.getEmbedding());
-                    return new MatchResult(user, similarity);
-                })
-                .filter(result -> faceBiometricsService.isMatch(result.similarity()))
-                .max(Comparator.comparingDouble(MatchResult::similarity));
+            Optional<MatchResult> duplicateMatch = userBiometricCache.parallelStream()
+                    .filter(item -> excludeCpf == null || !item.cpf().equals(excludeCpf))
+                    .map(item -> {
+                        double similarity = faceBiometricsService.calculateDotProduct(normalizedEmb, item.embedding());
+                        return new MatchResult(item, similarity);
+                      })
+                    .filter(result -> faceBiometricsService.isMatch(result.similarity()))
+                    .max(Comparator.comparingDouble(MatchResult::similarity));
 
-        if (duplicateMatch.isPresent()) {
-            User matchedUser = duplicateMatch.get().user();
-            throw new DuplicateFaceException("Esta face já está cadastrada no sistema sob o CPF: " 
-                    + formatCpf(matchedUser.getCpf()) + " (Nome: " + matchedUser.getName() + ").");
+            if (duplicateMatch.isPresent()) {
+                UserCacheItem matchedItem = duplicateMatch.get().item();
+                throw new DuplicateFaceException("Esta face já está cadastrada no sistema sob o CPF: " 
+                        + formatCpf(matchedItem.cpf()) + " (Nome: " + matchedItem.name() + ").");
+            }
+        } finally {
+            cacheLock.readLock().unlock();
         }
     }
 
@@ -338,5 +510,6 @@ public class UserService {
         return cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." + cpf.substring(6, 9) + "-" + cpf.substring(9, 11);
     }
 
-    private record MatchResult(User user, double similarity) {}
+    private record MatchResult(UserCacheItem item, double similarity) {}
+    private record SearchResult(UserCacheItem item, double similarity) {}
 }

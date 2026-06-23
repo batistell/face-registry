@@ -33,6 +33,9 @@ public class FaceBiometricsService {
     @Value("${face.recognition.threshold:0.60}")
     private double threshold;
 
+    @Value("${face.recognition.conf-threshold:0.50}")
+    private double confThreshConfig;
+
     @Value("${face.biometrics.mock:false}")
     private boolean mockConfig;
 
@@ -48,11 +51,46 @@ public class FaceBiometricsService {
             return;
         }
 
+        // Criar link simbólico para libnvToolsExt se necessário antes do DJL carregar as bibliotecas nativas
+        try {
+            String userHome = System.getProperty("user.home");
+            java.io.File pytorchRoot = new java.io.File(userHome, ".djl.ai/pytorch");
+            if (pytorchRoot.exists() && pytorchRoot.isDirectory()) {
+                java.io.File[] dirs = pytorchRoot.listFiles(java.io.File::isDirectory);
+                if (dirs != null) {
+                    for (java.io.File dir : dirs) {
+                        java.io.File targetSymlink = new java.io.File(dir, "libnvToolsExt.so.1");
+                        if (!targetSymlink.exists()) {
+                            java.io.File[] files = dir.listFiles((d, name) -> name.startsWith("libnvToolsExt-") && name.endsWith(".so.1"));
+                            if (files != null && files.length > 0) {
+                                log.info("Criando link simbólico para libnvToolsExt em {}: {} -> {}", dir.getName(), files[0].getName(), targetSymlink.getName());
+                                java.nio.file.Files.createSymbolicLink(targetSymlink.toPath(), files[0].toPath().getFileName());
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            log.warn("Erro ao tentar criar link simbólico para libnvToolsExt: {}", ex.getMessage());
+        }
+
         try {
             log.info("Inicializando modelos DJL REAIS para detecção e reconhecimento facial (PyTorch)...");
             
+            try {
+                ai.djl.engine.Engine.debugEnvironment();
+            } catch (Exception ex) {
+                log.warn("Erro ao executar Engine.debugEnvironment(): {}", ex.getMessage());
+            }
+            
+            int gpuCount = ai.djl.engine.Engine.getInstance().getGpuCount();
+            log.info("Quantidade de GPUs detectadas pela DJL: {}", gpuCount);
+            
+            ai.djl.Device device = gpuCount > 0 ? ai.djl.Device.gpu() : ai.djl.Device.cpu();
+            log.info("Dispositivo selecionado para inferência: {}", device);
+
             // Critérios para detecção facial (RetinaFace do PyTorch Model Zoo)
-            double confThresh = 0.85f;
+            double confThresh = confThreshConfig;
             double nmsThresh = 0.45f;
             double[] variance = {0.1f, 0.2f};
             int topK = 5000;
@@ -67,6 +105,7 @@ public class FaceBiometricsService {
                     .optModelName("retinaface") // specify model file prefix
                     .optTranslator(translator)
                     .optEngine("PyTorch")
+                    .optDevice(device)
                     .build();
             
             // Critérios para extração de embedding (FaceNet/ArcFace do PyTorch Model Zoo)
@@ -87,11 +126,18 @@ public class FaceBiometricsService {
                     .optModelName("face_feature")
                     .optEngine("PyTorch")
                     .optTranslator(recognitionTranslator)
+                    .optDevice(device)
                     .build();
 
             this.detectionModel = ModelZoo.loadModel(detectionCriteria);
             this.recognitionModel = ModelZoo.loadModel(recognitionCriteria);
             this.useMockMode = false;
+            try {
+                log.info("Dispositivo do modelo de detecção facial: {}", this.detectionModel.getNDManager().getDevice());
+                log.info("Dispositivo do modelo de reconhecimento facial: {}", this.recognitionModel.getNDManager().getDevice());
+            } catch (Exception devEx) {
+                log.warn("Não foi possível logar o dispositivo do modelo: {}", devEx.getMessage());
+            }
             log.info("Motor biométrico com Modelos Reais DJL (RetinaFace e FaceNet/PyTorch) carregados com sucesso!");
         } catch (Exception e) {
             this.useMockMode = true;
@@ -146,21 +192,14 @@ public class FaceBiometricsService {
                 throw new InvalidImageException("O rosto detectado está muito pequeno ou distante. Aproxime-se mais da câmera ou reenquadre a foto.");
             }
 
-            double xMin = rect.getX();
-            double yMin = rect.getY();
-            double xMax = xMin + rect.getWidth();
-            double yMax = yMin + rect.getHeight();
-            if (xMin < 0.02 || yMin < 0.02 || xMax > 0.98 || yMax > 0.98) {
-                throw new InvalidImageException("O rosto está muito próximo das bordas ou parcialmente cortado. Centralize o rosto e deixe uma margem ao redor da cabeça.");
-            }
-            
             int x = Math.max(0, (int) (rect.getX() * image.getWidth()));
             int y = Math.max(0, (int) (rect.getY() * image.getHeight()));
             int w = Math.min(image.getWidth() - x, (int) (rect.getWidth() * image.getWidth()));
             int h = Math.min(image.getHeight() - y, (int) (rect.getHeight() * image.getHeight()));
             
             Image croppedFace = image.getSubImage(x, y, w, h);
-            return recognizer.predict(croppedFace);
+            float[] rawEmbedding = recognizer.predict(croppedFace);
+            return normalize(rawEmbedding);
 
         } catch (NoFaceDetectedException | MultipleFacesDetectedException | InvalidImageException e) {
             throw e;
@@ -189,6 +228,41 @@ public class FaceBiometricsService {
         }
         if (normA == 0.0 || normB == 0.0) return 0.0;
         return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+    }
+
+    /**
+     * Calcula o produto escalar (dot product) entre dois vetores de 512 posições.
+     * Para vetores L2-normalizados, isso é idêntico à similaridade de cosseno.
+     */
+    public double calculateDotProduct(float[] vectorA, float[] vectorB) {
+        if (vectorA == null || vectorB == null) return 0.0;
+        if (vectorA.length != vectorB.length) return 0.0;
+
+        float dotProduct = 0.0f;
+        for (int i = 0; i < vectorA.length; i++) {
+            dotProduct += vectorA[i] * vectorB[i];
+        }
+        return dotProduct;
+    }
+
+    /**
+     * Normaliza um vetor float[] para ter norma L2 igual a 1 (vetor unitário).
+     */
+    public float[] normalize(float[] embedding) {
+        if (embedding == null) return null;
+        double sumSquare = 0.0;
+        for (float val : embedding) {
+            sumSquare += val * val;
+        }
+        double norm = Math.sqrt(sumSquare);
+        if (norm > 0) {
+            float[] normalized = new float[embedding.length];
+            for (int i = 0; i < embedding.length; i++) {
+                normalized[i] = (float) (embedding[i] / norm);
+            }
+            return normalized;
+        }
+        return embedding;
     }
 
     public boolean isMatch(double similarity) {

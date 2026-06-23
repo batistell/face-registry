@@ -17,6 +17,7 @@ spring:
 face:
   recognition:
     threshold: 0.60  # Limiar padrão para similaridade de cosseno
+    conf-threshold: 0.50  # Sensibilidade padrão do detector de faces (RetinaFace)
   biometrics:
     mock: false
 

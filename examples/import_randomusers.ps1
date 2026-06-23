@@ -5,7 +5,7 @@
 # ==============================================================================
 
 $ErrorActionPreference = "Stop"
-$API_BASE = "http://localhost:8080/api/users"
+$API_BASE = "http://127.0.0.1:8080/api/users"
 $EXAMPLES_DIR = "o:\JavaProjects\face-registry\examples"
 
 # Nomes brasileiros: 50 masculinos + 50 femininos
@@ -40,56 +40,45 @@ Write-Output "  IMPORTAÇÃO DE RANDOMUSERS - Face Registry"
 Write-Output "================================================================"
 
 # -----------------------------------------------
-# Passo 1: Excluir randomusers antigos do banco
+# Passo 1: Excluir randomusers antigos do banco (PULADO)
 # -----------------------------------------------
-Write-Output "`n[1/3] Excluindo randomusers antigos do banco..."
-
-$existingUsers = Invoke-RestMethod -Uri $API_BASE -Method GET -TimeoutSec 15
 $deletedCount = 0
-foreach ($user in $existingUsers) {
-    if ($user.name -match "Teste RandomUser" -or $user.name -eq "test 123") {
-        try {
-            Invoke-RestMethod -Uri "$API_BASE/$($user.cpf)" -Method DELETE -TimeoutSec 10
-            $deletedCount++
-            Write-Output "  Excluído: $($user.name) (CPF $($user.cpf))"
-        } catch {
-            Write-Output "  ERRO ao excluir CPF $($user.cpf): $_"
-        }
-    }
-}
-Write-Output "  Total excluídos: $deletedCount"
 
 # -----------------------------------------------
-# Passo 2: Escanear arquivos de randomusers
+# Passo 2: Escanear arquivos de usuários de teste
 # -----------------------------------------------
 Write-Output "`n[2/3] Escaneando arquivos em $EXAMPLES_DIR..."
 
-$pattern = "^randomuser_(men|women)_(\d{11})_(\d+)\.jpg$"
-$files = Get-ChildItem -Path $EXAMPLES_DIR -File | Where-Object { $_.Name -match $pattern } | Sort-Object Name
+$pattern = "^([a-zA-Z0-9_\-]+)_(\d{11})_(\d+)\.jpg$"
+$files = Get-ChildItem -Path $EXAMPLES_DIR -File | Where-Object { $_.Name -match $pattern }
 
-$menFiles = @()
-$womenFiles = @()
+$famousPrefixes = @("obama", "biden", "musk", "messi", "kana", "lena")
+$userFiles = @()
+
 foreach ($f in $files) {
     if ($f.Name -match $pattern) {
-        $gender = $Matches[1]
+        $prefix = $Matches[1]
         $cpf = $Matches[2]
         $index = [int]$Matches[3]
-        $entry = @{ File = $f; Cpf = $cpf; Index = $index }
-        if ($gender -eq "men") { $menFiles += $entry }
-        else { $womenFiles += $entry }
+        
+        # Ignora arquivos de famosos
+        if ($famousPrefixes -contains $prefix.ToLower()) {
+            continue
+        }
+        
+        $userFiles += @{ File = $f; Prefix = $prefix; Cpf = $cpf; Index = $index }
     }
 }
 
-# Ordena pelo índice para atribuição consistente de nomes
-$menFiles = $menFiles | Sort-Object { $_.Index }
-$womenFiles = $womenFiles | Sort-Object { $_.Index }
+# Ordena pelo índice para ordenação consistente no console
+$userFiles = $userFiles | Sort-Object { $_.Index }
 
-Write-Output "  Encontrados: $($menFiles.Count) homens, $($womenFiles.Count) mulheres"
+Write-Output "  Encontrados: $($userFiles.Count) usuários de teste no diretório."
 
 # -----------------------------------------------
 # Passo 3: Cadastrar via API REST
 # -----------------------------------------------
-Write-Output "`n[3/3] Cadastrando randomusers com nomes brasileiros...`n"
+Write-Output "`n[3/3] Cadastrando usuários de teste com nomes correspondentes...`n"
 
 $successCount = 0
 $errorCount = 0
@@ -131,48 +120,45 @@ function Register-User {
     return $response
 }
 
-# Cadastra homens
-for ($i = 0; $i -lt $menFiles.Count; $i++) {
-    $entry = $menFiles[$i]
-    $name = if ($entry.Index -le $MALE_NAMES.Count) { $MALE_NAMES[$entry.Index - 1] } else { "Homem $($entry.Index)" }
+# Cadastra os usuários
+foreach ($entry in $userFiles) {
+    $prefix = $entry.Prefix
+    $index = $entry.Index
+    $cpf = $entry.Cpf
     
-    try {
-        $result = Register-User -Cpf $entry.Cpf -Name $name -FilePath $entry.File.FullName
-        $successCount++
-        Write-Output "  [M] $name (CPF $($entry.Cpf)) - OK"
-    } catch {
-        $errorCount++
-        $errMsg = if ($_.ErrorDetails.Message) { ($_.ErrorDetails.Message | ConvertFrom-Json).message } else { $_.Exception.Message }
-        Write-Output "  [M] $name (CPF $($entry.Cpf)) - ERRO: $errMsg"
+    $name = ""
+    if ($prefix -eq "randomuser_men") {
+        $name = if ($index -le $MALE_NAMES.Count) { $MALE_NAMES[$index - 1] } else { "Homem $index" }
     }
-}
-
-# Cadastra mulheres
-for ($i = 0; $i -lt $womenFiles.Count; $i++) {
-    $entry = $womenFiles[$i]
-    $name = if ($entry.Index -le $FEMALE_NAMES.Count) { $FEMALE_NAMES[$entry.Index - 1] } else { "Mulher $($entry.Index)" }
+    elseif ($prefix -eq "randomuser_women") {
+        $name = if ($index -le $FEMALE_NAMES.Count) { $FEMALE_NAMES[$index - 1] } else { "Mulher $index" }
+    }
+    else {
+        # Formato customizado: extrai e formata o nome com ToTitleCase
+        $cleanPrefix = $prefix -replace '[-_]', ' '
+        $name = (Get-Culture).TextInfo.ToTitleCase($cleanPrefix)
+    }
     
     try {
-        $result = Register-User -Cpf $entry.Cpf -Name $name -FilePath $entry.File.FullName
+        $result = Register-User -Cpf $cpf -Name $name -FilePath $entry.File.FullName
         $successCount++
-        Write-Output "  [F] $name (CPF $($entry.Cpf)) - OK"
+        Write-Output "  ✅ $name (CPF $cpf) - OK"
     } catch {
         $errorCount++
-        $errMsg = if ($_.ErrorDetails.Message) { ($_.ErrorDetails.Message | ConvertFrom-Json).message } else { $_.Exception.Message }
-        Write-Output "  [F] $name (CPF $($entry.Cpf)) - ERRO: $errMsg"
+        $errMsg = if ($_.ErrorDetails.Message) { 
+            try { ($_.ErrorDetails.Message | ConvertFrom-Json).message } catch { $_.Exception.Message }
+        } else { $_.Exception.Message }
+        Write-Output "  ❌ $name (CPF $cpf) - ERRO: $errMsg"
     }
 }
 
 # -----------------------------------------------
 # Resumo
 # -----------------------------------------------
-$finalUsers = Invoke-RestMethod -Uri $API_BASE -Method GET -TimeoutSec 10
-
 Write-Output "`n================================================================"
 Write-Output "  RESUMO"
 Write-Output "================================================================"
 Write-Output "  Excluídos do banco:    $deletedCount"
 Write-Output "  Cadastrados com sucesso: $successCount"
 Write-Output "  Erros:                 $errorCount"
-Write-Output "  Total no banco agora:  $($finalUsers.Count)"
 Write-Output "================================================================"

@@ -1,0 +1,3130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.batistell.faceregistry.DatabasePopulationTest" time="44.008" tests="5" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="21"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="O:\JavaProjects\face-registry\backend\target\test-classes;O:\JavaProjects\face-registry\backend\target\classes;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.2.4\spring-boot-starter-web-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter\3.2.4\spring-boot-starter-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot\3.2.4\spring-boot-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.2.4\spring-boot-autoconfigure-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.2.4\spring-boot-starter-logging-3.2.4.jar;C:\Users\gbbts\.m2\repository\ch\qos\logback\logback-classic\1.4.14\logback-classic-1.4.14.jar;C:\Users\gbbts\.m2\repository\ch\qos\logback\logback-core\1.4.14\logback-core-1.4.14.jar;C:\Users\gbbts\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.21.1\log4j-to-slf4j-2.21.1.jar;C:\Users\gbbts\.m2\repository\org\apache\logging\log4j\log4j-api\2.21.1\log4j-api-2.21.1.jar;C:\Users\gbbts\.m2\repository\org\slf4j\jul-to-slf4j\2.0.12\jul-to-slf4j-2.0.12.jar;C:\Users\gbbts\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\gbbts\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.2.4\spring-boot-starter-json-3.2.4.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.15.4\jackson-databind-2.15.4.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.15.4\jackson-annotations-2.15.4.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.15.4\jackson-core-2.15.4.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.15.4\jackson-datatype-jdk8-2.15.4.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.15.4\jackson-datatype-jsr310-2.15.4.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.15.4\jackson-module-parameter-names-2.15.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.2.4\spring-boot-starter-tomcat-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.19\tomcat-embed-core-10.1.19.jar;C:\Users\gbbts\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.19\tomcat-embed-websocket-10.1.19.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-web\6.1.5\spring-web-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-beans\6.1.5\spring-beans-6.1.5.jar;C:\Users\gbbts\.m2\repository\io\micrometer\micrometer-observation\1.12.4\micrometer-observation-1.12.4.jar;C:\Users\gbbts\.m2\repository\io\micrometer\micrometer-commons\1.12.4\micrometer-commons-1.12.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-webmvc\6.1.5\spring-webmvc-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-aop\6.1.5\spring-aop-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-context\6.1.5\spring-context-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-expression\6.1.5\spring-expression-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\3.2.4\spring-boot-starter-data-jpa-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-aop\3.2.4\spring-boot-starter-aop-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\aspectj\aspectjweaver\1.9.21\aspectjweaver-1.9.21.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.2.4\spring-boot-starter-jdbc-3.2.4.jar;C:\Users\gbbts\.m2\repository\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-jdbc\6.1.5\spring-jdbc-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\hibernate\orm\hibernate-core\6.4.4.Final\hibernate-core-6.4.4.Final.jar;C:\Users\gbbts\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;C:\Users\gbbts\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;C:\Users\gbbts\.m2\repository\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar;C:\Users\gbbts\.m2\repository\org\hibernate\common\hibernate-commons-annotations\6.0.6.Final\hibernate-commons-annotations-6.0.6.Final.jar;C:\Users\gbbts\.m2\repository\io\smallrye\jandex\3.1.2\jandex-3.1.2.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\classmate\1.6.0\classmate-1.6.0.jar;C:\Users\gbbts\.m2\repository\net\bytebuddy\byte-buddy\1.14.12\byte-buddy-1.14.12.jar;C:\Users\gbbts\.m2\repository\org\glassfish\jaxb\jaxb-runtime\4.0.5\jaxb-runtime-4.0.5.jar;C:\Users\gbbts\.m2\repository\org\glassfish\jaxb\jaxb-core\4.0.5\jaxb-core-4.0.5.jar;C:\Users\gbbts\.m2\repository\org\eclipse\angus\angus-activation\2.0.2\angus-activation-2.0.2.jar;C:\Users\gbbts\.m2\repository\org\glassfish\jaxb\txw2\4.0.5\txw2-4.0.5.jar;C:\Users\gbbts\.m2\repository\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;C:\Users\gbbts\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;C:\Users\gbbts\.m2\repository\org\antlr\antlr4-runtime\4.13.0\antlr4-runtime-4.13.0.jar;C:\Users\gbbts\.m2\repository\org\springframework\data\spring-data-jpa\3.2.4\spring-data-jpa-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\data\spring-data-commons\3.2.4\spring-data-commons-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-orm\6.1.5\spring-orm-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-tx\6.1.5\spring-tx-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-aspects\6.1.5\spring-aspects-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-validation\3.2.4\spring-boot-starter-validation-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.19\tomcat-embed-el-10.1.19.jar;C:\Users\gbbts\.m2\repository\org\hibernate\validator\hibernate-validator\8.0.1.Final\hibernate-validator-8.0.1.Final.jar;C:\Users\gbbts\.m2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;C:\Users\gbbts\.m2\repository\org\postgresql\postgresql\42.6.2\postgresql-42.6.2.jar;C:\Users\gbbts\.m2\repository\org\checkerframework\checker-qual\3.31.0\checker-qual-3.31.0.jar;C:\Users\gbbts\.m2\repository\com\h2database\h2\2.2.224\h2-2.2.224.jar;C:\Users\gbbts\.m2\repository\org\projectlombok\lombok\1.18.36\lombok-1.18.36.jar;C:\Users\gbbts\.m2\repository\ai\djl\api\0.28.0\api-0.28.0.jar;C:\Users\gbbts\.m2\repository\com\google\code\gson\gson\2.10.1\gson-2.10.1.jar;C:\Users\gbbts\.m2\repository\net\java\dev\jna\jna\5.14.0\jna-5.14.0.jar;C:\Users\gbbts\.m2\repository\org\apache\commons\commons-compress\1.26.1\commons-compress-1.26.1.jar;C:\Users\gbbts\.m2\repository\commons-codec\commons-codec\1.16.1\commons-codec-1.16.1.jar;C:\Users\gbbts\.m2\repository\commons-io\commons-io\2.15.1\commons-io-2.15.1.jar;C:\Users\gbbts\.m2\repository\org\slf4j\slf4j-api\2.0.12\slf4j-api-2.0.12.jar;C:\Users\gbbts\.m2\repository\ai\djl\model-zoo\0.28.0\model-zoo-0.28.0.jar;C:\Users\gbbts\.m2\repository\ai\djl\pytorch\pytorch-engine\0.28.0\pytorch-engine-0.28.0.jar;C:\Users\gbbts\.m2\repository\ai\djl\pytorch\pytorch-model-zoo\0.28.0\pytorch-model-zoo-0.28.0.jar;C:\Users\gbbts\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-ui\2.5.0\springdoc-openapi-starter-webmvc-ui-2.5.0.jar;C:\Users\gbbts\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-api\2.5.0\springdoc-openapi-starter-webmvc-api-2.5.0.jar;C:\Users\gbbts\.m2\repository\org\springdoc\springdoc-openapi-starter-common\2.5.0\springdoc-openapi-starter-common-2.5.0.jar;C:\Users\gbbts\.m2\repository\io\swagger\core\v3\swagger-core-jakarta\2.2.21\swagger-core-jakarta-2.2.21.jar;C:\Users\gbbts\.m2\repository\org\apache\commons\commons-lang3\3.13.0\commons-lang3-3.13.0.jar;C:\Users\gbbts\.m2\repository\io\swagger\core\v3\swagger-annotations-jakarta\2.2.21\swagger-annotations-jakarta-2.2.21.jar;C:\Users\gbbts\.m2\repository\io\swagger\core\v3\swagger-models-jakarta\2.2.21\swagger-models-jakarta-2.2.21.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\dataformat\jackson-dataformat-yaml\2.15.4\jackson-dataformat-yaml-2.15.4.jar;C:\Users\gbbts\.m2\repository\org\webjars\swagger-ui\5.13.0\swagger-ui-5.13.0.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-test\3.2.4\spring-boot-starter-test-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-test\3.2.4\spring-boot-test-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\3.2.4\spring-boot-test-autoconfigure-3.2.4.jar;C:\Users\gbbts\.m2\repository\com\jayway\jsonpath\json-path\2.9.0\json-path-2.9.0.jar;C:\Users\gbbts\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.2\jakarta.xml.bind-api-4.0.2.jar;C:\Users\gbbts\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.3\jakarta.activation-api-2.1.3.jar;C:\Users\gbbts\.m2\repository\net\minidev\json-smart\2.5.0\json-smart-2.5.0.jar;C:\Users\gbbts\.m2\repository\net\minidev\accessors-smart\2.5.0\accessors-smart-2.5.0.jar;C:\Users\gbbts\.m2\repository\org\ow2\asm\asm\9.3\asm-9.3.jar;C:\Users\gbbts\.m2\repository\org\assertj\assertj-core\3.24.2\assertj-core-3.24.2.jar;C:\Users\gbbts\.m2\repository\org\awaitility\awaitility\4.2.0\awaitility-4.2.0.jar;C:\Users\gbbts\.m2\repository\org\hamcrest\hamcrest\2.2\hamcrest-2.2.jar;C:\Users\gbbts\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\gbbts\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\gbbts\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\gbbts\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\gbbts\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\gbbts\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\gbbts\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\gbbts\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;C:\Users\gbbts\.m2\repository\org\mockito\mockito-core\5.7.0\mockito-core-5.7.0.jar;C:\Users\gbbts\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.12\byte-buddy-agent-1.14.12.jar;C:\Users\gbbts\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\gbbts\.m2\repository\org\mockito\mockito-junit-jupiter\5.7.0\mockito-junit-jupiter-5.7.0.jar;C:\Users\gbbts\.m2\repository\org\skyscreamer\jsonassert\1.5.1\jsonassert-1.5.1.jar;C:\Users\gbbts\.m2\repository\com\vaadin\external\google\android-json\0.0.20131108.vaadin1\android-json-0.0.20131108.vaadin1.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-core\6.1.5\spring-core-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-jcl\6.1.5\spring-jcl-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-test\6.1.5\spring-test-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\xmlunit\xmlunit-core\2.9.1\xmlunit-core-2.9.1.jar;"/>
+    <property name="java.vm.vendor" value="Eclipse Adoptium"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://adoptium.net/"/>
+    <property name="user.timezone" value="America/Sao_Paulo"/>
+    <property name="org.jboss.logging.provider" value="slf4j"/>
+    <property name="os.name" value="Windows 11"/>
+    <property name="java.vm.specification.version" value="21"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="BR"/>
+    <property name="sun.boot.library.path" value="C:\Users\gbbts\AppData\Roaming\Antigravity\User\globalStorage\pleiades.java-extension-pack-jdk\java\21\bin"/>
+    <property name="sun.java.command" value="C:\Users\gbbts\AppData\Local\Temp\surefire8788195181520595374\surefirebooter-20260623133905935_3.jar C:\Users\gbbts\AppData\Local\Temp\surefire8788195181520595374 2026-06-23T13-39-05_839-jvmRun1 surefire-20260623133905935_1tmp surefire_0-20260623133905935_2tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="O:\JavaProjects\face-registry\backend\target\test-classes;O:\JavaProjects\face-registry\backend\target\classes;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.2.4\spring-boot-starter-web-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter\3.2.4\spring-boot-starter-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot\3.2.4\spring-boot-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.2.4\spring-boot-autoconfigure-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.2.4\spring-boot-starter-logging-3.2.4.jar;C:\Users\gbbts\.m2\repository\ch\qos\logback\logback-classic\1.4.14\logback-classic-1.4.14.jar;C:\Users\gbbts\.m2\repository\ch\qos\logback\logback-core\1.4.14\logback-core-1.4.14.jar;C:\Users\gbbts\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.21.1\log4j-to-slf4j-2.21.1.jar;C:\Users\gbbts\.m2\repository\org\apache\logging\log4j\log4j-api\2.21.1\log4j-api-2.21.1.jar;C:\Users\gbbts\.m2\repository\org\slf4j\jul-to-slf4j\2.0.12\jul-to-slf4j-2.0.12.jar;C:\Users\gbbts\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\gbbts\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.2.4\spring-boot-starter-json-3.2.4.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.15.4\jackson-databind-2.15.4.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.15.4\jackson-annotations-2.15.4.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.15.4\jackson-core-2.15.4.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.15.4\jackson-datatype-jdk8-2.15.4.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.15.4\jackson-datatype-jsr310-2.15.4.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.15.4\jackson-module-parameter-names-2.15.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.2.4\spring-boot-starter-tomcat-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.19\tomcat-embed-core-10.1.19.jar;C:\Users\gbbts\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.19\tomcat-embed-websocket-10.1.19.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-web\6.1.5\spring-web-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-beans\6.1.5\spring-beans-6.1.5.jar;C:\Users\gbbts\.m2\repository\io\micrometer\micrometer-observation\1.12.4\micrometer-observation-1.12.4.jar;C:\Users\gbbts\.m2\repository\io\micrometer\micrometer-commons\1.12.4\micrometer-commons-1.12.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-webmvc\6.1.5\spring-webmvc-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-aop\6.1.5\spring-aop-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-context\6.1.5\spring-context-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-expression\6.1.5\spring-expression-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\3.2.4\spring-boot-starter-data-jpa-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-aop\3.2.4\spring-boot-starter-aop-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\aspectj\aspectjweaver\1.9.21\aspectjweaver-1.9.21.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.2.4\spring-boot-starter-jdbc-3.2.4.jar;C:\Users\gbbts\.m2\repository\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-jdbc\6.1.5\spring-jdbc-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\hibernate\orm\hibernate-core\6.4.4.Final\hibernate-core-6.4.4.Final.jar;C:\Users\gbbts\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;C:\Users\gbbts\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;C:\Users\gbbts\.m2\repository\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar;C:\Users\gbbts\.m2\repository\org\hibernate\common\hibernate-commons-annotations\6.0.6.Final\hibernate-commons-annotations-6.0.6.Final.jar;C:\Users\gbbts\.m2\repository\io\smallrye\jandex\3.1.2\jandex-3.1.2.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\classmate\1.6.0\classmate-1.6.0.jar;C:\Users\gbbts\.m2\repository\net\bytebuddy\byte-buddy\1.14.12\byte-buddy-1.14.12.jar;C:\Users\gbbts\.m2\repository\org\glassfish\jaxb\jaxb-runtime\4.0.5\jaxb-runtime-4.0.5.jar;C:\Users\gbbts\.m2\repository\org\glassfish\jaxb\jaxb-core\4.0.5\jaxb-core-4.0.5.jar;C:\Users\gbbts\.m2\repository\org\eclipse\angus\angus-activation\2.0.2\angus-activation-2.0.2.jar;C:\Users\gbbts\.m2\repository\org\glassfish\jaxb\txw2\4.0.5\txw2-4.0.5.jar;C:\Users\gbbts\.m2\repository\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;C:\Users\gbbts\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;C:\Users\gbbts\.m2\repository\org\antlr\antlr4-runtime\4.13.0\antlr4-runtime-4.13.0.jar;C:\Users\gbbts\.m2\repository\org\springframework\data\spring-data-jpa\3.2.4\spring-data-jpa-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\data\spring-data-commons\3.2.4\spring-data-commons-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-orm\6.1.5\spring-orm-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-tx\6.1.5\spring-tx-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-aspects\6.1.5\spring-aspects-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-validation\3.2.4\spring-boot-starter-validation-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.19\tomcat-embed-el-10.1.19.jar;C:\Users\gbbts\.m2\repository\org\hibernate\validator\hibernate-validator\8.0.1.Final\hibernate-validator-8.0.1.Final.jar;C:\Users\gbbts\.m2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;C:\Users\gbbts\.m2\repository\org\postgresql\postgresql\42.6.2\postgresql-42.6.2.jar;C:\Users\gbbts\.m2\repository\org\checkerframework\checker-qual\3.31.0\checker-qual-3.31.0.jar;C:\Users\gbbts\.m2\repository\com\h2database\h2\2.2.224\h2-2.2.224.jar;C:\Users\gbbts\.m2\repository\org\projectlombok\lombok\1.18.36\lombok-1.18.36.jar;C:\Users\gbbts\.m2\repository\ai\djl\api\0.28.0\api-0.28.0.jar;C:\Users\gbbts\.m2\repository\com\google\code\gson\gson\2.10.1\gson-2.10.1.jar;C:\Users\gbbts\.m2\repository\net\java\dev\jna\jna\5.14.0\jna-5.14.0.jar;C:\Users\gbbts\.m2\repository\org\apache\commons\commons-compress\1.26.1\commons-compress-1.26.1.jar;C:\Users\gbbts\.m2\repository\commons-codec\commons-codec\1.16.1\commons-codec-1.16.1.jar;C:\Users\gbbts\.m2\repository\commons-io\commons-io\2.15.1\commons-io-2.15.1.jar;C:\Users\gbbts\.m2\repository\org\slf4j\slf4j-api\2.0.12\slf4j-api-2.0.12.jar;C:\Users\gbbts\.m2\repository\ai\djl\model-zoo\0.28.0\model-zoo-0.28.0.jar;C:\Users\gbbts\.m2\repository\ai\djl\pytorch\pytorch-engine\0.28.0\pytorch-engine-0.28.0.jar;C:\Users\gbbts\.m2\repository\ai\djl\pytorch\pytorch-model-zoo\0.28.0\pytorch-model-zoo-0.28.0.jar;C:\Users\gbbts\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-ui\2.5.0\springdoc-openapi-starter-webmvc-ui-2.5.0.jar;C:\Users\gbbts\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-api\2.5.0\springdoc-openapi-starter-webmvc-api-2.5.0.jar;C:\Users\gbbts\.m2\repository\org\springdoc\springdoc-openapi-starter-common\2.5.0\springdoc-openapi-starter-common-2.5.0.jar;C:\Users\gbbts\.m2\repository\io\swagger\core\v3\swagger-core-jakarta\2.2.21\swagger-core-jakarta-2.2.21.jar;C:\Users\gbbts\.m2\repository\org\apache\commons\commons-lang3\3.13.0\commons-lang3-3.13.0.jar;C:\Users\gbbts\.m2\repository\io\swagger\core\v3\swagger-annotations-jakarta\2.2.21\swagger-annotations-jakarta-2.2.21.jar;C:\Users\gbbts\.m2\repository\io\swagger\core\v3\swagger-models-jakarta\2.2.21\swagger-models-jakarta-2.2.21.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\dataformat\jackson-dataformat-yaml\2.15.4\jackson-dataformat-yaml-2.15.4.jar;C:\Users\gbbts\.m2\repository\org\webjars\swagger-ui\5.13.0\swagger-ui-5.13.0.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-test\3.2.4\spring-boot-starter-test-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-test\3.2.4\spring-boot-test-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\3.2.4\spring-boot-test-autoconfigure-3.2.4.jar;C:\Users\gbbts\.m2\repository\com\jayway\jsonpath\json-path\2.9.0\json-path-2.9.0.jar;C:\Users\gbbts\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.2\jakarta.xml.bind-api-4.0.2.jar;C:\Users\gbbts\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.3\jakarta.activation-api-2.1.3.jar;C:\Users\gbbts\.m2\repository\net\minidev\json-smart\2.5.0\json-smart-2.5.0.jar;C:\Users\gbbts\.m2\repository\net\minidev\accessors-smart\2.5.0\accessors-smart-2.5.0.jar;C:\Users\gbbts\.m2\repository\org\ow2\asm\asm\9.3\asm-9.3.jar;C:\Users\gbbts\.m2\repository\org\assertj\assertj-core\3.24.2\assertj-core-3.24.2.jar;C:\Users\gbbts\.m2\repository\org\awaitility\awaitility\4.2.0\awaitility-4.2.0.jar;C:\Users\gbbts\.m2\repository\org\hamcrest\hamcrest\2.2\hamcrest-2.2.jar;C:\Users\gbbts\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\gbbts\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\gbbts\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\gbbts\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\gbbts\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\gbbts\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\gbbts\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\gbbts\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;C:\Users\gbbts\.m2\repository\org\mockito\mockito-core\5.7.0\mockito-core-5.7.0.jar;C:\Users\gbbts\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.12\byte-buddy-agent-1.14.12.jar;C:\Users\gbbts\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\gbbts\.m2\repository\org\mockito\mockito-junit-jupiter\5.7.0\mockito-junit-jupiter-5.7.0.jar;C:\Users\gbbts\.m2\repository\org\skyscreamer\jsonassert\1.5.1\jsonassert-1.5.1.jar;C:\Users\gbbts\.m2\repository\com\vaadin\external\google\android-json\0.0.20131108.vaadin1\android-json-0.0.20131108.vaadin1.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-core\6.1.5\spring-core-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-jcl\6.1.5\spring-jcl-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-test\6.1.5\spring-test-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\xmlunit\xmlunit-core\2.9.1\xmlunit-core-2.9.1.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\gbbts"/>
+    <property name="user.language" value="pt"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2026-01-20"/>
+    <property name="java.home" value="C:\Users\gbbts\AppData\Roaming\Antigravity\User\globalStorage\pleiades.java-extension-pack-jdk\java\21"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="O:\JavaProjects\face-registry\backend"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="FILE_LOG_CHARSET" value="UTF-8"/>
+    <property name="java.awt.headless" value="true"/>
+    <property name="surefire.real.class.path" value="C:\Users\gbbts\AppData\Local\Temp\surefire8788195181520595374\surefirebooter-20260623133905935_3.jar"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="21.0.10+7-LTS"/>
+    <property name="user.name" value="gbbts"/>
+    <property name="stdout.encoding" value="Cp1252"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="jnidispatch.path" value="C:\Users\gbbts\AppData\Local\Temp\jna-98140070\jna5559283746032747379.dll"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="java.vendor.version" value="Temurin-21.0.10+7"/>
+    <property name="localRepository" value="C:\Users\gbbts\.m2\repository"/>
+    <property name="jna.loaded" value="true"/>
+    <property name="java.vendor.url.bug" value="https://github.com/adoptium/adoptium-support/issues"/>
+    <property name="java.io.tmpdir" value="C:\Users\gbbts\AppData\Local\Temp\"/>
+    <property name="com.zaxxer.hikari.pool_number" value="2"/>
+    <property name="java.version" value="21.0.10"/>
+    <property name="user.dir" value="O:\JavaProjects\face-registry\backend"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="PID" value="21724"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="CONSOLE_LOG_CHARSET" value="UTF-8"/>
+    <property name="native.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Users\gbbts\AppData\Roaming\Antigravity\User\globalStorage\pleiades.java-extension-pack-jdk\java\21\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:/Users/gbbts/.gemini/antigravity-ide/bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\dotnet\;C:\Program Files\NVIDIA Corporation\NVIDIA app\NvDLISR;C:\Program Files\Git\cmd;C:\Users\gbbts\AppData\Local\Programs\Python\Python312;C:\Users\gbbts\AppData\Local\Programs\Python\Python312\Scripts;C:\Program Files\playit_gg\bin\;C:\Program Files\Go\bin;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\Eclipse Adoptium\jdk-21\bin\java.exe;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files (x86)\cloudflared\;C:\Users\gbbts\.local\bin;C:\msys64\mingw64\bin;C:\Users\gbbts\go\bin;C:\Users\gbbts\AppData\Local\Python\bin;C:\Users\gbbts\AppData\Local\Programs\Antigravity\bin;C:\Users\gbbts\AppData\Local\Programs\Antigravity IDE\bin;C:\Users\gbbts\AppData\Local\Programs\Microsoft VS Code\bin;."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="Cp1252"/>
+    <property name="java.vendor" value="Eclipse Adoptium"/>
+    <property name="java.vm.version" value="21.0.10+7-LTS"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="apple.awt.UIElement" value="true"/>
+    <property name="java.class.version" value="65.0"/>
+  </properties>
+  <testcase name="cleanDatabase" classname="com.batistell.faceregistry.DatabasePopulationTest" time="0.029">
+    <system-out><![CDATA[2026-06-23T13:40:20.468-03:00  INFO 21724 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.batistell.faceregistry.DatabasePopulationTest]: DatabasePopulationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-06-23T13:40:20.471-03:00  INFO 21724 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.batistell.faceregistry.FaceRegistryApplication for test class com.batistell.faceregistry.DatabasePopulationTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.4)
+
+2026-06-23T13:40:20.505-03:00  INFO 21724 --- [           main] c.b.faceregistry.DatabasePopulationTest  : Starting DatabasePopulationTest using Java 21.0.10 with PID 21724 (started by gbbts in O:\JavaProjects\face-registry\backend)
+2026-06-23T13:40:20.505-03:00  INFO 21724 --- [           main] c.b.faceregistry.DatabasePopulationTest  : The following 1 profile is active: "local"
+2026-06-23T13:40:20.692-03:00  INFO 21724 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-23T13:40:20.701-03:00  INFO 21724 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9 ms. Found 1 JPA repository interface.
+2026-06-23T13:40:20.768-03:00  INFO 21724 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-06-23T13:40:20.771-03:00  INFO 21724 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-06-23T13:40:20.774-03:00  INFO 21724 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-23T13:40:20.775-03:00  INFO 21724 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-06-23T13:40:20.776-03:00  INFO 21724 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:faceregistry user=SA
+2026-06-23T13:40:20.776-03:00  INFO 21724 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-06-23T13:40:20.777-03:00  WARN 21724 --- [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-23T13:40:20.818-03:00  INFO 21724 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: 
+    alter table if exists users 
+       drop constraint if exists idx_users_cpf
+Hibernate: 
+    alter table if exists users 
+       add constraint idx_users_cpf unique (cpf)
+2026-06-23T13:40:20.828-03:00  INFO 21724 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-23T13:40:20.881-03:00  INFO 21724 --- [           main] c.b.f.service.FaceBiometricsService      : Inicializando modelos DJL REAIS para detecção e reconhecimento facial (PyTorch)...
+----------- System Properties -----------
+java.specification.version: 21
+sun.cpu.isalist: amd64
+sun.jnu.encoding: Cp1252
+java.class.path: O:\JavaProjects\face-registry\backend\target\test-classes;O:\JavaProjects\face-registry\backend\target\classes;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.2.4\spring-boot-starter-web-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter\3.2.4\spring-boot-starter-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot\3.2.4\spring-boot-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.2.4\spring-boot-autoconfigure-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.2.4\spring-boot-starter-logging-3.2.4.jar;C:\Users\gbbts\.m2\repository\ch\qos\logback\logback-classic\1.4.14\logback-classic-1.4.14.jar;C:\Users\gbbts\.m2\repository\ch\qos\logback\logback-core\1.4.14\logback-core-1.4.14.jar;C:\Users\gbbts\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.21.1\log4j-to-slf4j-2.21.1.jar;C:\Users\gbbts\.m2\repository\org\apache\logging\log4j\log4j-api\2.21.1\log4j-api-2.21.1.jar;C:\Users\gbbts\.m2\repository\org\slf4j\jul-to-slf4j\2.0.12\jul-to-slf4j-2.0.12.jar;C:\Users\gbbts\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\gbbts\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.2.4\spring-boot-starter-json-3.2.4.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.15.4\jackson-databind-2.15.4.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.15.4\jackson-annotations-2.15.4.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.15.4\jackson-core-2.15.4.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.15.4\jackson-datatype-jdk8-2.15.4.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.15.4\jackson-datatype-jsr310-2.15.4.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.15.4\jackson-module-parameter-names-2.15.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.2.4\spring-boot-starter-tomcat-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.19\tomcat-embed-core-10.1.19.jar;C:\Users\gbbts\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.19\tomcat-embed-websocket-10.1.19.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-web\6.1.5\spring-web-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-beans\6.1.5\spring-beans-6.1.5.jar;C:\Users\gbbts\.m2\repository\io\micrometer\micrometer-observation\1.12.4\micrometer-observation-1.12.4.jar;C:\Users\gbbts\.m2\repository\io\micrometer\micrometer-commons\1.12.4\micrometer-commons-1.12.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-webmvc\6.1.5\spring-webmvc-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-aop\6.1.5\spring-aop-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-context\6.1.5\spring-context-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-expression\6.1.5\spring-expression-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\3.2.4\spring-boot-starter-data-jpa-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-aop\3.2.4\spring-boot-starter-aop-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\aspectj\aspectjweaver\1.9.21\aspectjweaver-1.9.21.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.2.4\spring-boot-starter-jdbc-3.2.4.jar;C:\Users\gbbts\.m2\repository\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-jdbc\6.1.5\spring-jdbc-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\hibernate\orm\hibernate-core\6.4.4.Final\hibernate-core-6.4.4.Final.jar;C:\Users\gbbts\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;C:\Users\gbbts\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;C:\Users\gbbts\.m2\repository\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar;C:\Users\gbbts\.m2\repository\org\hibernate\common\hibernate-commons-annotations\6.0.6.Final\hibernate-commons-annotations-6.0.6.Final.jar;C:\Users\gbbts\.m2\repository\io\smallrye\jandex\3.1.2\jandex-3.1.2.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\classmate\1.6.0\classmate-1.6.0.jar;C:\Users\gbbts\.m2\repository\net\bytebuddy\byte-buddy\1.14.12\byte-buddy-1.14.12.jar;C:\Users\gbbts\.m2\repository\org\glassfish\jaxb\jaxb-runtime\4.0.5\jaxb-runtime-4.0.5.jar;C:\Users\gbbts\.m2\repository\org\glassfish\jaxb\jaxb-core\4.0.5\jaxb-core-4.0.5.jar;C:\Users\gbbts\.m2\repository\org\eclipse\angus\angus-activation\2.0.2\angus-activation-2.0.2.jar;C:\Users\gbbts\.m2\repository\org\glassfish\jaxb\txw2\4.0.5\txw2-4.0.5.jar;C:\Users\gbbts\.m2\repository\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;C:\Users\gbbts\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;C:\Users\gbbts\.m2\repository\org\antlr\antlr4-runtime\4.13.0\antlr4-runtime-4.13.0.jar;C:\Users\gbbts\.m2\repository\org\springframework\data\spring-data-jpa\3.2.4\spring-data-jpa-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\data\spring-data-commons\3.2.4\spring-data-commons-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-orm\6.1.5\spring-orm-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-tx\6.1.5\spring-tx-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-aspects\6.1.5\spring-aspects-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-validation\3.2.4\spring-boot-starter-validation-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.19\tomcat-embed-el-10.1.19.jar;C:\Users\gbbts\.m2\repository\org\hibernate\validator\hibernate-validator\8.0.1.Final\hibernate-validator-8.0.1.Final.jar;C:\Users\gbbts\.m2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;C:\Users\gbbts\.m2\repository\org\postgresql\postgresql\42.6.2\postgresql-42.6.2.jar;C:\Users\gbbts\.m2\repository\org\checkerframework\checker-qual\3.31.0\checker-qual-3.31.0.jar;C:\Users\gbbts\.m2\repository\com\h2database\h2\2.2.224\h2-2.2.224.jar;C:\Users\gbbts\.m2\repository\org\projectlombok\lombok\1.18.36\lombok-1.18.36.jar;C:\Users\gbbts\.m2\repository\ai\djl\api\0.28.0\api-0.28.0.jar;C:\Users\gbbts\.m2\repository\com\google\code\gson\gson\2.10.1\gson-2.10.1.jar;C:\Users\gbbts\.m2\repository\net\java\dev\jna\jna\5.14.0\jna-5.14.0.jar;C:\Users\gbbts\.m2\repository\org\apache\commons\commons-compress\1.26.1\commons-compress-1.26.1.jar;C:\Users\gbbts\.m2\repository\commons-codec\commons-codec\1.16.1\commons-codec-1.16.1.jar;C:\Users\gbbts\.m2\repository\commons-io\commons-io\2.15.1\commons-io-2.15.1.jar;C:\Users\gbbts\.m2\repository\org\slf4j\slf4j-api\2.0.12\slf4j-api-2.0.12.jar;C:\Users\gbbts\.m2\repository\ai\djl\model-zoo\0.28.0\model-zoo-0.28.0.jar;C:\Users\gbbts\.m2\repository\ai\djl\pytorch\pytorch-engine\0.28.0\pytorch-engine-0.28.0.jar;C:\Users\gbbts\.m2\repository\ai\djl\pytorch\pytorch-model-zoo\0.28.0\pytorch-model-zoo-0.28.0.jar;C:\Users\gbbts\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-ui\2.5.0\springdoc-openapi-starter-webmvc-ui-2.5.0.jar;C:\Users\gbbts\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-api\2.5.0\springdoc-openapi-starter-webmvc-api-2.5.0.jar;C:\Users\gbbts\.m2\repository\org\springdoc\springdoc-openapi-starter-common\2.5.0\springdoc-openapi-starter-common-2.5.0.jar;C:\Users\gbbts\.m2\repository\io\swagger\core\v3\swagger-core-jakarta\2.2.21\swagger-core-jakarta-2.2.21.jar;C:\Users\gbbts\.m2\repository\org\apache\commons\commons-lang3\3.13.0\commons-lang3-3.13.0.jar;C:\Users\gbbts\.m2\repository\io\swagger\core\v3\swagger-annotations-jakarta\2.2.21\swagger-annotations-jakarta-2.2.21.jar;C:\Users\gbbts\.m2\repository\io\swagger\core\v3\swagger-models-jakarta\2.2.21\swagger-models-jakarta-2.2.21.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\dataformat\jackson-dataformat-yaml\2.15.4\jackson-dataformat-yaml-2.15.4.jar;C:\Users\gbbts\.m2\repository\org\webjars\swagger-ui\5.13.0\swagger-ui-5.13.0.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-test\3.2.4\spring-boot-starter-test-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-test\3.2.4\spring-boot-test-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\3.2.4\spring-boot-test-autoconfigure-3.2.4.jar;C:\Users\gbbts\.m2\repository\com\jayway\jsonpath\json-path\2.9.0\json-path-2.9.0.jar;C:\Users\gbbts\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.2\jakarta.xml.bind-api-4.0.2.jar;C:\Users\gbbts\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.3\jakarta.activation-api-2.1.3.jar;C:\Users\gbbts\.m2\repository\net\minidev\json-smart\2.5.0\json-smart-2.5.0.jar;C:\Users\gbbts\.m2\repository\net\minidev\accessors-smart\2.5.0\accessors-smart-2.5.0.jar;C:\Users\gbbts\.m2\repository\org\ow2\asm\asm\9.3\asm-9.3.jar;C:\Users\gbbts\.m2\repository\org\assertj\assertj-core\3.24.2\assertj-core-3.24.2.jar;C:\Users\gbbts\.m2\repository\org\awaitility\awaitility\4.2.0\awaitility-4.2.0.jar;C:\Users\gbbts\.m2\repository\org\hamcrest\hamcrest\2.2\hamcrest-2.2.jar;C:\Users\gbbts\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\gbbts\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\gbbts\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\gbbts\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\gbbts\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\gbbts\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\gbbts\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\gbbts\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;C:\Users\gbbts\.m2\repository\org\mockito\mockito-core\5.7.0\mockito-core-5.7.0.jar;C:\Users\gbbts\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.12\byte-buddy-agent-1.14.12.jar;C:\Users\gbbts\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\gbbts\.m2\repository\org\mockito\mockito-junit-jupiter\5.7.0\mockito-junit-jupiter-5.7.0.jar;C:\Users\gbbts\.m2\repository\org\skyscreamer\jsonassert\1.5.1\jsonassert-1.5.1.jar;C:\Users\gbbts\.m2\repository\com\vaadin\external\google\android-json\0.0.20131108.vaadin1\android-json-0.0.20131108.vaadin1.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-core\6.1.5\spring-core-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-jcl\6.1.5\spring-jcl-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-test\6.1.5\spring-test-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\xmlunit\xmlunit-core\2.9.1\xmlunit-core-2.9.1.jar;
+java.vm.vendor: Eclipse Adoptium
+sun.arch.data.model: 64
+user.variant: 
+java.vendor.url: https://adoptium.net/
+user.timezone: America/Sao_Paulo
+org.jboss.logging.provider: slf4j
+java.vm.specification.version: 21
+os.name: Windows 11
+sun.java.launcher: SUN_STANDARD
+user.country: BR
+sun.boot.library.path: C:\Users\gbbts\AppData\Roaming\Antigravity\User\globalStorage\pleiades.java-extension-pack-jdk\java\21\bin
+sun.java.command: C:\Users\gbbts\AppData\Local\Temp\surefire8788195181520595374\surefirebooter-20260623133905935_3.jar C:\Users\gbbts\AppData\Local\Temp\surefire8788195181520595374 2026-06-23T13-39-05_839-jvmRun1 surefire-20260623133905935_1tmp surefire_0-20260623133905935_2tmp
+jdk.debug: release
+surefire.test.class.path: O:\JavaProjects\face-registry\backend\target\test-classes;O:\JavaProjects\face-registry\backend\target\classes;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.2.4\spring-boot-starter-web-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter\3.2.4\spring-boot-starter-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot\3.2.4\spring-boot-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.2.4\spring-boot-autoconfigure-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.2.4\spring-boot-starter-logging-3.2.4.jar;C:\Users\gbbts\.m2\repository\ch\qos\logback\logback-classic\1.4.14\logback-classic-1.4.14.jar;C:\Users\gbbts\.m2\repository\ch\qos\logback\logback-core\1.4.14\logback-core-1.4.14.jar;C:\Users\gbbts\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.21.1\log4j-to-slf4j-2.21.1.jar;C:\Users\gbbts\.m2\repository\org\apache\logging\log4j\log4j-api\2.21.1\log4j-api-2.21.1.jar;C:\Users\gbbts\.m2\repository\org\slf4j\jul-to-slf4j\2.0.12\jul-to-slf4j-2.0.12.jar;C:\Users\gbbts\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\gbbts\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.2.4\spring-boot-starter-json-3.2.4.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.15.4\jackson-databind-2.15.4.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.15.4\jackson-annotations-2.15.4.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.15.4\jackson-core-2.15.4.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.15.4\jackson-datatype-jdk8-2.15.4.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.15.4\jackson-datatype-jsr310-2.15.4.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.15.4\jackson-module-parameter-names-2.15.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.2.4\spring-boot-starter-tomcat-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.19\tomcat-embed-core-10.1.19.jar;C:\Users\gbbts\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.19\tomcat-embed-websocket-10.1.19.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-web\6.1.5\spring-web-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-beans\6.1.5\spring-beans-6.1.5.jar;C:\Users\gbbts\.m2\repository\io\micrometer\micrometer-observation\1.12.4\micrometer-observation-1.12.4.jar;C:\Users\gbbts\.m2\repository\io\micrometer\micrometer-commons\1.12.4\micrometer-commons-1.12.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-webmvc\6.1.5\spring-webmvc-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-aop\6.1.5\spring-aop-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-context\6.1.5\spring-context-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-expression\6.1.5\spring-expression-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\3.2.4\spring-boot-starter-data-jpa-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-aop\3.2.4\spring-boot-starter-aop-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\aspectj\aspectjweaver\1.9.21\aspectjweaver-1.9.21.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.2.4\spring-boot-starter-jdbc-3.2.4.jar;C:\Users\gbbts\.m2\repository\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-jdbc\6.1.5\spring-jdbc-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\hibernate\orm\hibernate-core\6.4.4.Final\hibernate-core-6.4.4.Final.jar;C:\Users\gbbts\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;C:\Users\gbbts\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;C:\Users\gbbts\.m2\repository\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar;C:\Users\gbbts\.m2\repository\org\hibernate\common\hibernate-commons-annotations\6.0.6.Final\hibernate-commons-annotations-6.0.6.Final.jar;C:\Users\gbbts\.m2\repository\io\smallrye\jandex\3.1.2\jandex-3.1.2.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\classmate\1.6.0\classmate-1.6.0.jar;C:\Users\gbbts\.m2\repository\net\bytebuddy\byte-buddy\1.14.12\byte-buddy-1.14.12.jar;C:\Users\gbbts\.m2\repository\org\glassfish\jaxb\jaxb-runtime\4.0.5\jaxb-runtime-4.0.5.jar;C:\Users\gbbts\.m2\repository\org\glassfish\jaxb\jaxb-core\4.0.5\jaxb-core-4.0.5.jar;C:\Users\gbbts\.m2\repository\org\eclipse\angus\angus-activation\2.0.2\angus-activation-2.0.2.jar;C:\Users\gbbts\.m2\repository\org\glassfish\jaxb\txw2\4.0.5\txw2-4.0.5.jar;C:\Users\gbbts\.m2\repository\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;C:\Users\gbbts\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;C:\Users\gbbts\.m2\repository\org\antlr\antlr4-runtime\4.13.0\antlr4-runtime-4.13.0.jar;C:\Users\gbbts\.m2\repository\org\springframework\data\spring-data-jpa\3.2.4\spring-data-jpa-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\data\spring-data-commons\3.2.4\spring-data-commons-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-orm\6.1.5\spring-orm-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-tx\6.1.5\spring-tx-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-aspects\6.1.5\spring-aspects-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-validation\3.2.4\spring-boot-starter-validation-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.19\tomcat-embed-el-10.1.19.jar;C:\Users\gbbts\.m2\repository\org\hibernate\validator\hibernate-validator\8.0.1.Final\hibernate-validator-8.0.1.Final.jar;C:\Users\gbbts\.m2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;C:\Users\gbbts\.m2\repository\org\postgresql\postgresql\42.6.2\postgresql-42.6.2.jar;C:\Users\gbbts\.m2\repository\org\checkerframework\checker-qual\3.31.0\checker-qual-3.31.0.jar;C:\Users\gbbts\.m2\repository\com\h2database\h2\2.2.224\h2-2.2.224.jar;C:\Users\gbbts\.m2\repository\org\projectlombok\lombok\1.18.36\lombok-1.18.36.jar;C:\Users\gbbts\.m2\repository\ai\djl\api\0.28.0\api-0.28.0.jar;C:\Users\gbbts\.m2\repository\com\google\code\gson\gson\2.10.1\gson-2.10.1.jar;C:\Users\gbbts\.m2\repository\net\java\dev\jna\jna\5.14.0\jna-5.14.0.jar;C:\Users\gbbts\.m2\repository\org\apache\commons\commons-compress\1.26.1\commons-compress-1.26.1.jar;C:\Users\gbbts\.m2\repository\commons-codec\commons-codec\1.16.1\commons-codec-1.16.1.jar;C:\Users\gbbts\.m2\repository\commons-io\commons-io\2.15.1\commons-io-2.15.1.jar;C:\Users\gbbts\.m2\repository\org\slf4j\slf4j-api\2.0.12\slf4j-api-2.0.12.jar;C:\Users\gbbts\.m2\repository\ai\djl\model-zoo\0.28.0\model-zoo-0.28.0.jar;C:\Users\gbbts\.m2\repository\ai\djl\pytorch\pytorch-engine\0.28.0\pytorch-engine-0.28.0.jar;C:\Users\gbbts\.m2\repository\ai\djl\pytorch\pytorch-model-zoo\0.28.0\pytorch-model-zoo-0.28.0.jar;C:\Users\gbbts\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-ui\2.5.0\springdoc-openapi-starter-webmvc-ui-2.5.0.jar;C:\Users\gbbts\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-api\2.5.0\springdoc-openapi-starter-webmvc-api-2.5.0.jar;C:\Users\gbbts\.m2\repository\org\springdoc\springdoc-openapi-starter-common\2.5.0\springdoc-openapi-starter-common-2.5.0.jar;C:\Users\gbbts\.m2\repository\io\swagger\core\v3\swagger-core-jakarta\2.2.21\swagger-core-jakarta-2.2.21.jar;C:\Users\gbbts\.m2\repository\org\apache\commons\commons-lang3\3.13.0\commons-lang3-3.13.0.jar;C:\Users\gbbts\.m2\repository\io\swagger\core\v3\swagger-annotations-jakarta\2.2.21\swagger-annotations-jakarta-2.2.21.jar;C:\Users\gbbts\.m2\repository\io\swagger\core\v3\swagger-models-jakarta\2.2.21\swagger-models-jakarta-2.2.21.jar;C:\Users\gbbts\.m2\repository\com\fasterxml\jackson\dataformat\jackson-dataformat-yaml\2.15.4\jackson-dataformat-yaml-2.15.4.jar;C:\Users\gbbts\.m2\repository\org\webjars\swagger-ui\5.13.0\swagger-ui-5.13.0.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-starter-test\3.2.4\spring-boot-starter-test-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-test\3.2.4\spring-boot-test-3.2.4.jar;C:\Users\gbbts\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\3.2.4\spring-boot-test-autoconfigure-3.2.4.jar;C:\Users\gbbts\.m2\repository\com\jayway\jsonpath\json-path\2.9.0\json-path-2.9.0.jar;C:\Users\gbbts\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.2\jakarta.xml.bind-api-4.0.2.jar;C:\Users\gbbts\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.3\jakarta.activation-api-2.1.3.jar;C:\Users\gbbts\.m2\repository\net\minidev\json-smart\2.5.0\json-smart-2.5.0.jar;C:\Users\gbbts\.m2\repository\net\minidev\accessors-smart\2.5.0\accessors-smart-2.5.0.jar;C:\Users\gbbts\.m2\repository\org\ow2\asm\asm\9.3\asm-9.3.jar;C:\Users\gbbts\.m2\repository\org\assertj\assertj-core\3.24.2\assertj-core-3.24.2.jar;C:\Users\gbbts\.m2\repository\org\awaitility\awaitility\4.2.0\awaitility-4.2.0.jar;C:\Users\gbbts\.m2\repository\org\hamcrest\hamcrest\2.2\hamcrest-2.2.jar;C:\Users\gbbts\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\gbbts\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\gbbts\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\gbbts\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\gbbts\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\gbbts\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\gbbts\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\gbbts\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;C:\Users\gbbts\.m2\repository\org\mockito\mockito-core\5.7.0\mockito-core-5.7.0.jar;C:\Users\gbbts\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.12\byte-buddy-agent-1.14.12.jar;C:\Users\gbbts\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\gbbts\.m2\repository\org\mockito\mockito-junit-jupiter\5.7.0\mockito-junit-jupiter-5.7.0.jar;C:\Users\gbbts\.m2\repository\org\skyscreamer\jsonassert\1.5.1\jsonassert-1.5.1.jar;C:\Users\gbbts\.m2\repository\com\vaadin\external\google\android-json\0.0.20131108.vaadin1\android-json-0.0.20131108.vaadin1.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-core\6.1.5\spring-core-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-jcl\6.1.5\spring-jcl-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\springframework\spring-test\6.1.5\spring-test-6.1.5.jar;C:\Users\gbbts\.m2\repository\org\xmlunit\xmlunit-core\2.9.1\xmlunit-core-2.9.1.jar;
+sun.cpu.endian: little
+user.home: C:\Users\gbbts
+user.language: pt
+java.specification.vendor: Oracle Corporation
+java.version.date: 2026-01-20
+java.home: C:\Users\gbbts\AppData\Roaming\Antigravity\User\globalStorage\pleiades.java-extension-pack-jdk\java\21
+file.separator: \
+basedir: O:\JavaProjects\face-registry\backend
+java.vm.compressedOopsMode: Zero based
+line.separator: 
+
+java.vm.specification.vendor: Oracle Corporation
+java.specification.name: Java Platform API Specification
+FILE_LOG_CHARSET: UTF-8
+java.awt.headless: true
+surefire.real.class.path: C:\Users\gbbts\AppData\Local\Temp\surefire8788195181520595374\surefirebooter-20260623133905935_3.jar
+user.script: 
+sun.management.compiler: HotSpot 64-Bit Tiered Compilers
+java.runtime.version: 21.0.10+7-LTS
+user.name: gbbts
+stdout.encoding: Cp1252
+path.separator: ;
+os.version: 10.0
+java.runtime.name: OpenJDK Runtime Environment
+file.encoding: UTF-8
+jnidispatch.path: C:\Users\gbbts\AppData\Local\Temp\jna-98140070\jna5559283746032747379.dll
+java.vm.name: OpenJDK 64-Bit Server VM
+java.vendor.version: Temurin-21.0.10+7
+localRepository: C:\Users\gbbts\.m2\repository
+jna.loaded: true
+java.vendor.url.bug: https://github.com/adoptium/adoptium-support/issues
+java.io.tmpdir: C:\Users\gbbts\AppData\Local\Temp\
+com.zaxxer.hikari.pool_number: 2
+java.version: 21.0.10
+user.dir: O:\JavaProjects\face-registry\backend
+os.arch: amd64
+java.vm.specification.name: Java Virtual Machine Specification
+PID: 21724
+sun.os.patch.level: 
+CONSOLE_LOG_CHARSET: UTF-8
+native.encoding: Cp1252
+java.library.path: C:\Users\gbbts\AppData\Roaming\Antigravity\User\globalStorage\pleiades.java-extension-pack-jdk\java\21\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:/Users/gbbts/.gemini/antigravity-ide/bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\dotnet\;C:\Program Files\NVIDIA Corporation\NVIDIA app\NvDLISR;C:\Program Files\Git\cmd;C:\Users\gbbts\AppData\Local\Programs\Python\Python312;C:\Users\gbbts\AppData\Local\Programs\Python\Python312\Scripts;C:\Program Files\playit_gg\bin\;C:\Program Files\Go\bin;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\Eclipse Adoptium\jdk-21\bin\java.exe;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files (x86)\cloudflared\;C:\Users\gbbts\.local\bin;C:\msys64\mingw64\bin;C:\Users\gbbts\go\bin;C:\Users\gbbts\AppData\Local\Python\bin;C:\Users\gbbts\AppData\Local\Programs\Antigravity\bin;C:\Users\gbbts\AppData\Local\Programs\Antigravity IDE\bin;C:\Users\gbbts\AppData\Local\Programs\Microsoft VS Code\bin;.
+java.vm.info: mixed mode, sharing
+stderr.encoding: Cp1252
+java.vendor: Eclipse Adoptium
+java.vm.version: 21.0.10+7-LTS
+sun.io.unicode.encoding: UnicodeLittle
+apple.awt.UIElement: true
+java.class.version: 65.0
+
+--------- Environment Variables ---------
+PATH: C:/Users/gbbts/.gemini/antigravity-ide/bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\dotnet\;C:\Program Files\NVIDIA Corporation\NVIDIA app\NvDLISR;C:\Program Files\Git\cmd;C:\Users\gbbts\AppData\Local\Programs\Python\Python312;C:\Users\gbbts\AppData\Local\Programs\Python\Python312\Scripts;C:\Program Files\playit_gg\bin\;C:\Program Files\Go\bin;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\Eclipse Adoptium\jdk-21\bin\java.exe;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files (x86)\cloudflared\;C:\Users\gbbts\.local\bin;C:\msys64\mingw64\bin;C:\Users\gbbts\go\bin;C:\Users\gbbts\AppData\Local\Python\bin;C:\Users\gbbts\AppData\Local\Programs\Antigravity\bin;C:\Users\gbbts\AppData\Local\Programs\Antigravity IDE\bin;C:\Users\gbbts\AppData\Local\Programs\Microsoft VS Code\bin
+USERDOMAIN_ROAMINGPROFILE: DESKTOP
+ANTIGRAVITY_EDITOR_APP_ROOT: c:\Users\gbbts\AppData\Local\Programs\Antigravity IDE\resources\app
+EFC_9260_1592913036: 1
+PROCESSOR_LEVEL: 25
+SYSTEMDRIVE: C:
+ANTIGRAVITY_LS_ADDRESS: localhost:53137
+ANTIGRAVITY_CSRF_TOKEN: *********
+SESSIONNAME: Console
+ALLUSERSPROFILE: C:\ProgramData
+PROCESSOR_ARCHITECTURE: AMD64
+DRIVERDATA: C:\Windows\System32\Drivers\DriverData
+VSCODE_PID: 12144
+MAVEN_HOME: C:\Users\gbbts\AppData\Local\Programs\IntelliJ IDEA\plugins\maven\lib\maven3
+PROGRAMFILES: C:\Program Files
+PSMODULEPATH: C:\Users\gbbts\OneDrive\Documentos\WindowsPowerShell\Modules;C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules
+PROGRAMDATA: C:\ProgramData
+USERNAME: gbbts
+VSCODE_NLS_CONFIG: {"userLocale":"en-us","osLocale":"pt-br","resolvedLanguage":"en","defaultMessagesFile":"C:\\Users\\gbbts\\AppData\\Local\\Programs\\Antigravity IDE\\resources\\app\\out\\nls.messages.json","locale":"en-us","availableLanguages":{}}
+WDIR: O:\
+CHROME_CRASHPAD_PIPE_NAME: \\.\pipe\crashpad_12144_SPWKYKRKAJWXVBWU
+ONEDRIVE: C:\Users\gbbts\OneDrive
+PATHEXT: .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.CPL
+ONEDRIVECONSUMER: C:\Users\gbbts\OneDrive
+CLASSWORLDS_JAR: "C:\Users\gbbts\AppData\Local\Programs\IntelliJ IDEA\plugins\maven\lib\maven3\boot\plexus-classworlds-2.9.0.jar"
+GOPATH: C:\Users\gbbts\go
+VSCODE_CODE_CACHE_PATH: C:\Users\gbbts\AppData\Roaming\Antigravity IDE\CachedData\def9583aef9852ff94cb0dea16ede9bb6b095b30
+WINDIR: C:\WINDOWS
+HOMEPATH: \Users\gbbts
+PROCESSOR_IDENTIFIER: AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD
+PUBLIC: C:\Users\Public
+=EXITCODE: 00000000
+ANTIGRAVITY_SOURCE_METADATA: {"tool":{"conversationId":"a8cba3d5-11ef-4536-b59d-6577d7d76bf2","stepIndex":398,"toolCall":{"id":"w0wa4srr","name":"run_command","argumentsJson":"{\"CommandLine\":\"$env:JAVA_HOME = \\\"C:\\\\Users\\\\gbbts\\\\AppData\\\\Roaming\\\\Antigravity\\\\User\\\\globalStorage\\\\pleiades.java-extension-pack-jdk\\\\java\\\\21\\\"; \\u0026 \\\"C:\\\\Users\\\\gbbts\\\\AppData\\\\Local\\\\Programs\\\\IntelliJ IDEA\\\\plugins\\\\maven\\\\lib\\\\maven3\\\\bin\\\\mvn.cmd\\\" test\",\"Cwd\":\"o:\\\\JavaProjects\\\\face-registry\\\\backend\",\"WaitMsBeforeAsync\":2000,\"toolAction\":\"Running Maven tests\",\"toolSummary\":\"Run Maven tests\"}","thinkingSignature":"Em4KbAEMOdbHrQjrDCzbv5k5ePNr4asO8wcmZ2f2JG77c54aLZeUd2ZEKLju4tqEOvXyUkTaK8zHYrT0h6ov2aUas/aGDZZllS2hA7LNmZ30wUNZYo/MKZGonsQNprPZcO5MfVRpqRBUtqnnKGtCNg==","originalName":"run_command"}}}
+LOCALAPPDATA: C:\Users\gbbts\AppData\Local
+COMMONPROGRAMFILES(X86): C:\Program Files (x86)\Common Files
+USERDOMAIN: DESKTOP
+LOGONSERVER: \\DESKTOP
+=O:: O:\JavaProjects\face-registry\backend
+JAVA_HOME: C:\Users\gbbts\AppData\Roaming\Antigravity\User\globalStorage\pleiades.java-extension-pack-jdk\java\21
+PROMPT: $P$G
+ANTIGRAVITY_TRAJECTORY_ID: c8ea6ffa-1f36-4157-9857-ff21c9ca3a35
+PROGRAMFILES(X86): C:\Program Files (x86)
+ERROR_CODE: 0
+EXEC_DIR: O:\JavaProjects\face-registry\backend
+MAVEN_OPTS: --enable-native-access=ALL-UNNAMED 
+APPDATA: C:\Users\gbbts\AppData\Roaming
+PROGRAMW6432: C:\Program Files
+SYSTEMROOT: C:\WINDOWS
+MAVEN_CMD_LINE_ARGS: test
+VSCODE_CWD: C:\Users\gbbts\AppData\Local\Programs\Antigravity IDE
+OS: Windows_NT
+COMMONPROGRAMW6432: C:\Program Files\Common Files
+COMPUTERNAME: DESKTOP
+COMMONPROGRAMFILES: C:\Program Files\Common Files
+COMSPEC: C:\WINDOWS\system32\cmd.exe
+JAVACMD: C:\Users\gbbts\AppData\Roaming\Antigravity\User\globalStorage\pleiades.java-extension-pack-jdk\java\21\bin\java.exe
+MAVEN_PROJECTBASEDIR: O:\JavaProjects\face-registry\backend
+FARGODATAPATH: C:\Users\gbbts\Documents\My Games\Terraria\tModLoader\Dev
+PROCESSOR_REVISION: 5000
+CLASSWORLDS_LAUNCHER: org.codehaus.plexus.classworlds.launcher.Launcher
+TEMP: C:\Users\gbbts\AppData\Local\Temp
+HOMEDRIVE: C:
+USERPROFILE: C:\Users\gbbts
+TMP: C:\Users\gbbts\AppData\Local\Temp
+NUMBER_OF_PROCESSORS: 16
+ANTIGRAVITY_AGENT: 1
+JVMCONFIG: \.mvn\jvm.config
+VSCODE_IPC_HOOK: \\.\pipe\2c6ea420-1.107.0-main-sock
+
+-------------- Directories --------------
+temp directory: C:\Users\gbbts\AppData\Local\Temp
+DJL cache directory: C:\Users\gbbts\.djl.ai
+Engine cache directory: C:\Users\gbbts\.djl.ai
+
+------------------ CUDA -----------------
+GPU Count: 1
+CUDA: 065
+ARCH: 86
+GPU(0) memory used: 1093140480 bytes
+
+----------------- Engines ---------------
+DJL version: 0.28.0
+Default Engine: PyTorch:2.2.2, capabilities: [
+	OPENMP,
+	MKL,
+	MKLDNN,
+]
+PyTorch Library: C:\Users\gbbts\.djl.ai\pytorch\2.2.2-cpu-win-x86_64
+Default Device: cpu()
+PyTorch: 2
+2026-06-23T13:40:20.887-03:00  INFO 21724 --- [           main] c.b.f.service.FaceBiometricsService      : Quantidade de GPUs detectadas pela DJL: 0
+2026-06-23T13:40:20.887-03:00  INFO 21724 --- [           main] c.b.f.service.FaceBiometricsService      : Dispositivo selecionado para inferência: cpu()
+2026-06-23T13:40:21.341-03:00  INFO 21724 --- [           main] c.b.f.service.FaceBiometricsService      : Dispositivo do modelo de detecção facial: cpu()
+2026-06-23T13:40:21.341-03:00  INFO 21724 --- [           main] c.b.f.service.FaceBiometricsService      : Dispositivo do modelo de reconhecimento facial: cpu()
+2026-06-23T13:40:21.341-03:00  INFO 21724 --- [           main] c.b.f.service.FaceBiometricsService      : Motor biométrico com Modelos Reais DJL (RetinaFace e FaceNet/PyTorch) carregados com sucesso!
+2026-06-23T13:40:21.343-03:00  INFO 21724 --- [           main] c.b.faceregistry.service.UserService     : Inicializando cache biométrico em memória...
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.cpf,
+        u1_0.name,
+        u1_0.embedding 
+    from
+        users u1_0
+2026-06-23T13:40:21.347-03:00  INFO 21724 --- [           main] c.b.faceregistry.service.UserService     : Cache biométrico inicializado com 0 usuários.
+2026-06-23T13:40:21.390-03:00  WARN 21724 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-23T13:40:21.515-03:00  INFO 21724 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:faceregistry'
+2026-06-23T13:40:21.531-03:00  INFO 21724 --- [           main] c.b.faceregistry.DatabasePopulationTest  : Started DatabasePopulationTest in 1.057 seconds (process running for 75.47)
+═══════════════════════════════════════════════════════════
+  DATABASE POPULATION TEST
+  Diretório de exemplos: O:\JavaProjects\face-registry\examples
+═══════════════════════════════════════════════════════════
+Hibernate: 
+    select
+        count(*) 
+    from
+        users u1_0
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.cpf,
+        u1_0.created_at,
+        u1_0.embedding,
+        u1_0.name,
+        u1_0.photo 
+    from
+        users u1_0
+2026-06-23T13:40:21.560-03:00  INFO 21724 --- [           main] c.b.faceregistry.service.UserService     : Inicializando cache biométrico em memória...
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.cpf,
+        u1_0.name,
+        u1_0.embedding 
+    from
+        users u1_0
+2026-06-23T13:40:21.561-03:00  INFO 21724 --- [           main] c.b.faceregistry.service.UserService     : Cache biométrico inicializado com 0 usuários.
+Hibernate: 
+    select
+        count(*) 
+    from
+        users u1_0
+
+🗑️  Banco limpo: 0 registros removidos. Total atual: 0
+]]></system-out>
+  </testcase>
+  <testcase name="registerFamousPeople" classname="com.batistell.faceregistry.DatabasePopulationTest" time="3.383">
+    <system-out><![CDATA[
+📸 Cadastrando famosos...
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Barack Obama (CPF 64657075942) cadastrado com obama_64657075942_1.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Joe Biden (CPF 21603180001) cadastrado com biden_21603180001_1.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Elon Musk (CPF 92230775596) cadastrado com musk_92230775596_1.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Lionel Messi (CPF 74394356644) cadastrado com messi_74394356644_1.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Kana (CPF 62079744844) cadastrado com kana_62079744844_1.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Lena (CPF 83992409821) cadastrado com lena_83992409821_1.jpg
+]]></system-out>
+  </testcase>
+  <testcase name="validateAndCleanSecondaryPhotos" classname="com.batistell.faceregistry.DatabasePopulationTest" time="7.435">
+    <system-out><![CDATA[
+🔍 Validando fotos secundárias dos famosos...
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.cpf,
+        u1_0.created_at,
+        u1_0.embedding,
+        u1_0.name,
+        u1_0.photo 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=?
+
+  👤 Barack Obama — 3 fotos secundárias encontradas
+    ✅ obama_64657075942_2.jpg — similaridade: 0,9923 ✓
+    ✅ obama_64657075942_3.jpg — similaridade: 0,8134 ✓
+    ✅ obama_64657075942_4.jpg — similaridade: 0,9923 ✓
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.cpf,
+        u1_0.created_at,
+        u1_0.embedding,
+        u1_0.name,
+        u1_0.photo 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=?
+
+  👤 Joe Biden — 1 fotos secundárias encontradas
+    ✅ biden_21603180001_2.jpg — similaridade: 0,6262 ✓
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.cpf,
+        u1_0.created_at,
+        u1_0.embedding,
+        u1_0.name,
+        u1_0.photo 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=?
+
+  👤 Elon Musk — 1 fotos secundárias encontradas
+    ✅ musk_92230775596_2.jpg — similaridade: 0,8436 ✓
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.cpf,
+        u1_0.created_at,
+        u1_0.embedding,
+        u1_0.name,
+        u1_0.photo 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=?
+
+  👤 Lionel Messi — 3 fotos secundárias encontradas
+    ✅ messi_74394356644_2.jpg — similaridade: 0,8483 ✓
+    ✅ messi_74394356644_3.jpg — similaridade: 0,7026 ✓
+    ✅ messi_74394356644_alt.jpg — similaridade: 0,9780 ✓
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.cpf,
+        u1_0.created_at,
+        u1_0.embedding,
+        u1_0.name,
+        u1_0.photo 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=?
+
+  👤 Kana — 3 fotos secundárias encontradas
+    ✅ kana_62079744844_3.jpg — similaridade: 0,7316 ✓
+    ✅ kana_62079744844_5.jpg — similaridade: 0,7636 ✓
+    ✅ kana_62079744844_alt.jpg — similaridade: 0,7636 ✓
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.cpf,
+        u1_0.created_at,
+        u1_0.embedding,
+        u1_0.name,
+        u1_0.photo 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=?
+
+  👤 Lena — 0 fotos secundárias encontradas
+
+📊 Resultado da validação: 11 válidas, 0 excluídas
+]]></system-out>
+  </testcase>
+  <testcase name="registerRandomUsers" classname="com.batistell.faceregistry.DatabasePopulationTest" time="32.049">
+    <system-out><![CDATA[
+👥 Cadastrando randomusers e novos usuários...
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ João Silva (CPF 64260072420) cadastrado com randomuser_men_64260072420_1.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Ana Clara (CPF 51384313400) cadastrado com randomuser_women_51384313400_1.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Pedro Santos (CPF 60840930941) cadastrado com randomuser_men_60840930941_2.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Maria Eduarda (CPF 82894837593) cadastrado com randomuser_women_82894837593_2.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Lucas Oliveira (CPF 46944701162) cadastrado com randomuser_men_46944701162_3.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Juliana Santos (CPF 41579154450) cadastrado com randomuser_women_41579154450_3.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Gabriel Souza (CPF 99120991762) cadastrado com randomuser_men_99120991762_4.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Camila Oliveira (CPF 27305124540) cadastrado com randomuser_women_27305124540_4.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Matheus Costa (CPF 53957813824) cadastrado com randomuser_men_53957813824_5.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Fernanda Costa (CPF 08346178549) cadastrado com randomuser_women_08346178549_5.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Rafael Pereira (CPF 17325664109) cadastrado com randomuser_men_17325664109_6.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Beatriz Souza (CPF 46051984402) cadastrado com randomuser_women_46051984402_6.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Bruno Ferreira (CPF 66327832016) cadastrado com randomuser_men_66327832016_7.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Larissa Lima (CPF 65559876933) cadastrado com randomuser_women_65559876933_7.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ André Almeida (CPF 65448791182) cadastrado com randomuser_men_65448791182_8.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Patrícia Ferreira (CPF 19896611068) cadastrado com randomuser_women_19896611068_8.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Thiago Rodrigues (CPF 51710222751) cadastrado com randomuser_men_51710222751_9.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Amanda Almeida (CPF 88763342626) cadastrado com randomuser_women_88763342626_9.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Felipe Lima (CPF 82014751005) cadastrado com randomuser_men_82014751005_10.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Carolina Rodrigues (CPF 55959675951) cadastrado com randomuser_women_55959675951_10.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Diego Martins (CPF 61435092040) cadastrado com randomuser_men_61435092040_11.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Isabela Martins (CPF 14312918201) cadastrado com randomuser_women_14312918201_11.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Gustavo Nascimento (CPF 54818598828) cadastrado com randomuser_men_54818598828_12.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Letícia Nascimento (CPF 65524170201) cadastrado com randomuser_women_65524170201_12.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Marcos Araújo (CPF 64240262232) cadastrado com randomuser_men_64240262232_13.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Mariana Araújo (CPF 54841358269) cadastrado com randomuser_women_54841358269_13.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Rodrigo Ribeiro (CPF 34544362067) cadastrado com randomuser_men_34544362067_14.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Gabriela Ribeiro (CPF 98631375101) cadastrado com randomuser_women_98631375101_14.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Henrique Carvalho (CPF 25979994750) cadastrado com randomuser_men_25979994750_15.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Rafaela Carvalho (CPF 73467486037) cadastrado com randomuser_women_73467486037_15.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Daniel Gomes (CPF 06640583453) cadastrado com randomuser_men_06640583453_16.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Bruna Gomes (CPF 95361504335) cadastrado com randomuser_women_95361504335_16.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+  ⚠️ Leonardo Barbosa (CPF 54562891300) — ERRO: Esta face já está cadastrada no sistema sob o CPF: 259.799.947-50 (Nome: Henrique Carvalho).
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Natália Barbosa (CPF 12597557111) cadastrado com randomuser_women_12597557111_17.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Vinícius Monteiro (CPF 03274386065) cadastrado com randomuser_men_03274386065_18.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Vanessa Monteiro (CPF 84449464605) cadastrado com randomuser_women_84449464605_18.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Eduardo Correia (CPF 85291769360) cadastrado com randomuser_men_85291769360_19.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Tatiana Correia (CPF 71845993497) cadastrado com randomuser_women_71845993497_19.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Carlos Cardoso (CPF 90637605071) cadastrado com randomuser_men_90637605071_20.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Daniela Cardoso (CPF 10582480655) cadastrado com randomuser_women_10582480655_20.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Renato Teixeira (CPF 45600161352) cadastrado com randomuser_men_45600161352_21.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Priscila Teixeira (CPF 62049169710) cadastrado com randomuser_women_62049169710_21.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Fábio Vieira (CPF 76169607580) cadastrado com randomuser_men_76169607580_22.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Renata Vieira (CPF 56104871968) cadastrado com randomuser_women_56104871968_22.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Ricardo Mendes (CPF 75312541583) cadastrado com randomuser_men_75312541583_23.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Aline Mendes (CPF 69021237997) cadastrado com randomuser_women_69021237997_23.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Paulo Moreira (CPF 50045283907) cadastrado com randomuser_men_50045283907_24.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Bianca Moreira (CPF 18216928963) cadastrado com randomuser_women_18216928963_24.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Roberto Castro (CPF 09522436879) cadastrado com randomuser_men_09522436879_25.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Cristina Castro (CPF 66466762831) cadastrado com randomuser_women_66466762831_25.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Alexandre Pinto (CPF 19131875270) cadastrado com randomuser_men_19131875270_26.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Débora Pinto (CPF 98688019150) cadastrado com randomuser_women_98688019150_26.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Fernando Rocha (CPF 44591124428) cadastrado com randomuser_men_44591124428_27.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Elaine Rocha (CPF 63132214604) cadastrado com randomuser_women_63132214604_27.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Marcelo Dias (CPF 92871527059) cadastrado com randomuser_men_92871527059_28.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Flávia Dias (CPF 45030746951) cadastrado com randomuser_women_45030746951_28.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Leandro Campos (CPF 22855686067) cadastrado com randomuser_men_22855686067_29.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Helena Campos (CPF 41749886502) cadastrado com randomuser_women_41749886502_29.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Caio Nunes (CPF 48658142566) cadastrado com randomuser_men_48658142566_30.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Ingrid Nunes (CPF 43367000108) cadastrado com randomuser_women_43367000108_30.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Hugo Machado (CPF 03401051946) cadastrado com randomuser_men_03401051946_31.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Jéssica Machado (CPF 94340887129) cadastrado com randomuser_women_94340887129_31.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Arthur Marques (CPF 79792815783) cadastrado com randomuser_men_79792815783_32.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Karen Marques (CPF 00054353238) cadastrado com randomuser_women_00054353238_32.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Samuel Freitas (CPF 00830306030) cadastrado com randomuser_men_00830306030_33.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Laura Andrade (CPF 17716631543) cadastrado com randomuser_women_17716631543_33.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Otávio Lopes (CPF 72845466625) cadastrado com randomuser_men_72845466625_34.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Mônica Freitas (CPF 59059364473) cadastrado com randomuser_women_59059364473_34.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Victor Duarte (CPF 62578181411) cadastrado com randomuser_men_62578181411_35.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+  ⚠️ Nathalie Lopes (CPF 55245156083) — ERRO: Esta face já está cadastrada no sistema sob o CPF: 655.241.702-01 (Nome: Letícia Nascimento).
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Renan Moura (CPF 05388311627) cadastrado com randomuser_men_05388311627_36.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Olívia Duarte (CPF 63909413404) cadastrado com randomuser_women_63909413404_36.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ William Cavalcanti (CPF 08957936440) cadastrado com randomuser_men_08957936440_37.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Paula Moura (CPF 48471863626) cadastrado com randomuser_women_48471863626_37.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Júlio Ramos (CPF 04316510193) cadastrado com randomuser_men_04316510193_38.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Raquel Cavalcanti (CPF 04009077638) cadastrado com randomuser_women_04009077638_38.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Luciano Cunha (CPF 65751310420) cadastrado com randomuser_men_65751310420_39.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Sandra Ramos (CPF 43616452643) cadastrado com randomuser_women_43616452643_39.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Adriano Borges (CPF 01907209565) cadastrado com randomuser_men_01907209565_40.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Simone Cunha (CPF 00653671113) cadastrado com randomuser_women_00653671113_40.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Bernardo Pires (CPF 72930696508) cadastrado com randomuser_men_72930696508_41.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Talita Borges (CPF 19908886401) cadastrado com randomuser_women_19908886401_41.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Matias Fonseca (CPF 62980078140) cadastrado com randomuser_men_62980078140_42.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Úrsula Pires (CPF 04202812905) cadastrado com randomuser_women_04202812905_42.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Nelson Melo (CPF 62500907465) cadastrado com randomuser_men_62500907465_43.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Valéria Fonseca (CPF 01433197367) cadastrado com randomuser_women_01433197367_43.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Sérgio Rezende (CPF 22567512446) cadastrado com randomuser_men_22567512446_44.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Yasmin Melo (CPF 39182895678) cadastrado com randomuser_women_39182895678_44.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Maurício Fernandes (CPF 69140067092) cadastrado com randomuser_men_69140067092_45.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Zélia Rezende (CPF 85395589473) cadastrado com randomuser_women_85395589473_45.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Emerson Azevedo (CPF 78750771680) cadastrado com randomuser_men_78750771680_46.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Adriana Fernandes (CPF 83138754104) cadastrado com randomuser_women_83138754104_46.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Douglas Braga (CPF 40592760065) cadastrado com randomuser_men_40592760065_47.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+  ⚠️ Bárbara Azevedo (CPF 32691454894) — ERRO: Esta face já está cadastrada no sistema sob o CPF: 182.169.289-63 (Nome: Bianca Moreira).
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Cristiano Xavier (CPF 39153368231) cadastrado com randomuser_men_39153368231_48.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+  ⚠️ Carla Braga (CPF 84854128933) — ERRO: Esta face já está cadastrada no sistema sob o CPF: 655.241.702-01 (Nome: Letícia Nascimento).
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Igor Batista (CPF 78853867671) cadastrado com randomuser_men_78853867671_49.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Diana Xavier (CPF 07741675486) cadastrado com randomuser_women_07741675486_49.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Cauan Nogueira (CPF 18866772631) cadastrado com randomuser_men_18866772631_50.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Érika Batista (CPF 53814389824) cadastrado com randomuser_women_53814389824_50.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Adam Djili (CPF 38580566428) cadastrado com adam-djili_38580566428_51.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Adrienne Andersen (CPF 11798024977) cadastrado com adrienne-andersen_11798024977_52.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Alejandro Peralta (CPF 37325084552) cadastrado com alejandro-peralta_37325084552_53.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Alirezazare (CPF 87853375794) cadastrado com alirezazare_87853375794_54.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Anastasia Shuraeva (CPF 12489264125) cadastrado com anastasia-shuraeva_12489264125_55.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Angela Roma (CPF 19482729544) cadastrado com angela-roma_19482729544_56.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Anntarazevich (CPF 76387258081) cadastrado com anntarazevich_76387258081_57.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Aog Pixels (CPF 61575172046) cadastrado com aog-pixels_61575172046_58.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Avonnephoto (CPF 53629517501) cadastrado com avonnephoto_53629517501_59.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Barcelos Fotos (CPF 63658291168) cadastrado com barcelos-fotos_63658291168_60.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Bestbe Models (CPF 83918535517) cadastrado com bestbe-models_83918535517_61.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Breston Kenya (CPF 38799470829) cadastrado com breston-kenya_38799470829_62.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Cottonbro (CPF 31432419935) cadastrado com cottonbro_31432419935_63.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Cottonbro (CPF 16667966035) cadastrado com cottonbro_16667966035_64.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Cottonbro (CPF 56892515509) cadastrado com cottonbro_56892515509_65.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Davdkuko (CPF 72286688478) cadastrado com davdkuko_72286688478_66.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ David Florin (CPF 87394936953) cadastrado com david-florin_87394936953_67.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Gipain (CPF 00454599323) cadastrado com gipain_00454599323_68.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Iamikeee (CPF 85735282573) cadastrado com iamikeee_85735282573_69.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Ibadat Singh (CPF 17194599830) cadastrado com ibadat-singh_17194599830_70.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Ivan S (CPF 71936418169) cadastrado com ivan-s_71936418169_71.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Jessicanunes (CPF 49198386620) cadastrado com jessicanunes_49198386620_72.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Julia Kuzenkov (CPF 88591024729) cadastrado com julia-kuzenkov_88591024729_73.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Kalyn Kostov (CPF 95318235964) cadastrado com kalyn-kostov_95318235964_74.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Kevinbidwell (CPF 09476950528) cadastrado com kevinbidwell_09476950528_75.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Lolarussian (CPF 33832730320) cadastrado com lolarussian_33832730320_76.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Luri (CPF 28889325801) cadastrado com luri_28889325801_77.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Marcelo Moreira (CPF 74218050953) cadastrado com marcelo-moreira_74218050953_78.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Mohamedelaminemsiouri (CPF 88803120068) cadastrado com mohamedelaminemsiouri_88803120068_79.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Murat Esibatir (CPF 13258135592) cadastrado com murat-esibatir_13258135592_80.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ M Y Dogar (CPF 15722400670) cadastrado com m-y-dogar_15722400670_81.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Nicole Berro (CPF 85944039337) cadastrado com nicole-berro_85944039337_82.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Ninazey (CPF 29091241004) cadastrado com ninazey_29091241004_83.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Renzylaurel (CPF 38698105300) cadastrado com renzylaurel_38698105300_84.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Rquiros (CPF 34057143548) cadastrado com rquiros_34057143548_85.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Sam Lion (CPF 20184796520) cadastrado com sam-lion_20184796520_86.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Slaytinaaaa (CPF 13944514238) cadastrado com slaytinaaaa_13944514238_87.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Steinportraits (CPF 50894433199) cadastrado com steinportraits_50894433199_88.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Streetwindy (CPF 72664038800) cadastrado com streetwindy_72664038800_89.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Tkirkgoz (CPF 40345886755) cadastrado com tkirkgoz_40345886755_90.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Visoesdomundo (CPF 19393028206) cadastrado com visoesdomundo_19393028206_91.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Visoesdomundo (CPF 52278190504) cadastrado com visoesdomundo_52278190504_92.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Wesrocha (CPF 75067969296) cadastrado com wesrocha_75067969296_93.jpg
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.cpf=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        users
+        (cpf, created_at, embedding, name, photo, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+  ✅ Xperimental (CPF 03124515552) cadastrado com xperimental_03124515552_94.jpg
+
+📊 Total de usuários de teste/random cadastrados: 140
+]]></system-out>
+  </testcase>
+  <testcase name="printSummary" classname="com.batistell.faceregistry.DatabasePopulationTest" time="0.038">
+    <system-out><![CDATA[Hibernate: 
+    select
+        count(*) 
+    from
+        users u1_0
+
+═══════════════════════════════════════════════════════════
+  RESUMO FINAL
+═══════════════════════════════════════════════════════════
+  Total cadastrado neste teste: 146
+  Fotos secundárias validadas:  11
+  Arquivos inválidos excluídos: 0
+  Total de registros no banco:  146
+═══════════════════════════════════════════════════════════
+
+📋 Registros no banco:
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.cpf,
+        u1_0.created_at,
+        u1_0.embedding,
+        u1_0.name,
+        u1_0.photo 
+    from
+        users u1_0
+  • Barack Obama              CPF 64657075942  Embedding: ✅ 512-D
+  • Joe Biden                 CPF 21603180001  Embedding: ✅ 512-D
+  • Elon Musk                 CPF 92230775596  Embedding: ✅ 512-D
+  • Lionel Messi              CPF 74394356644  Embedding: ✅ 512-D
+  • Kana                      CPF 62079744844  Embedding: ✅ 512-D
+  • Lena                      CPF 83992409821  Embedding: ✅ 512-D
+  • João Silva                CPF 64260072420  Embedding: ✅ 512-D
+  • Ana Clara                 CPF 51384313400  Embedding: ✅ 512-D
+  • Pedro Santos              CPF 60840930941  Embedding: ✅ 512-D
+  • Maria Eduarda             CPF 82894837593  Embedding: ✅ 512-D
+  • Lucas Oliveira            CPF 46944701162  Embedding: ✅ 512-D
+  • Juliana Santos            CPF 41579154450  Embedding: ✅ 512-D
+  • Gabriel Souza             CPF 99120991762  Embedding: ✅ 512-D
+  • Camila Oliveira           CPF 27305124540  Embedding: ✅ 512-D
+  • Matheus Costa             CPF 53957813824  Embedding: ✅ 512-D
+  • Fernanda Costa            CPF 08346178549  Embedding: ✅ 512-D
+  • Rafael Pereira            CPF 17325664109  Embedding: ✅ 512-D
+  • Beatriz Souza             CPF 46051984402  Embedding: ✅ 512-D
+  • Bruno Ferreira            CPF 66327832016  Embedding: ✅ 512-D
+  • Larissa Lima              CPF 65559876933  Embedding: ✅ 512-D
+  • André Almeida             CPF 65448791182  Embedding: ✅ 512-D
+  • Patrícia Ferreira         CPF 19896611068  Embedding: ✅ 512-D
+  • Thiago Rodrigues          CPF 51710222751  Embedding: ✅ 512-D
+  • Amanda Almeida            CPF 88763342626  Embedding: ✅ 512-D
+  • Felipe Lima               CPF 82014751005  Embedding: ✅ 512-D
+  • Carolina Rodrigues        CPF 55959675951  Embedding: ✅ 512-D
+  • Diego Martins             CPF 61435092040  Embedding: ✅ 512-D
+  • Isabela Martins           CPF 14312918201  Embedding: ✅ 512-D
+  • Gustavo Nascimento        CPF 54818598828  Embedding: ✅ 512-D
+  • Letícia Nascimento        CPF 65524170201  Embedding: ✅ 512-D
+  • Marcos Araújo             CPF 64240262232  Embedding: ✅ 512-D
+  • Mariana Araújo            CPF 54841358269  Embedding: ✅ 512-D
+  • Rodrigo Ribeiro           CPF 34544362067  Embedding: ✅ 512-D
+  • Gabriela Ribeiro          CPF 98631375101  Embedding: ✅ 512-D
+  • Henrique Carvalho         CPF 25979994750  Embedding: ✅ 512-D
+  • Rafaela Carvalho          CPF 73467486037  Embedding: ✅ 512-D
+  • Daniel Gomes              CPF 06640583453  Embedding: ✅ 512-D
+  • Bruna Gomes               CPF 95361504335  Embedding: ✅ 512-D
+  • Natália Barbosa           CPF 12597557111  Embedding: ✅ 512-D
+  • Vinícius Monteiro         CPF 03274386065  Embedding: ✅ 512-D
+  • Vanessa Monteiro          CPF 84449464605  Embedding: ✅ 512-D
+  • Eduardo Correia           CPF 85291769360  Embedding: ✅ 512-D
+  • Tatiana Correia           CPF 71845993497  Embedding: ✅ 512-D
+  • Carlos Cardoso            CPF 90637605071  Embedding: ✅ 512-D
+  • Daniela Cardoso           CPF 10582480655  Embedding: ✅ 512-D
+  • Renato Teixeira           CPF 45600161352  Embedding: ✅ 512-D
+  • Priscila Teixeira         CPF 62049169710  Embedding: ✅ 512-D
+  • Fábio Vieira              CPF 76169607580  Embedding: ✅ 512-D
+  • Renata Vieira             CPF 56104871968  Embedding: ✅ 512-D
+  • Ricardo Mendes            CPF 75312541583  Embedding: ✅ 512-D
+  • Aline Mendes              CPF 69021237997  Embedding: ✅ 512-D
+  • Paulo Moreira             CPF 50045283907  Embedding: ✅ 512-D
+  • Bianca Moreira            CPF 18216928963  Embedding: ✅ 512-D
+  • Roberto Castro            CPF 09522436879  Embedding: ✅ 512-D
+  • Cristina Castro           CPF 66466762831  Embedding: ✅ 512-D
+  • Alexandre Pinto           CPF 19131875270  Embedding: ✅ 512-D
+  • Débora Pinto              CPF 98688019150  Embedding: ✅ 512-D
+  • Fernando Rocha            CPF 44591124428  Embedding: ✅ 512-D
+  • Elaine Rocha              CPF 63132214604  Embedding: ✅ 512-D
+  • Marcelo Dias              CPF 92871527059  Embedding: ✅ 512-D
+  • Flávia Dias               CPF 45030746951  Embedding: ✅ 512-D
+  • Leandro Campos            CPF 22855686067  Embedding: ✅ 512-D
+  • Helena Campos             CPF 41749886502  Embedding: ✅ 512-D
+  • Caio Nunes                CPF 48658142566  Embedding: ✅ 512-D
+  • Ingrid Nunes              CPF 43367000108  Embedding: ✅ 512-D
+  • Hugo Machado              CPF 03401051946  Embedding: ✅ 512-D
+  • Jéssica Machado           CPF 94340887129  Embedding: ✅ 512-D
+  • Arthur Marques            CPF 79792815783  Embedding: ✅ 512-D
+  • Karen Marques             CPF 00054353238  Embedding: ✅ 512-D
+  • Samuel Freitas            CPF 00830306030  Embedding: ✅ 512-D
+  • Laura Andrade             CPF 17716631543  Embedding: ✅ 512-D
+  • Otávio Lopes              CPF 72845466625  Embedding: ✅ 512-D
+  • Mônica Freitas            CPF 59059364473  Embedding: ✅ 512-D
+  • Victor Duarte             CPF 62578181411  Embedding: ✅ 512-D
+  • Renan Moura               CPF 05388311627  Embedding: ✅ 512-D
+  • Olívia Duarte             CPF 63909413404  Embedding: ✅ 512-D
+  • William Cavalcanti        CPF 08957936440  Embedding: ✅ 512-D
+  • Paula Moura               CPF 48471863626  Embedding: ✅ 512-D
+  • Júlio Ramos               CPF 04316510193  Embedding: ✅ 512-D
+  • Raquel Cavalcanti         CPF 04009077638  Embedding: ✅ 512-D
+  • Luciano Cunha             CPF 65751310420  Embedding: ✅ 512-D
+  • Sandra Ramos              CPF 43616452643  Embedding: ✅ 512-D
+  • Adriano Borges            CPF 01907209565  Embedding: ✅ 512-D
+  • Simone Cunha              CPF 00653671113  Embedding: ✅ 512-D
+  • Bernardo Pires            CPF 72930696508  Embedding: ✅ 512-D
+  • Talita Borges             CPF 19908886401  Embedding: ✅ 512-D
+  • Matias Fonseca            CPF 62980078140  Embedding: ✅ 512-D
+  • Úrsula Pires              CPF 04202812905  Embedding: ✅ 512-D
+  • Nelson Melo               CPF 62500907465  Embedding: ✅ 512-D
+  • Valéria Fonseca           CPF 01433197367  Embedding: ✅ 512-D
+  • Sérgio Rezende            CPF 22567512446  Embedding: ✅ 512-D
+  • Yasmin Melo               CPF 39182895678  Embedding: ✅ 512-D
+  • Maurício Fernandes        CPF 69140067092  Embedding: ✅ 512-D
+  • Zélia Rezende             CPF 85395589473  Embedding: ✅ 512-D
+  • Emerson Azevedo           CPF 78750771680  Embedding: ✅ 512-D
+  • Adriana Fernandes         CPF 83138754104  Embedding: ✅ 512-D
+  • Douglas Braga             CPF 40592760065  Embedding: ✅ 512-D
+  • Cristiano Xavier          CPF 39153368231  Embedding: ✅ 512-D
+  • Igor Batista              CPF 78853867671  Embedding: ✅ 512-D
+  • Diana Xavier              CPF 07741675486  Embedding: ✅ 512-D
+  • Cauan Nogueira            CPF 18866772631  Embedding: ✅ 512-D
+  • Érika Batista             CPF 53814389824  Embedding: ✅ 512-D
+  • Adam Djili                CPF 38580566428  Embedding: ✅ 512-D
+  • Adrienne Andersen         CPF 11798024977  Embedding: ✅ 512-D
+  • Alejandro Peralta         CPF 37325084552  Embedding: ✅ 512-D
+  • Alirezazare               CPF 87853375794  Embedding: ✅ 512-D
+  • Anastasia Shuraeva        CPF 12489264125  Embedding: ✅ 512-D
+  • Angela Roma               CPF 19482729544  Embedding: ✅ 512-D
+  • Anntarazevich             CPF 76387258081  Embedding: ✅ 512-D
+  • Aog Pixels                CPF 61575172046  Embedding: ✅ 512-D
+  • Avonnephoto               CPF 53629517501  Embedding: ✅ 512-D
+  • Barcelos Fotos            CPF 63658291168  Embedding: ✅ 512-D
+  • Bestbe Models             CPF 83918535517  Embedding: ✅ 512-D
+  • Breston Kenya             CPF 38799470829  Embedding: ✅ 512-D
+  • Cottonbro                 CPF 31432419935  Embedding: ✅ 512-D
+  • Cottonbro                 CPF 16667966035  Embedding: ✅ 512-D
+  • Cottonbro                 CPF 56892515509  Embedding: ✅ 512-D
+  • Davdkuko                  CPF 72286688478  Embedding: ✅ 512-D
+  • David Florin              CPF 87394936953  Embedding: ✅ 512-D
+  • Gipain                    CPF 00454599323  Embedding: ✅ 512-D
+  • Iamikeee                  CPF 85735282573  Embedding: ✅ 512-D
+  • Ibadat Singh              CPF 17194599830  Embedding: ✅ 512-D
+  • Ivan S                    CPF 71936418169  Embedding: ✅ 512-D
+  • Jessicanunes              CPF 49198386620  Embedding: ✅ 512-D
+  • Julia Kuzenkov            CPF 88591024729  Embedding: ✅ 512-D
+  • Kalyn Kostov              CPF 95318235964  Embedding: ✅ 512-D
+  • Kevinbidwell              CPF 09476950528  Embedding: ✅ 512-D
+  • Lolarussian               CPF 33832730320  Embedding: ✅ 512-D
+  • Luri                      CPF 28889325801  Embedding: ✅ 512-D
+  • Marcelo Moreira           CPF 74218050953  Embedding: ✅ 512-D
+  • Mohamedelaminemsiouri     CPF 88803120068  Embedding: ✅ 512-D
+  • Murat Esibatir            CPF 13258135592  Embedding: ✅ 512-D
+  • M Y Dogar                 CPF 15722400670  Embedding: ✅ 512-D
+  • Nicole Berro              CPF 85944039337  Embedding: ✅ 512-D
+  • Ninazey                   CPF 29091241004  Embedding: ✅ 512-D
+  • Renzylaurel               CPF 38698105300  Embedding: ✅ 512-D
+  • Rquiros                   CPF 34057143548  Embedding: ✅ 512-D
+  • Sam Lion                  CPF 20184796520  Embedding: ✅ 512-D
+  • Slaytinaaaa               CPF 13944514238  Embedding: ✅ 512-D
+  • Steinportraits            CPF 50894433199  Embedding: ✅ 512-D
+  • Streetwindy               CPF 72664038800  Embedding: ✅ 512-D
+  • Tkirkgoz                  CPF 40345886755  Embedding: ✅ 512-D
+  • Visoesdomundo             CPF 19393028206  Embedding: ✅ 512-D
+  • Visoesdomundo             CPF 52278190504  Embedding: ✅ 512-D
+  • Wesrocha                  CPF 75067969296  Embedding: ✅ 512-D
+  • Xperimental               CPF 03124515552  Embedding: ✅ 512-D
+]]></system-out>
+  </testcase>
+</testsuite>

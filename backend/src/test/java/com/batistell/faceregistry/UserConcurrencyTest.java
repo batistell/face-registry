@@ -2,6 +2,7 @@ package com.batistell.faceregistry;
 
 import com.batistell.faceregistry.dto.UserDTOs.UserResponse;
 import com.batistell.faceregistry.exception.CustomExceptions.DuplicateCpfException;
+import com.batistell.faceregistry.exception.CustomExceptions.DuplicateFaceException;
 import com.batistell.faceregistry.model.User;
 import com.batistell.faceregistry.repository.UserRepository;
 import com.batistell.faceregistry.service.UserService;
@@ -36,6 +37,7 @@ public class UserConcurrencyTest {
     @BeforeEach
     public void setup() throws IOException {
         userRepository.deleteAll();
+        userService.initCache();
         
         BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -94,7 +96,7 @@ public class UserConcurrencyTest {
         executor.shutdown();
         executor.awaitTermination(5, TimeUnit.SECONDS);
 
-        // One and only one registration should succeed, the others must throw DuplicateCpfException/DataIntegrityViolationException
+        // One and only one registration should succeed, the others must throw DuplicateCpfException/DuplicateFaceException/DataIntegrityViolationException
         int successCount = 0;
         int failureCount = 0;
         for (Future<Void> future : futures) {
@@ -103,7 +105,9 @@ public class UserConcurrencyTest {
                 successCount++;
             } catch (ExecutionException e) {
                 Throwable cause = e.getCause();
-                assertTrue(cause instanceof DuplicateCpfException || cause instanceof org.springframework.dao.DataIntegrityViolationException);
+                assertTrue(cause instanceof DuplicateCpfException 
+                        || cause instanceof DuplicateFaceException 
+                        || cause instanceof org.springframework.dao.DataIntegrityViolationException);
                 failureCount++;
             }
         }

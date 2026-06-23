@@ -1,6 +1,7 @@
 package com.batistell.faceregistry;
 
 import com.batistell.faceregistry.repository.UserRepository;
+import com.batistell.faceregistry.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,17 +32,28 @@ public class UserControllerTest {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserService userService;
+
     private byte[] tinyPngBytes;
+    private byte[] tinyPngBytes2;
 
     @BeforeEach
     public void setup() throws IOException {
         userRepository.deleteAll();
+        userService.initCache();
         
         // Cria uma imagem PNG de 1x1 pixel válida em memória para passar na decodificação de ImageIO
         BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(img, "png", baos);
         tinyPngBytes = baos.toByteArray();
+
+        // Cria uma imagem PNG de 2x2 pixels válida para representar uma imagem diferente no batch upload
+        BufferedImage img2 = new BufferedImage(2, 2, BufferedImage.TYPE_INT_ARGB);
+        ByteArrayOutputStream baos2 = new ByteArrayOutputStream();
+        ImageIO.write(img2, "png", baos2);
+        tinyPngBytes2 = baos2.toByteArray();
     }
 
     @Test
@@ -251,7 +263,7 @@ public class UserControllerTest {
     @Test
     public void testBatchUploadSuccess() throws Exception {
         MockMultipartFile photo1 = new MockMultipartFile("photos", "p1.png", MediaType.IMAGE_PNG_VALUE, tinyPngBytes);
-        MockMultipartFile photo2 = new MockMultipartFile("photos", "p2.png", MediaType.IMAGE_PNG_VALUE, tinyPngBytes);
+        MockMultipartFile photo2 = new MockMultipartFile("photos", "p2.png", MediaType.IMAGE_PNG_VALUE, tinyPngBytes2);
 
         mockMvc.perform(multipart("/api/users/batch")
                 .file(photo1)

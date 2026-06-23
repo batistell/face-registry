@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import jakarta.persistence.LockModeType;
+import com.batistell.faceregistry.dto.UserLightweight;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -18,6 +20,9 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT u FROM User u WHERE u.cpf = :cpf")
     Optional<User> findByCpfWithLock(@Param("cpf") String cpf);
+    
+    @Query("SELECT new com.batistell.faceregistry.dto.UserLightweight(u.id, u.cpf, u.name, u.embeddingString) FROM User u")
+    List<UserLightweight> findAllLightweight();
     
     boolean existsByCpf(String cpf);
     void deleteByCpf(String cpf);

@@ -1,3 +1,4 @@
-/app/src/test/java/com/batistell/faceregistry/UserControllerTest.java
-/app/src/test/java/com/batistell/faceregistry/BiometricsVerificationTest.java
-/app/src/test/java/com/batistell/faceregistry/UserConcurrencyTest.java
+O:\JavaProjects\face-registry\backend\src\test\java\com\batistell\faceregistry\UserConcurrencyTest.java
+O:\JavaProjects\face-registry\backend\src\test\java\com\batistell\faceregistry\BiometricsVerificationTest.java
+O:\JavaProjects\face-registry\backend\src\test\java\com\batistell\faceregistry\DatabasePopulationTest.java
+O:\JavaProjects\face-registry\backend\src\test\java\com\batistell\faceregistry\UserControllerTest.java

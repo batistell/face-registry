@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Controlador REST para gerenciamento de usuários e operações biométricas faciais.
@@ -196,6 +197,15 @@ public class UserController {
      * @param file Arquivo multipart a ser validado. Se null ou vazio, a validação é ignorada.
      * @throws InvalidImageException Se a extensão ou o Content-Type não forem suportados.
      */
+    private static final Set<String> ALLOWED_EXTENSIONS = Set.of(
+            ".jpg", ".jpeg", ".png", ".webp", ".bmp", ".gif", ".tiff", ".tif", ".avif"
+    );
+
+    private static final Set<String> ALLOWED_CONTENT_TYPES = Set.of(
+            "image/jpeg", "image/jpg", "image/png", "image/webp",
+            "image/bmp", "image/gif", "image/tiff", "image/avif"
+    );
+
     private void validateFileFormat(MultipartFile file) {
         if (file == null || file.isEmpty()) {
             return;
@@ -205,12 +215,13 @@ public class UserController {
             throw new InvalidImageException("Nome do arquivo inválido.");
         }
         String lowerFilename = filename.toLowerCase();
-        if (!lowerFilename.endsWith(".jpg") && !lowerFilename.endsWith(".jpeg") && !lowerFilename.endsWith(".png")) {
-            throw new InvalidImageException("Tipo de arquivo não permitido (" + filename + "). Apenas imagens JPG, JPEG e PNG são aceitas.");
+        boolean validExtension = ALLOWED_EXTENSIONS.stream().anyMatch(lowerFilename::endsWith);
+        if (!validExtension) {
+            throw new InvalidImageException("Tipo de arquivo não permitido (" + filename + "). Formatos aceitos: JPG, JPEG, PNG, WebP, BMP, GIF, TIFF, AVIF.");
         }
         String contentType = file.getContentType();
-        if (contentType != null && !contentType.equals("image/jpeg") && !contentType.equals("image/png") && !contentType.equals("image/jpg")) {
-            throw new InvalidImageException("Tipo de conteúdo de imagem inválido (" + contentType + "). Apenas JPG, JPEG e PNG são aceitas.");
+        if (contentType != null && !ALLOWED_CONTENT_TYPES.contains(contentType)) {
+            throw new InvalidImageException("Tipo de conteúdo de imagem inválido (" + contentType + "). Formatos aceitos: JPG, JPEG, PNG, WebP, BMP, GIF, TIFF, AVIF.");
         }
     }
 }

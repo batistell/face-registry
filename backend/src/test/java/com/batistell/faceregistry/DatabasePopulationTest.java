@@ -129,6 +129,7 @@ public class DatabasePopulationTest {
     void cleanDatabase() {
         long before = userRepository.count();
         userRepository.deleteAll();
+        userService.initCache();
         long after = userRepository.count();
         System.out.println("\n🗑️  Banco limpo: " + before + " registros removidos. Total atual: " + after);
         Assertions.assertEquals(0, after);
@@ -234,89 +235,95 @@ public class DatabasePopulationTest {
     // Teste 4: Cadastrar todos os randomusers com nomes brasileiros
     // ==================================================================================
 
-    @Test
+        @Test
     @Order(4)
-    @DisplayName("4. Cadastra todos os randomusers com nomes brasileiros")
+    @DisplayName("4. Cadastra todos os randomusers e novos usuários de fotos")
     void registerRandomUsers() throws IOException {
-        System.out.println("\n👥 Cadastrando randomusers com nomes brasileiros...");
+        System.out.println("\n👥 Cadastrando randomusers e novos usuários...");
 
-        // Regex para extrair gênero, CPF e número do nome do arquivo
-        // Padrão: randomuser_(men|women)_XXXXXXXXXXX_N.jpg
-        Pattern pattern = Pattern.compile("randomuser_(men|women)_(\\d{11})_(\\d+)\\.jpg");
+        // Regex para extrair identificador, CPF e número do nome do arquivo
+        // Padrão: [prefixo]_[CPF]_[Index].jpg
+        Pattern pattern = Pattern.compile("([a-zA-Z0-9_\\-]+)_(\\d{11})_(\\d+)\\.jpg");
 
-        // Coleta todos os arquivos de randomusers, agrupados por gênero
-        Map<String, List<Path>> genderFiles = new TreeMap<>();
-        genderFiles.put("men", new ArrayList<>());
-        genderFiles.put("women", new ArrayList<>());
+        // Coleta todos os arquivos que representam usuários de teste
+        List<Path> userFiles = new ArrayList<>();
 
         try (Stream<Path> files = Files.list(examplesDir)) {
             files.filter(Files::isRegularFile)
-                 .filter(p -> p.getFileName().toString().startsWith("randomuser_"))
+                 .filter(p -> {
+                     String filename = p.getFileName().toString();
+                     // Deve casar com a regex geral de usuários de teste e ser .jpg
+                     if (!filename.matches("[a-zA-Z0-9_\\-]+_\\d{11}_\\d+\\.jpg")) {
+                         return false;
+                     }
+                     // Ignora famosos
+                     for (String[] person : FAMOUS_PEOPLE) {
+                         String famousPrefix = person[2] + "_" + person[1] + "_";
+                         if (filename.toLowerCase().startsWith(famousPrefix.toLowerCase())) {
+                             return false;
+                         }
+                     }
+                     return true;
+                 })
                  .sorted(Comparator.comparing(p -> {
                      // Ordena pelo número do arquivo (sufixo _N) para atribuição consistente de nomes
                      Matcher m = pattern.matcher(p.getFileName().toString());
                      if (m.matches()) return Integer.parseInt(m.group(3));
                      return 0;
                  }))
-                 .forEach(path -> {
-                     Matcher m = pattern.matcher(path.getFileName().toString());
-                     if (m.matches()) {
-                         genderFiles.get(m.group(1)).add(path);
-                     }
-                 });
+                 .forEach(userFiles::add);
         }
 
-        int menCount = 0;
-        int womenCount = 0;
+        int count = 0;
 
-        // Cadastra homens
-        for (Path photo : genderFiles.get("men")) {
+        for (Path photo : userFiles) {
             Matcher m = pattern.matcher(photo.getFileName().toString());
             if (!m.matches()) continue;
 
+            String prefix = m.group(1);
             String cpf = m.group(2);
             int index = Integer.parseInt(m.group(3));
+            String name;
 
-            // Atribui nome da lista (usa índice - 1 porque o índice começa em 1)
-            String name = (index - 1 < MALE_NAMES.length)
-                    ? MALE_NAMES[index - 1]
-                    : "Usuário Masculino " + index;
+            if (prefix.equals("randomuser_men")) {
+                name = (index - 1 < MALE_NAMES.length)
+                        ? MALE_NAMES[index - 1]
+                        : "Usuário Masculino " + index;
+            } else if (prefix.equals("randomuser_women")) {
+                name = (index - 1 < FEMALE_NAMES.length)
+                        ? FEMALE_NAMES[index - 1]
+                        : "Usuária Feminina " + index;
+            } else {
+                // Formato customizado: extrai o nome a partir do nome do arquivo
+                name = formatNameFromFilename(prefix);
+            }
 
             try {
                 byte[] photoBytes = Files.readAllBytes(photo);
                 userService.createUser(cpf, name, photoBytes, photo.getFileName().toString());
-                menCount++;
+                count++;
                 registeredCount++;
-                System.out.println("  ✅ [M] " + name + " (CPF " + cpf + ")");
+                System.out.println("  ✅ " + name + " (CPF " + cpf + ") cadastrado com " + photo.getFileName().toString());
             } catch (Exception e) {
-                System.out.println("  ⚠️ [M] " + name + " (CPF " + cpf + ") — ERRO: " + e.getMessage());
+                System.out.println("  ⚠️ " + name + " (CPF " + cpf + ") — ERRO: " + e.getMessage());
             }
         }
 
-        // Cadastra mulheres
-        for (Path photo : genderFiles.get("women")) {
-            Matcher m = pattern.matcher(photo.getFileName().toString());
-            if (!m.matches()) continue;
+        System.out.println("\n📊 Total de usuários de teste/random cadastrados: " + count);
+    }
 
-            String cpf = m.group(2);
-            int index = Integer.parseInt(m.group(3));
-
-            String name = (index - 1 < FEMALE_NAMES.length)
-                    ? FEMALE_NAMES[index - 1]
-                    : "Usuária Feminina " + index;
-
-            try {
-                byte[] photoBytes = Files.readAllBytes(photo);
-                userService.createUser(cpf, name, photoBytes, photo.getFileName().toString());
-                womenCount++;
-                registeredCount++;
-                System.out.println("  ✅ [F] " + name + " (CPF " + cpf + ")");
-            } catch (Exception e) {
-                System.out.println("  ⚠️ [F] " + name + " (CPF " + cpf + ") — ERRO: " + e.getMessage());
-            }
+    /**
+     * Formata um nome de exibição amigável a partir do prefixo do arquivo (ex: adam-djili -> Adam Djili).
+     */
+    private String formatNameFromFilename(String prefix) {
+        if (prefix == null || prefix.isEmpty()) {
+            return "Usuário Sem Nome";
         }
-
-        System.out.println("\n📊 Randomusers cadastrados: " + menCount + " homens + " + womenCount + " mulheres");
+        String clean = prefix.replace("-", " ").replace("_", " ");
+        return java.util.Arrays.stream(clean.split("\\s+"))
+                .filter(w -> !w.isEmpty())
+                .map(w -> Character.toUpperCase(w.charAt(0)) + w.substring(1).toLowerCase())
+                .collect(java.util.stream.Collectors.joining(" "));
     }
 
     // ==================================================================================

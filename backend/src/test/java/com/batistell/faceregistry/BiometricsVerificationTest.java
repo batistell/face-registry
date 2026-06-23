@@ -12,6 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 
 import java.io.InputStream;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,6 +37,7 @@ public class BiometricsVerificationTest {
     @BeforeEach
     public void setup() {
         userRepository.deleteAll();
+        userService.initCache();
     }
 
     @Test
@@ -137,5 +139,88 @@ public class BiometricsVerificationTest {
 
             assertTrue(isMatch, "Photos for " + name + " should match (similarity: " + similarity + ", expected threshold: " + expectedThreshold + ")");
         }
+    }
+
+    @Test
+    public void testIdentifyFacePerformanceOneMillionUsers() throws Exception {
+        UserService targetService = org.springframework.test.util.AopTestUtils.getTargetObject(userService);
+
+        // Encontra o campo privado de cache em UserService
+        java.lang.reflect.Field cacheField = UserService.class.getDeclaredField("userBiometricCache");
+        cacheField.setAccessible(true);
+        @SuppressWarnings("unchecked")
+        List<Object> cache = (List<Object>) cacheField.get(targetService);
+
+        // Encontra o campo privado de lock em UserService
+        java.lang.reflect.Field lockField = UserService.class.getDeclaredField("cacheLock");
+        lockField.setAccessible(true);
+        java.util.concurrent.locks.ReentrantReadWriteLock lock = (java.util.concurrent.locks.ReentrantReadWriteLock) lockField.get(targetService);
+
+        // Encontra a classe/record interna UserCacheItem
+        Class<?> cacheItemClass = Class.forName("com.batistell.faceregistry.service.UserService$UserCacheItem");
+        java.lang.reflect.Constructor<?> constructor = cacheItemClass.getDeclaredConstructor(
+            java.util.UUID.class, String.class, String.class, float[].class
+        );
+        constructor.setAccessible(true);
+
+        System.out.println("Gerando 1 milhão de usuários fictícios em memória para o benchmark...");
+        
+        lock.writeLock().lock();
+        try {
+            cache.clear();
+            for (int i = 0; i < 1_000_000; i++) {
+                float[] emb = new float[512];
+                emb[i % 512] = 1.0f; // Vetor unitário L2-normalizado super rápido de gerar
+                Object item = constructor.newInstance(
+                    java.util.UUID.randomUUID(),
+                    String.format("%011d", i),
+                    "Fictitious User " + i,
+                    emb
+                );
+                cache.add(item);
+            }
+        } finally {
+            lock.writeLock().unlock();
+        }
+        
+        System.out.println("Cache populado com " + cache.size() + " usuários.");
+
+        // Prepara uma foto real de teste
+        String testPhotoPath = "examples/obama_64657075942_2.jpg";
+        byte[] photoBytes;
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream(testPhotoPath)) {
+            assertNotNull(is, "Test photo not found: " + testPhotoPath);
+            photoBytes = is.readAllBytes();
+        }
+
+        // Extrai o embedding usando o serviço
+        float[] targetEmbedding = faceBiometricsService.extractFaceEmbedding(photoBytes, "obama.jpg");
+
+        // Aquecimento do JIT Compiler
+        System.out.println("Aquecendo a JVM (JIT compiler)...");
+        for (int w = 0; w < 15; w++) {
+            userService.identifyFaceWithEmbedding(targetEmbedding);
+        }
+
+        // Mede o tempo da busca (1:1.000.000) no cache em memória
+        long startTime = System.nanoTime();
+        com.batistell.faceregistry.dto.UserDTOs.IdentificationResponse response = 
+            userService.identifyFaceWithEmbedding(targetEmbedding);
+        long durationNs = System.nanoTime() - startTime;
+        double durationMs = durationNs / 1_000_000.0;
+
+        System.out.println("Tempo de busca biométrica 1:1.000.000 (excluindo extração de IA): " + durationMs + " ms");
+        System.out.println("Resultado da identificação: " + (response.identified() ? "Identificado" : "Não Identificado"));
+
+        // Limpa o cache após o teste
+        lock.writeLock().lock();
+        try {
+            cache.clear();
+        } finally {
+            lock.writeLock().unlock();
+        }
+
+        // Valida que o tempo de busca no cache é aceitável (menor que 200ms na CPU)
+        assertTrue(durationMs < 200.0, "Tempo de busca em memória deve ser menor que 200ms para 1 milhão de usuários (obtido: " + durationMs + "ms)");
     }
 }
