@@ -53,4 +53,15 @@ public class CustomExceptions {
             super(message);
         }
     }
+
+    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+    public static class BiometricProcessingException extends RuntimeException {
+        public BiometricProcessingException(String message) {
+            super(message);
+        }
+
+        public BiometricProcessingException(String message, Throwable cause) {
+            super(message, cause);
+        }
+    }
 }
