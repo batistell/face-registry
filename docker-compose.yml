@@ -21,8 +21,8 @@ services:
   backend:
     image: ghcr.io/batistell/face-registry/backend:latest
     build:
-      context: ./backend
-      dockerfile: Dockerfile
+      context: ./
+      dockerfile: backend/Dockerfile
     container_name: face-registry-backend
     ports:
       - "8080:8080"
@@ -53,8 +53,8 @@ services:
   frontend:
     image: ghcr.io/batistell/face-registry/frontend:latest
     build:
-      context: ./frontend
-      dockerfile: Dockerfile
+      context: ./
+      dockerfile: frontend/Dockerfile
     container_name: face-registry-frontend
     ports:
       - "4200:80"
