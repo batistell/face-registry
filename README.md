@@ -22,15 +22,15 @@ O ecossistema foi projetado de forma modular e conteinerizada, garantindo indepe
    - Executa inferência nativa de Deep Learning via interface JNI.
 
 3. **Banco de Dados (PostgreSQL 15+):**
-   - Armazena dados cadastrais clássicos (Nome, CPF formatado), a foto original em formato binário (`BYTEA`) e os **Templates Faciais (Embeddings)** pré-calculados de 512 dimensões (`REAL[]`).
-   - Habilita buscas e comparações biológicas de altíssima performance diretamente na memória da aplicação via computação vetorial.
+   - Armazena dados cadastrais clássicos (Nome, CPF formatado), a foto original em formato binário (`BYTEA`) e os **Templates Faciais (Embeddings)** pré-calculados de 512 dimensões serializados como `VARCHAR` (formato `float;float;...`).
+   - Os embeddings são desserializados em memória pela camada JPA para cálculo de similaridade, garantindo compatibilidade total entre PostgreSQL (produção) e H2 (testes).
 
 ```mermaid
 graph TD
     A[Usuário / Navegador] -->|HTTPS / WSS| B[Nginx Reverse Proxy / SSL Port 8000]
     B -->|Base: /face-registry/| C[Frontend Angular 17 Container]
     B -->|API: /api/*| D[Backend Spring Boot Container]
-    D -->|JPA / REAL array column| E[PostgreSQL Container]
+    D -->|JPA / Hibernate ORM| E[PostgreSQL Container]
     D -->|JNI C++ Inference| F[DJL Engine - PyTorch native]
     F -->|RetinaFace + FaceNet| D
 ```
@@ -56,7 +56,7 @@ graph TD
   - Adicionado um ícone de "Checkmark" dourado (<i class="fa-solid fa-check"></i>) ao lado do badge **512-D** nos cartões dos usuários para atestar visualmente que a assinatura biométrica facial foi gerada com sucesso.
 
 ### Banco de Dados
-- **PostgreSQL 15+:** Coluna do tipo vetor de reais `REAL[]` para salvar os embeddings diretamente nos registros de usuários, permitindo que a busca biológica 1:n seja resolvida rapidamente com algoritmos de similaridade vetorial.
+- **PostgreSQL 15+:** Os embeddings de 512 dimensões são armazenados como `VARCHAR` serializado (separador `;`), garantindo portabilidade entre PostgreSQL (produção) e H2 (testes unitários). A desserialização `String → float[]` ocorre via métodos utilitários da entidade JPA, e a busca 1:n é resolvida em memória pela aplicação com similaridade de cosseno em paralelo (`parallelStream`).
 
 ---
 

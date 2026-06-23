@@ -166,8 +166,9 @@ public class FaceBiometricsService {
             throw e;
         } catch (Exception e) {
             log.error("Erro no pipeline de IA da DJL: {}", e.getMessage(), e);
-            // Em caso de qualquer erro de execução de IA real (ex: falta de memória), usamos o fallback mock
-            return processMockEmbedding(imageBytes, originalFilename);
+            throw new BiometricProcessingException(
+                    "Erro no processamento biométrico da imagem. O motor de IA não conseguiu processar a requisição. "
+                    + "Tente novamente em alguns instantes ou entre em contato com o administrador do sistema.", e);
         }
     }
 
