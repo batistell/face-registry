@@ -40,20 +40,20 @@ public class BiometricsVerificationTest {
 
     @Test
     public void testBiometricsMatchAcrossCustomExamples() throws Exception {
-        // Load the first photo of the subject
-        String registerPhotoPath = "examples/WhatsApp Image 2026-06-22 at 15.20.20.jpeg";
+        // Carrega a primeira foto do sujeito de teste (Kana, CPF 62079744844)
+        String registerPhotoPath = "examples/kana_62079744844_register.jpeg";
         byte[] registerBytes;
         try (InputStream is = getClass().getClassLoader().getResourceAsStream(registerPhotoPath)) {
             assertNotNull(is, "Registration photo not found in classpath: " + registerPhotoPath);
             registerBytes = is.readAllBytes();
         }
 
-        // Register the user
+        // Cadastra o usuário no banco com a foto de registro
         String cpf = "92479121305";
         String name = "Test Subject";
         userService.createUser(cpf, name, registerBytes, "register.jpg");
 
-        // Verify the user exists and has a generated embedding
+        // Verifica que o usuário foi persistido e possui embedding de 512 dimensões
         Optional<User> registeredUserOpt = userRepository.findByCpf(cpf);
         assertTrue(registeredUserOpt.isPresent());
         User registeredUser = registeredUserOpt.get();
@@ -61,12 +61,12 @@ public class BiometricsVerificationTest {
         assertNotNull(registeredEmbedding);
         assertEquals(512, registeredEmbedding.length, "Embedding should have 512 dimensions");
 
-        // List of other photos to verify against the registered embedding
+        // Fotos alternativas da mesma pessoa para verificação cruzada (devem dar match)
         String[] testPhotos = {
-            "examples/WhatsApp Image 2026-06-22 at 15.20.20 (1).jpeg",
-            "examples/WhatsApp Image 2026-06-22 at 15.20.21.jpeg",
-            "examples/WhatsApp Image 2026-06-22 at 15.20.21 (1).jpeg",
-            "examples/WhatsApp Image 2026-06-22 at 15.20.21 (2).jpeg"
+            "examples/kana_62079744844_verify1.jpeg",
+            "examples/kana_62079744844_verify2.jpeg",
+            "examples/kana_62079744844_verify3.jpeg",
+            "examples/kana_62079744844_verify4.jpeg"
         };
 
         for (String photoPath : testPhotos) {
@@ -76,30 +76,31 @@ public class BiometricsVerificationTest {
                 photoBytes = is.readAllBytes();
             }
 
-            // Extract face embedding for the test photo using the real model
+            // Extrai embedding da foto de teste usando o modelo real
             float[] testEmbedding = faceBiometricsService.extractFaceEmbedding(photoBytes, photoPath);
             assertNotNull(testEmbedding);
             assertEquals(512, testEmbedding.length);
 
-            // Compute similarity
+            // Calcula similaridade e valida match
             double similarity = faceBiometricsService.calculateCosineSimilarity(registeredEmbedding, testEmbedding);
             boolean isMatch = faceBiometricsService.isMatch(similarity);
 
             System.out.println("Comparing registered face with " + photoPath + ": similarity = " + similarity + ", isMatch = " + isMatch);
 
-            // Assert that they match!
+            // Deve dar match — mesma pessoa em poses diferentes
             assertTrue(isMatch, "Photo " + photoPath + " should match the registered user (similarity: " + similarity + ", threshold: " + faceBiometricsService.getThreshold() + ")");
         }
     }
 
     @Test
     public void testBiometricsMatchFamousPeople() throws Exception {
+        // Pares de fotos de celebridades: [nome, cpf, foto_registro, foto_verificação, threshold_esperado]
         Object[][] famousPairs = {
-            {"Barack Obama", "64657075942", "examples/obama1.jpg", "examples/obama2.jpg", 0.60},
-            {"Joe Biden", "21603180001", "examples/biden.jpg", "examples/biden1.jpg", 0.60},
-            {"Elon Musk", "92230775596", "examples/musk1.jpg", "examples/musk2.jpg", 0.60},
-            {"Lionel Messi", "74394356644", "examples/messi1.jpg", "examples/messi2.jpg", 0.60},
-            {"Kana", "62079744844", "examples/kana1.jpg", "examples/kana2.jpg", 0.50}
+            {"Barack Obama", "64657075942", "examples/obama_64657075942_2.jpg", "examples/obama_64657075942_3.jpg", 0.60},
+            {"Joe Biden", "21603180001", "examples/biden_21603180001_1.jpg", "examples/biden_21603180001_2.jpg", 0.60},
+            {"Elon Musk", "92230775596", "examples/musk_92230775596_1.jpg", "examples/musk_92230775596_2.jpg", 0.60},
+            {"Lionel Messi", "74394356644", "examples/messi_74394356644_1.jpg", "examples/messi_74394356644_2.jpg", 0.60},
+            {"Kana", "62079744844", "examples/kana_62079744844_1.jpg", "examples/kana_62079744844_2.jpg", 0.50}
         };
 
         for (Object[] pair : famousPairs) {

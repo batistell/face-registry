@@ -83,13 +83,13 @@ Uma das escolhas cruciais no design do sistema foi a **Prevenção de Duplicados
 
 Para facilitar a verificação e homologação da biometria 1:1 na aba **"Verificar Biometria"** da interface, a pasta [examples/to-compare](file:///o:/JavaProjects/face-registry/examples/to-compare/) foi populada com fotos alternativas (retratos e poses diferentes obtidos da Wikimedia Commons sob licenças livres) das celebridades cadastradas no banco de dados.
 
-Os arquivos estão nomeados contendo o nome e o CPF cadastrado da respectiva celebridade, facilitando a cópia e colagem na interface:
-- **Barack Obama (CPF 64657075942)**: `obama_alt2.jpg`, `obama2.jpg`, etc.
-- **Joe Biden (CPF 21603180001)**: `biden_alt2.jpg`, `biden1.jpg`.
-- **Elon Musk (CPF 92230775596)**: `musk_alt2.jpg`, `musk2.jpg`.
-- **Lionel Messi (CPF 74394356644)**: `messi_alt2.jpg`, `messi2.jpg`.
-- **Kana (CPF 62079744844)**: `kana_alt2.jpg`, `kana2.jpg`, etc.
-- **Lena (CPF 83992409821)**: `lena_alt2.png`, `lena.jpg`.
+Os arquivos seguem o padrão `pessoa_cpf_N.ext`, facilitando a identificação e a cópia do CPF na interface:
+- **Barack Obama (CPF 64657075942)**: `obama_64657075942_2.jpg`, `obama_64657075942_3.jpg`, `obama_64657075942_alt.jpg`
+- **Joe Biden (CPF 21603180001)**: `biden_21603180001_2.jpg`, `biden_21603180001_3.jpg`, `biden_21603180001_alt.jpg`
+- **Elon Musk (CPF 92230775596)**: `musk_92230775596_2.jpg`, `musk_92230775596_3.jpg`, `musk_92230775596_alt.jpg`
+- **Lionel Messi (CPF 74394356644)**: `messi_74394356644_2.jpg`, `messi_74394356644_3.jpg`, `messi_74394356644_alt.jpg`
+- **Kana (CPF 62079744844)**: `kana_62079744844_2.jpg`, `kana_62079744844_3.jpg`, `kana_62079744844_alt.jpg`
+- **Lena (CPF 83992409821)**: `lena_83992409821_1.jpg`, `lena_83992409821_2.png`, `lena_83992409821_alt.png`
 
 ---
 

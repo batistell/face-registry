@@ -21,7 +21,7 @@ Configurar a tabela `users` para armazenar:
 - `cpf` (VARCHAR(11), Único, Indexado)
 - `name` (VARCHAR(255), Obrigatório)
 - `photo` (BYTEA, armazenamento binário da foto original)
-- `embedding` (REAL[], vetor de floats com 512 dimensões contendo o template facial pré-calculado)
+- `embedding` (VARCHAR(8000), vetor de 512 floats serializado como string separada por `;`)
 - `created_at` (TIMESTAMP)
 
 ---

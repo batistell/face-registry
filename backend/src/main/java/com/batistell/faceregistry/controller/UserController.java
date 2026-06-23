@@ -15,6 +15,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controlador REST para gerenciamento de usuários e operações biométricas faciais.
+ * 
+ * Oferece endpoints para CRUD completo, cadastro em lote concorrente,
+ * verificação facial 1:1 (um-para-um) e identificação facial 1:N (um-para-muitos).
+ * Todos os endpoints que recebem fotos operam com multipart/form-data.
+ * 
+ * @see com.batistell.faceregistry.service.UserService
+ */
 @Slf4j
 @RestController
 @RequestMapping("/api/users")
@@ -180,6 +189,13 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Valida o formato do arquivo de imagem enviado pelo usuário.
+     * Verifica tanto a extensão do arquivo (JPG/JPEG/PNG) quanto o Content-Type MIME.
+     * 
+     * @param file Arquivo multipart a ser validado. Se null ou vazio, a validação é ignorada.
+     * @throws InvalidImageException Se a extensão ou o Content-Type não forem suportados.
+     */
     private void validateFileFormat(MultipartFile file) {
         if (file == null || file.isEmpty()) {
             return;
