@@ -90,8 +90,9 @@ Reconecte na máquina EC2 e prepare o repositório da aplicação:
 git clone <url-do-repositorio> face-registry
 cd face-registry
 
-# Crie o arquivo .env contendo o token do túnel do Cloudflare (se necessário)
-echo "TUNNEL_TOKEN=seu_token_aqui" > .env
+# Copie o arquivo .env a partir do template e configure as variáveis
+cp .env.example .env
+nano .env
 ```
 
 ### 4. Deploy da Stack

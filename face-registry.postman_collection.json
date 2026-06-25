@@ -1,0 +1,321 @@
+{
+	"info": {
+		"_postman_id": "8bfa2e2a-1c71-4a11-85f0-1d8be8d5dcf9",
+		"name": "Face Registry API",
+		"description": "Coleção de requisições Postman para o desafio Face Registry. Cobre operações de CRUD, upload em lote, verificação 1:1, identificação 1:N e auditoria de duplicados.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CRUD de Usuários",
+			"item": [
+				{
+					"name": "Listar Usuários",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Usuário por CPF",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/21603180001",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"21603180001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cadastrar Usuário",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "cpf",
+									"value": "21603180001",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Joe Biden",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "/caminho/para/imagem.jpg",
+									"description": "Arquivo de foto contendo exatamente um rosto"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Usuário",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Joe Biden Alterado",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "/caminho/para/nova_imagem.jpg",
+									"description": "Nova foto a ser atualizada (opcional)",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/21603180001",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"21603180001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Excluir Usuário",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/21603180001",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"21603180001"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Operações Biométricas",
+			"item": [
+				{
+					"name": "Verificação Facial (1:1)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "cpf",
+									"value": "21603180001",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "/caminho/para/imagem_comparacao.jpg",
+									"description": "Foto para verificar contra o CPF informado"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/verify",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"verify"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Identificação Facial (1:N)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "/caminho/para/imagem_desconhecida.jpg",
+									"description": "Foto a ser identificada na base de dados"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/identify",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"identify"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auditoria de Duplicados",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/duplicates",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"duplicates"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Lote e Concorrência",
+			"item": [
+				{
+					"name": "Cadastro em Lote (Batch)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "cpfs",
+									"value": "11111111111",
+									"type": "text"
+								},
+								{
+									"key": "names",
+									"value": "Usuário Lote 1",
+									"type": "text"
+								},
+								{
+									"key": "photos",
+									"type": "file",
+									"src": "/caminho/lote1.jpg"
+								},
+								{
+									"key": "cpfs",
+									"value": "22222222222",
+									"type": "text"
+								},
+								{
+									"key": "names",
+									"value": "Usuário Lote 2",
+									"type": "text"
+								},
+								{
+									"key": "photos",
+									"type": "file",
+									"src": "/caminho/lote2.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/batch",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
