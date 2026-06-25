@@ -84,6 +84,17 @@ Certifique-se de possuir o **Docker** e o **Docker Compose** instalados no seu h
 
 ---
 
+## ☁️ Implantação e Deploy em Produção (AWS EC2)
+
+A implantação em produção é realizada em uma instância **Amazon EC2 (Ubuntu Server 22.04 LTS)** orquestrada com Docker. 
+
+Devido ao processamento pesado e consumo de memória do motor PyTorch (DJL) na extração dos embeddings faciais, recomenda-se o uso de instâncias com pelo menos **4 GB de RAM (t3.medium ou superior)** para evitar travamento de CPU e estouros de memória.
+
+Para o roteiro passo a passo detalhado de criação da instância EC2 na AWS, instalação do motor Docker e inicialização da stack com Docker Compose, consulte o guia de deploy:
+👉 **[Guia de Implantação e DevOps (docs/deployment.md)](file:///o:/JavaProjects/face-registry/docs/deployment.md#-implanta%C3%A7%C3%A3o-na-nuvem-aws-ec2)**
+
+---
+
 ## 🌐 Endereços e Acesso aos Serviços
 
 Após o start completo da stack:

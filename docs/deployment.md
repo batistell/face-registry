@@ -48,6 +48,65 @@ graph TD
 
 ---
 
+## ☁️ Implantação na Nuvem (AWS EC2)
+
+Abaixo está o roteiro passo a passo para provisionar uma máquina virtual **Amazon EC2** e implantar os containers Docker da aplicação.
+
+### 1. Provisionamento do EC2 (AWS Console)
+*   **Sistema Operacional:** Ubuntu Server 22.04 LTS (x86_64).
+*   **Dimensionamento (Instance Type):** Recomendado no mínimo `t3.medium` (2 vCPUs, 4 GB RAM) ou superior. O carregamento dos modelos RetinaFace e FaceNet pelo DJL exige cerca de 1.5 GB a 2 GB de memória Heap ativa na JVM. Instâncias menores (como `t3.micro`) podem sofrer de *Out Of Memory* (OOM) ou travamento de CPU na inicialização do PyTorch.
+*   **Armazenamento:** Mínimo de 20 GB de SSD gp3 para acomodar os caches do PyTorch e as imagens Docker dos builds.
+*   **Grupo de Segurança (Security Group):**
+    *   **Inbound Rules (Regras de Entrada):**
+        *   `TCP 22` (SSH) de IPs confiáveis.
+        *   `TCP 80` (HTTP) liberado para o público.
+        *   `TCP 8000` (HTTPS) liberado para tráfego do frontend do Nginx.
+
+### 2. Instalação do Docker e Compose no EC2
+Após se conectar via SSH (`ssh -i chave.pem ubuntu@ec2-ip-publico`), execute os comandos para instalar o motor Docker moderno:
+
+```bash
+# Atualiza os repositórios do sistema
+sudo apt update && sudo apt upgrade -y
+
+# Instala pré-requisitos
+sudo apt install apt-transport-https ca-certificates curl gnupg lsb-release -y
+
+# Instala motor Docker e docker-compose plugin
+sudo apt install docker.io docker-compose-v2 -y
+
+# Adiciona o usuário do Ubuntu ao grupo do Docker para não precisar usar sudo nos comandos docker
+sudo usermod -aG docker ubuntu
+
+# Reinicie a sessão SSH para aplicar as alterações de grupo
+exit
+```
+
+### 3. Clone do Repositório e Configuração
+Reconecte na máquina EC2 e prepare o repositório da aplicação:
+
+```bash
+# Clone o repositório do projeto
+git clone <url-do-repositorio> face-registry
+cd face-registry
+
+# Crie o arquivo .env contendo o token do túnel do Cloudflare (se necessário)
+echo "TUNNEL_TOKEN=seu_token_aqui" > .env
+```
+
+### 4. Deploy da Stack
+Inicie a aplicação utilizando o Docker Compose:
+
+```bash
+# Constrói as imagens e inicia os containers em background
+docker compose up --build -d
+
+# Monitore o carregamento do backend e dos modelos de IA
+docker compose logs -f backend
+```
+
+---
+
 ## 🐳 Dockerfiles de Build em Estágios Múltiplos (Multi-Stage)
 
 Ambos os Dockerfiles utilizam builds em múltiplos estágios para garantir imagens de produção limpas e sem compiladores extras instalados.
@@ -62,7 +121,7 @@ Ambos os Dockerfiles utilizam builds em múltiplos estágios para garantir image
 
 ---
 
-## 🛠️ Comandos de Operação e Implantação
+## 🛠️ Comandos de Operação Úteis
 
 ### 1. Subir toda a Stack localmente compilando do zero:
 ```bash
