@@ -99,6 +99,14 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- PyTorch Native Auto-downloader (detects GPU/CUDA) -->
+        <dependency>
+            <groupId>ai.djl.pytorch</groupId>
+            <artifactId>pytorch-native-auto</artifactId>
+            <version>${djl.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
         <!-- PyTorch Model Zoo -->
         <dependency>
             <groupId>ai.djl.pytorch</groupId>
