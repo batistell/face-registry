@@ -27,10 +27,10 @@ public class UserService {
     private final UserRepository userRepository;
     private final FaceBiometricsService faceBiometricsService;
 
-    // Executor usando Virtual Threads para alta performance e concorrência no processamento de imagens
+    // Executor para Virtual Threads
     private final Executor virtualThreadExecutor = Executors.newVirtualThreadPerTaskExecutor();
 
-    // Cache biométrico em memória para alta performance (1:n e verificação)
+    // Cache de assinaturas biométricas em memória
     private final List<UserCacheItem> userBiometricCache = new ArrayList<>();
     private final ReentrantReadWriteLock cacheLock = new ReentrantReadWriteLock();
 
@@ -64,9 +64,7 @@ public class UserService {
         return emb;
     }
 
-    /**
-     * Cadastra um novo usuário no banco com biometria calculada.
-     */
+    // Cadastra novo usuário com validação de duplicados
     @Transactional
     public UserResponse createUser(String cpf, String name, byte[] photo, String filename) {
         String cleanCpf = cleanAndValidateCpf(cpf);
@@ -86,7 +84,7 @@ public class UserService {
 
         User saved = userRepository.save(user);
 
-        // Atualiza cache em memória
+        // Atualiza cache
         cacheLock.writeLock().lock();
         try {
             userBiometricCache.add(new UserCacheItem(saved.getId(), saved.getCpf(), saved.getName(), saved.getEmbedding()));
@@ -97,13 +95,10 @@ public class UserService {
         return toResponse(saved);
     }
 
-    /**
-     * Atualiza o cadastro de um usuário com trava pessimista para concorrência de escritas.
-     */
+    // Atualiza dados e foto com lock pessimista
     @Transactional
     public UserResponse updateUser(String cpf, String name, byte[] photo, String filename) {
         String cleanCpf = cleanAndValidateCpf(cpf);
-        // Busca com bloqueio de escrita pessimista para evitar concorrência de fotos simultâneas
         User user = userRepository.findByCpfWithLock(cleanCpf)
                 .orElseThrow(() -> new UserNotFoundException("Usuário com CPF " + cleanCpf + " não encontrado para atualização."));
 
@@ -120,7 +115,7 @@ public class UserService {
 
         User saved = userRepository.save(user);
 
-        // Atualiza cache em memória
+        // Atualiza cache
         cacheLock.writeLock().lock();
         try {
             userBiometricCache.removeIf(item -> item.cpf().equals(cleanCpf));
@@ -132,9 +127,7 @@ public class UserService {
         return toResponse(saved);
     }
 
-    /**
-     * Deleta um usuário.
-     */
+    // Deleta usuário e remove do cache
     @Transactional
     public void deleteUser(String cpf) {
         String cleanCpf = cleanAndValidateCpf(cpf);
@@ -142,7 +135,7 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException("Usuário com CPF " + cleanCpf + " não encontrado."));
         userRepository.delete(user);
 
-        // Remove do cache em memória
+        // Atualiza cache
         cacheLock.writeLock().lock();
         try {
             userBiometricCache.removeIf(item -> item.cpf().equals(cleanCpf));
@@ -151,9 +144,6 @@ public class UserService {
         }
     }
 
-    /**
-     * Busca um usuário pelo CPF.
-     */
     @Transactional(readOnly = true)
     public UserResponse getUserByCpf(String cpf) {
         String cleanCpf = cleanAndValidateCpf(cpf);
@@ -162,9 +152,7 @@ public class UserService {
         return toResponse(user);
     }
 
-    /**
-     * Lista todos os usuários cadastrados (limitando a 100 para evitar OOM com 1 milhão de usuários).
-     */
+    // Lista os usuários cadastrados limitando o resultado
     @Transactional(readOnly = true)
     public List<UserResponse> getAllUsers() {
         return userRepository.findAll().stream()
@@ -173,14 +161,12 @@ public class UserService {
                 .toList();
     }
 
-    /**
-     * Cadastro concorrente de lote (batch) de usuários com rollback total em caso de erros.
-     */
+    // Cadastro concorrente em lote
     @Transactional
     public List<UserResponse> createUsersBatch(List<UserBatchRequest> requests) {
         log.info("Iniciando processamento em lote para {} usuários...", requests.size());
 
-        // Processa as imagens e gera embeddings em paralelo usando Virtual Threads
+        // Processa biometrias em paralelo via virtual threads
         List<CompletableFuture<User>> futures = requests.stream()
                 .map(req -> CompletableFuture.supplyAsync(() -> {
                     String cleanCpf = cleanAndValidateCpf(req.cpf());
@@ -203,7 +189,6 @@ public class UserService {
                 }, virtualThreadExecutor))
                 .toList();
 
-        // Aguarda todas as threads terminarem
         List<User> usersToSave;
         try {
             usersToSave = futures.stream()
@@ -218,7 +203,7 @@ public class UserService {
             throw new RuntimeException("Erro ao processar o lote de cadastro.", e);
         }
 
-        // Verifica duplicidade facial dentro do próprio lote
+        // Valida duplicados no lote
         for (int i = 0; i < usersToSave.size(); i++) {
             User u1 = usersToSave.get(i);
             for (int j = i + 1; j < usersToSave.size(); j++) {
@@ -232,11 +217,11 @@ public class UserService {
             }
         }
 
-        // Salva todos no banco de forma atômica (se der erro em um, o Spring rola de volta a transação inteira)
+        // Salva lote de forma atômica
         List<User> saved = userRepository.saveAll(usersToSave);
         log.info("Lote de {} cadastros persistido com sucesso.", saved.size());
 
-        // Atualiza cache em memória
+        // Atualiza cache
         cacheLock.writeLock().lock();
         try {
             for (User u : saved) {
@@ -250,9 +235,7 @@ public class UserService {
         return saved.stream().map(this::toResponse).toList();
     }
 
-    /**
-     * Verificação facial 1:1 otimizada usando cache.
-     */
+    // Verificação 1:1 via cache
     @Transactional(readOnly = true)
     public VerificationResponse verifyFace(String cpf, byte[] photoBytes, String filename) {
         String cleanCpf = cleanAndValidateCpf(cpf);
@@ -281,18 +264,14 @@ public class UserService {
         return new VerificationResponse(match, similarity, faceBiometricsService.getThreshold());
     }
 
-    /**
-     * Identificação facial 1:n com busca paralela ultrarápida em cache de memória (1 milhão de usuários).
-     */
+    // Identificação 1:N
     @Transactional(readOnly = true)
     public IdentificationResponse identifyFace(byte[] photoBytes, String filename) {
         float[] targetEmbedding = faceBiometricsService.extractFaceEmbedding(photoBytes, filename);
         return identifyFaceWithEmbedding(targetEmbedding);
     }
 
-    /**
-     * Busca um embedding no cache de forma paralela usando o pool ForkJoin do Java (sem alocações por elemento).
-     */
+    // Busca paralela no cache
     public IdentificationResponse identifyFaceWithEmbedding(float[] targetEmbedding) {
         cacheLock.readLock().lock();
         try {
@@ -302,7 +281,7 @@ public class UserService {
 
             int size = userBiometricCache.size();
             
-            // Para bases pequenas, busca sequencial simples é mais rápida devido ao overhead de threads
+            // Busca sequencial para bases pequenas
             if (size < 5000) {
                 UserCacheItem bestItem = null;
                 double bestSimilarity = -1.0;
@@ -316,7 +295,7 @@ public class UserService {
                 return buildIdentificationResponse(bestItem, bestSimilarity);
             }
 
-            // Para bases grandes (ex: 1 milhão), paraleliza dividindo em fatias por processador
+            // Busca paralela para bases grandes
             int numThreads = Runtime.getRuntime().availableProcessors();
             int chunkSize = (size + numThreads - 1) / numThreads;
             List<CompletableFuture<SearchResult>> futures = new ArrayList<>();
@@ -338,7 +317,7 @@ public class UserService {
                         }
                     }
                     return new SearchResult(bestItem, bestSimilarity);
-                })); // Usa o pool comum ForkJoin (CPU-bound)
+                }));
             }
 
             SearchResult bestResult = futures.stream()
@@ -380,8 +359,6 @@ public class UserService {
         );
     }
 
-    // --- Helper Métodos ---
-
     private UserResponse toResponse(User user) {
         String base64 = Base64.getEncoder().encodeToString(user.getPhoto());
         return new UserResponse(
@@ -398,7 +375,7 @@ public class UserService {
                 item.id(),
                 item.cpf(),
                 item.name(),
-                null, // foto nula nas duplicatas para não onerar rede
+                null, // Sem foto para otimizar transferência
                 LocalDateTime.now()
         );
     }
@@ -445,9 +422,7 @@ public class UserService {
         return cleanCpf;
     }
 
-    /**
-     * Varre todos os usuários duplicados em memória via produto escalar rápido.
-     */
+    // Auditoria de duplicados via cache
     @Transactional(readOnly = true)
     public List<DuplicatePairResponse> findDuplicateUsers() {
         List<DuplicatePairResponse> duplicates = new java.util.ArrayList<>();
@@ -474,9 +449,7 @@ public class UserService {
         return duplicates;
     }
 
-    /**
-     * Verifica se o rosto já está cadastrado em memória no cache biométrico.
-     */
+    // Valida se o rosto já existe na base
     private void checkForDuplicateFace(float[] embedding, String excludeCpf) {
         float[] normalizedEmb = faceBiometricsService.normalize(embedding);
         

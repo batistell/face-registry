@@ -15,7 +15,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
-// Tentamos importar as classes da DJL. Se houver falha de classpath, utilizaremos o mock.
 import ai.djl.modality.cv.Image;
 import ai.djl.modality.cv.ImageFactory;
 import ai.djl.modality.cv.output.BoundingBox;
@@ -51,7 +50,7 @@ public class FaceBiometricsService {
             return;
         }
 
-        // Criar link simbólico para libnvToolsExt se necessário antes do DJL carregar as bibliotecas nativas
+        // Link simbólico para libnvToolsExt
         try {
             String userHome = System.getProperty("user.home");
             java.io.File pytorchRoot = new java.io.File(userHome, ".djl.ai/pytorch");
@@ -89,7 +88,7 @@ public class FaceBiometricsService {
             ai.djl.Device device = gpuCount > 0 ? ai.djl.Device.gpu() : ai.djl.Device.cpu();
             log.info("Dispositivo selecionado para inferência: {}", device);
 
-            // Critérios para detecção facial (RetinaFace do PyTorch Model Zoo)
+            // Tradutor RetinaFace
             double confThresh = confThreshConfig;
             double nmsThresh = 0.45f;
             double[] variance = {0.1f, 0.2f};
@@ -102,13 +101,13 @@ public class FaceBiometricsService {
             Criteria<Image, DetectedObjects> detectionCriteria = Criteria.builder()
                     .setTypes(Image.class, DetectedObjects.class)
                     .optModelUrls("https://resources.djl.ai/test-models/pytorch/retinaface.zip")
-                    .optModelName("retinaface") // specify model file prefix
+                    .optModelName("retinaface")
                     .optTranslator(translator)
                     .optEngine("PyTorch")
                     .optDevice(device)
                     .build();
             
-            // Critérios para extração de embedding (FaceNet/ArcFace do PyTorch Model Zoo)
+            // Tradutor FaceNet
             java.util.List<Float> meanList = java.util.Arrays.asList(
                     127.5f / 255.0f,
                     127.5f / 255.0f,
@@ -155,9 +154,7 @@ public class FaceBiometricsService {
         }
     }
 
-    /**
-     * Valida a foto e extrai o embedding de 512 dimensões.
-     */
+    // Valida a imagem e extrai o embedding 512-D
     public float[] extractFaceEmbedding(byte[] imageBytes, String originalFilename) {
         validateImage(imageBytes);
 
@@ -179,13 +176,13 @@ public class FaceBiometricsService {
                 throw new MultipleFacesDetectedException("Múltiplos rostos detectados (" + faceCount + "). Envie uma foto com apenas 1 rosto visível.");
             }
 
-            // Recorta o primeiro rosto detectado
+            // Recorta o primeiro rosto
             ai.djl.modality.Classifications.Classification classification = detections.items().get(0);
             DetectedObjects.DetectedObject face = (DetectedObjects.DetectedObject) classification;
             BoundingBox box = face.getBoundingBox();
             ai.djl.modality.cv.output.Rectangle rect = box.getBounds();
             
-            // Validações adicionais de enquadramento e tamanho
+            // Validações de enquadramento/tamanho
             double faceRatioW = rect.getWidth();
             double faceRatioH = rect.getHeight();
             if (faceRatioW < 0.15 || faceRatioH < 0.15) {
@@ -211,9 +208,7 @@ public class FaceBiometricsService {
         }
     }
 
-    /**
-     * Calcula a similaridade de cosseno entre dois vetores de características.
-     */
+    // Similaridade de cosseno
     public double calculateCosineSimilarity(float[] vectorA, float[] vectorB) {
         if (vectorA == null || vectorB == null) return 0.0;
         if (vectorA.length != vectorB.length) return 0.0;
@@ -230,10 +225,7 @@ public class FaceBiometricsService {
         return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
     }
 
-    /**
-     * Calcula o produto escalar (dot product) entre dois vetores de 512 posições.
-     * Para vetores L2-normalizados, isso é idêntico à similaridade de cosseno.
-     */
+    // Produto escalar (equivalente a cosseno para vetores normalizados)
     public double calculateDotProduct(float[] vectorA, float[] vectorB) {
         if (vectorA == null || vectorB == null) return 0.0;
         if (vectorA.length != vectorB.length) return 0.0;
@@ -245,9 +237,7 @@ public class FaceBiometricsService {
         return dotProduct;
     }
 
-    /**
-     * Normaliza um vetor float[] para ter norma L2 igual a 1 (vetor unitário).
-     */
+    // Normalização L2 do vetor
     public float[] normalize(float[] embedding) {
         if (embedding == null) return null;
         double sumSquare = 0.0;
@@ -292,7 +282,7 @@ public class FaceBiometricsService {
     private float[] processMockEmbedding(byte[] bytes, String filename) {
         String nameLower = filename != null ? filename.toLowerCase() : "";
 
-        // Regras específicas de simulação para validação de erros biológicos
+        // Simulações de erros biológicos para testes
         if (nameLower.contains("noface") || nameLower.contains("sem_rosto") || nameLower.contains("sem-rosto")) {
             throw new NoFaceDetectedException("Simulação: Nenhum rosto detectado na foto.");
         }
@@ -308,7 +298,7 @@ public class FaceBiometricsService {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(bytes);
             
-            // Obtém um seed numérico estável a partir do hash SHA-256 da imagem
+            // Seed estável a partir do hash SHA-256
             long seed = 0;
             for (int i = 0; i < Math.min(8, hash.length); i++) {
                 seed = (seed << 8) | (hash[i] & 0xFF);
@@ -318,13 +308,13 @@ public class FaceBiometricsService {
             float[] embedding = new float[512];
             double sumSquare = 0.0;
 
-            // Gera uma distribuição estável de floats
+            // Gera floats de distribuição normal
             for (int i = 0; i < 512; i++) {
                 embedding[i] = (float) rand.nextGaussian();
                 sumSquare += embedding[i] * embedding[i];
             }
 
-            // L2-Normalização para facilitar cálculo direto de produto escalar
+            // Normalização L2
             double norm = Math.sqrt(sumSquare);
             if (norm > 0) {
                 for (int i = 0; i < 512; i++) {

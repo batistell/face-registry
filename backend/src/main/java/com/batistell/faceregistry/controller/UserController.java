@@ -17,13 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Controlador REST para gerenciamento de usuários e operações biométricas faciais.
- * 
- * Oferece endpoints para CRUD completo, cadastro em lote concorrente,
- * verificação facial 1:1 (um-para-um) e identificação facial 1:N (um-para-muitos).
- * Todos os endpoints que recebem fotos operam com multipart/form-data.
- * 
- * @see com.batistell.faceregistry.service.UserService
+ * Controlador REST para gerenciamento de usuários e biometria facial.
  */
 @Slf4j
 @RestController
@@ -34,9 +28,6 @@ public class UserController {
 
     private final UserService userService;
 
-    /**
-     * Cadastro individual.
-     */
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<UserResponse> createUser(
             @RequestParam("cpf") String cpf,
@@ -55,9 +46,6 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    /**
-     * Atualização de cadastro (nome e/ou foto).
-     */
     @PutMapping(value = "/{cpf}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<UserResponse> updateUser(
             @PathVariable("cpf") String cpf,
@@ -73,9 +61,6 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * Exclusão de usuário.
-     */
     @DeleteMapping("/{cpf}")
     public ResponseEntity<Void> deleteUser(@PathVariable("cpf") String cpf) {
         log.info("Recebida requisição para excluir usuário CPF: {}", cpf);
@@ -83,9 +68,6 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    /**
-     * Busca de detalhes de um usuário.
-     */
     @GetMapping("/{cpf}")
     public ResponseEntity<UserResponse> getUserByCpf(@PathVariable("cpf") String cpf) {
         log.info("Recebida busca por CPF: {}", cpf);
@@ -93,9 +75,6 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * Listagem de todos os usuários.
-     */
     @GetMapping
     public ResponseEntity<List<UserResponse>> getAllUsers() {
         log.info("Recebida listagem de todos os usuários.");
@@ -103,9 +82,6 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * Busca por rostos duplicados no banco de dados.
-     */
     @GetMapping("/duplicates")
     public ResponseEntity<List<DuplicatePairResponse>> getDuplicateUsers() {
         log.info("Recebida busca por rostos duplicados no banco.");
@@ -113,9 +89,6 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * Cadastro concorrente em lote (Batch Upload).
-     */
     @PostMapping(value = "/batch", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<List<UserResponse>> createUsersBatch(
             @RequestParam("cpfs") List<String> cpfs,
@@ -151,9 +124,6 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    /**
-     * Verificação biometria facial (1:1).
-     */
     @PostMapping(value = "/verify", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<VerificationResponse> verifyFace(
             @RequestParam("cpf") String cpf,
@@ -171,9 +141,6 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * Identificação biometria facial (1:n).
-     */
     @PostMapping(value = "/identify", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<IdentificationResponse> identifyFace(
             @RequestParam("photo") MultipartFile photoFile) throws IOException {
@@ -190,13 +157,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * Valida o formato do arquivo de imagem enviado pelo usuário.
-     * Verifica tanto a extensão do arquivo (JPG/JPEG/PNG) quanto o Content-Type MIME.
-     * 
-     * @param file Arquivo multipart a ser validado. Se null ou vazio, a validação é ignorada.
-     * @throws InvalidImageException Se a extensão ou o Content-Type não forem suportados.
-     */
+    // Valida formato de arquivo de imagem (extensão e Content-Type MIME)
     private static final Set<String> ALLOWED_EXTENSIONS = Set.of(
             ".jpg", ".jpeg", ".png", ".webp", ".bmp", ".gif", ".tiff", ".tif", ".avif"
     );
