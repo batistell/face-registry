@@ -67,7 +67,7 @@ services:
     container_name: face-registry-tunnel
     environment:
       - TUNNEL_TOKEN=${TUNNEL_TOKEN}
-    command: tunnel --no-autoupdate run
+    command: tunnel --no-autoupdate run --protocol http2
     extra_hosts:
       - "localhost:host-gateway"
     depends_on:

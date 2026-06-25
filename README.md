@@ -1,29 +1,37 @@
 # 👤 Face Registry - Sistema de Cadastro e Reconhecimento Facial
 
-Este repositório contém a implementação completa do sistema **Face Registry**, um desafio para a vaga de **Desenvolvedor Full Stack Java e Angular**. O sistema gerencia o cadastro de usuários e suas fotos, realizando a **Verificação Facial (1:1)**, a **Identificação Facial (1:n)** de forma concorrente e a **Prevenção de Cadastros Duplicados** com alta performance e precisão biométrica.
+Este repositório contém a implementação completa do sistema **Face Registry**, um desafio para a vaga de **Desenvolvedor Full Stack Java e Angular**. O sistema gerencia o cadastro de usuários e suas fotos, realizando a **Verificação Facial (1:1)**, a **Identificação Facial (1:N)** de forma concorrente e a **Prevenção de Cadastros Duplicados** com alta performance e precisão biométrica.
 
 O projeto está totalmente funcional em ambiente de produção sob o domínio público [https://jarvis.xyz.br/face-registry/](https://jarvis.xyz.br/face-registry/).
 
 ---
 
-## 🏗️ Arquitetura do Sistema
+## 🗂️ Documentação Detalhada do Projeto
 
-O ecossistema foi projetado de forma modular e conteinerizada, garantindo independência de serviços e facilidade de deploy:
+Para facilitar o entendimento, a manutenção e a implantação, a documentação técnica foi estruturada em guias especializados:
 
-1. **Front-end (Angular 17+):**
-   - Roda em um servidor **Nginx** configurado com **SSL/HTTPS**.
-   - Interface premium e responsiva (estética glassmorphic, micro-animações, loaders e feedbacks em tempo real).
-   - Suporte a captura via webcam nativa da API de mídia do navegador ou upload de arquivos locais.
-   - Roteamento configurado sob o subcaminho base `/face-registry/`.
+*   **[🏗️ Arquitetura e Engenharia de Software (docs/architecture.md)](file:///o:/JavaProjects/face-registry/docs/architecture.md):** Detalha o fluxo biométrico, concorrência otimizada com **Virtual Threads (Java 21)**, cache em memória protegido por **Locks** e integração de IA com a biblioteca **Deep Java Library (DJL)** e motor **PyTorch** nativo.
+*   **[📞 Manual da REST API (docs/api.md)](file:///o:/JavaProjects/face-registry/docs/api.md):** Catálogo de todos os endpoints expostos pelo Spring Boot (CRUD, lotes, verificação 1:1, identificação 1:N), DTOs de request/response e tratamento de erros padronizado.
+*   **[💾 Persistência e Estrutura de Dados (docs/database.md)](file:///o:/JavaProjects/face-registry/docs/database.md):** Detalhamento do esquema do banco de dados PostgreSQL, índices de CPF, serialização de embeddings de 512 dimensões como `VARCHAR` e otimização de consultas de cache por DTO de projeção leve.
+*   **[🎨 Interface e Front-end (docs/frontend.md)](file:///o:/JavaProjects/face-registry/docs/frontend.md):** Explica a arquitetura standalone do **Angular 17**, captura de câmera webcam nativa da API HTML5 e o mecanismo interativo de zoom, movimentação (Pan) e recorte de rostos no Canvas.
+*   **[🚀 Implantação e DevOps (docs/deployment.md)](file:///o:/JavaProjects/face-registry/docs/deployment.md):** Manual completo de orquestração de containers com **Docker Compose**, geração automática de certificados SSL/HTTPS no Nginx para webcam e túnel seguro do Cloudflare.
 
-2. **Back-end (Spring Boot 3.2.4 + Java 21/26):**
-   - Engine transacional REST API responsável pela lógica de negócios, controle de concorrência, transações ACID e orquestração de IA.
-   - Processamento assíncrono e concorrente utilizando **Virtual Threads (Java 21)** e pool de threads otimizados para operações pesadas de I/O e processamento de imagem em lote.
-   - Executa inferência nativa de Deep Learning via interface JNI.
+---
 
-3. **Banco de Dados (PostgreSQL 15+):**
-   - Armazena dados cadastrais clássicos (Nome, CPF formatado), a foto original em formato binário (`BYTEA`) e os **Templates Faciais (Embeddings)** pré-calculados de 512 dimensões serializados como `VARCHAR` (formato `float;float;...`).
-   - Os embeddings são desserializados em memória pela camada JPA para cálculo de similaridade, garantindo compatibilidade total entre PostgreSQL (produção) e H2 (testes).
+## 🏗️ Resumo da Arquitetura do Sistema
+
+O ecossistema é projetado de forma modular e conteinerizada, garantindo independência de serviços e facilidade de deploy:
+
+1.  **Front-end (Angular 17+):**
+    *   Roda em um servidor **Nginx** configurado com **SSL/HTTPS** (necessário para habilitar webcam).
+    *   Interface responsiva com estética glassmorphic, micro-animações, loaders e feedbacks em tempo real.
+    *   Suporte a captura via webcam nativa da API de mídia do navegador ou upload de arquivos locais.
+2.  **Back-end (Spring Boot 3 + Java 21):**
+    *   Engine transacional REST API responsável pela lógica de negócios, controle de concorrência, transações ACID e orquestração de IA.
+    *   Processamento assíncrono utilizando **Virtual Threads (Java 21)** e pool de threads otimizados para operações em lote.
+    *   Executa inferência nativa de Deep Learning via interface JNI.
+3.  **Banco de Dados (PostgreSQL 15):**
+    *   Armazena dados cadastrais, a foto original em formato binário (`BYTEA`) e os **Templates Faciais (Embeddings)** pré-calculados de 512 dimensões serializados como `VARCHAR`.
 
 ```mermaid
 graph TD
@@ -37,51 +45,17 @@ graph TD
 
 ---
 
-## 🛠️ Stack Tecnológica & Escolhas de Design
+## 🔒 Regras de Negócio e Segurança Biométrica
 
-### Back-end
-- **Linguagem & Framework:** **Java 21** e **Spring Boot 3.2.4** com Spring Data JPA, Hibernate e Apache Maven.
-- **Deep Java Library (DJL) com Motor PyTorch:**
-  - Escolha para IA: Em vez de expor uma API em Python externa (Flask/FastAPI) que adicionaria latência de rede e complexidade de infraestrutura, utilizamos o **DJL** da AWS com motor nativo do **PyTorch** via JNI (Java Native Interface). Isso possibilita que a inferência pesada ocorra dentro da mesma JVM de forma otimizada usando bibliotecas nativas C++.
-  - **Detecção Facial (RetinaFace):** Valida se há **exatamente 1 rosto** na imagem enviada. Imagens sem rostos ou com múltiplos rostos são rejeitadas de imediato com `400 Bad Request`.
-  - **Extração de Vetores (FaceNet/ArcFace):** Normaliza o rosto alinhado e gera um vetor numérico de **512 floats** (`512-D`) que resume as características únicas do rosto.
-- **Concorrência Otimizada:**
-  - O endpoint de upload em lote (`POST /api/users/batch`) distribui o processamento de imagens e o cálculo de embeddings concorrentemente através de threads virtuais (Java 21 Virtual Threads) para maximizar o uso de CPU/GPU.
-
-### Front-end
-- **Framework:** **Angular 17+** com padrão standalone, HttpClient e RxJS para gerenciar o fluxo reativo de dados.
-- **Estética & Visual:**
-  - Utilização de **CSS Vanilla estruturado** para controle de layout com componentes glassmorphic.
-  - Paleta HSL moderna com tons escuros elegantes (Dark theme premium), efeitos de hover ativos e transições suaves.
-  - Adicionado um ícone de "Checkmark" dourado (<i class="fa-solid fa-check"></i>) ao lado do badge **512-D** nos cartões dos usuários para atestar visualmente que a assinatura biométrica facial foi gerada com sucesso.
-
-### Banco de Dados
-- **PostgreSQL 15+:** Os embeddings de 512 dimensões são armazenados como `VARCHAR` serializado (separador `;`), garantindo portabilidade entre PostgreSQL (produção) e H2 (testes unitários). A desserialização `String → float[]` ocorre via métodos utilitários da entidade JPA, e a busca 1:n é resolvida em memória pela aplicação com similaridade de cosseno em paralelo (`parallelStream`).
-
----
-
-## 🔒 Regras de Segurança Biométrica & Prevenção de Duplicados
-
-Uma das escolhas cruciais no design do sistema foi a **Prevenção de Duplicados Biométricos**:
-
-1. **Cálculo de Similaridade por Cosseno:**
-   A similaridade entre a face de entrada ($A$) e a face cadastrada ($B$) é dada pela fórmula matemática:
-   $$\text{similaridade} = \frac{A \cdot B}{\|A\| \|B\|}$$
-   O limiar de aceitação (threshold) padrão é configurado em **0.60** (Customizável via `application.yml`).
-
-2. **Prevenção Concorrente no Cadastro e Edição:**
-   - **Cadastro Individual:** Ao tentar cadastrar uma foto, a API calcula o embedding e realiza um rastreamento completo sobre a tabela de usuários. Se a similaridade for superior ao threshold, o cadastro é bloqueado com `409 Conflict`, exibindo uma mensagem personalizada informando o nome e o CPF do usuário já registrado com aquele rosto.
-   - **Edição de Usuário:** O mesmo rastreamento é aplicado ao atualizar uma foto, permitindo que a pessoa permaneça com a própria face atualizada (excluindo seu próprio CPF do rastreio), mas impedindo-a de usar a foto de outro usuário cadastrado.
-   - **Upload em Lote:** O fluxo do batch valida de forma inteligente a duplicidade tanto contra o banco de dados quanto internamente entre as fotos do próprio lote enviado, bloqueando o lote inteiro de forma atômica se houver faces repetidas.
-
-3. **API de Auditoria de Duplicados:**
-   - Foi exposto um endpoint de auditoria `GET /api/users/duplicates` que executa uma verificação cruzada $O(N^2)$ em toda a base de dados para listar e exportar possíveis pares duplicados que possuam similaridade biométrica acima do limite tolerado.
+*   **Similaridade por Cosseno / Produto Escalar:** A similaridade entre faces é baseada em produto escalar de vetores L2-normalizados, operando com threshold padrão de **0.60** (customizável via `application.yml`).
+*   **Prevenção de Duplicados:** O cadastro individual de usuários, bem como atualizações de fotos, rastreiam a base de dados em memória. Se a foto enviada corresponder a um rosto já cadastrado por outra pessoa, a operação é bloqueada retornando `409 Conflict` contendo o nome e o CPF do usuário já registrado.
+*   **Transações de Lote Atômicas:** No upload em lote (`POST /api/users/batch`), a transação garante que o lote inteiro seja revertido (rollback) caso haja alguma duplicidade facial interna no lote, no banco, ou erro de processamento de imagem em qualquer registro.
 
 ---
 
 ## 📂 Diretório de Imagens para Testes 1:1
 
-Para facilitar a verificação e homologação da biometria 1:1 na aba **"Verificar Biometria"** da interface, a pasta [examples/to-compare](file:///o:/JavaProjects/face-registry/examples/to-compare/) foi populada com fotos alternativas (retratos e poses diferentes obtidos da Wikimedia Commons sob licenças livres) das celebridades cadastradas no banco de dados.
+Para facilitar a verificação e homologação da biometria 1:1 na aba **"Verificar Biometria"** da interface, a pasta [examples/to-compare](file:///o:/JavaProjects/face-registry/examples/to-compare/) foi populada com fotos alternativas (retratos e poses diferentes) das celebridades cadastradas no banco de dados.
 
 Os arquivos seguem o padrão `pessoa_cpf_N.ext`, facilitando a identificação e a cópia do CPF na interface:
 - **Barack Obama (CPF 64657075942)**: `obama_64657075942_2.jpg`, `obama_64657075942_3.jpg`, `obama_64657075942_alt.jpg`
@@ -95,37 +69,24 @@ Os arquivos seguem o padrão `pessoa_cpf_N.ext`, facilitando a identificação e
 
 ## 🚀 Como Executar o Projeto Localmente
 
-### Requisitos Prévios
-- Docker e Docker Compose instalados.
+### Pré-requisito
+Certifique-se de possuir o **Docker** e o **Docker Compose** instalados no seu host.
 
-### Opção A: Executar usando os arquivos pré-compilados (`.tar`) [Recomendado]
-Se você possui os arquivos `.tar` exportados na raiz do projeto, você pode importar as imagens diretamente para o seu daemon do Docker local (evitando o tempo de compilação do Angular/Maven):
-
-1. **Importar as imagens salvadas**:
-   ```bash
-   docker load -i face-registry-backend.tar
-   docker load -i face-registry-frontend.tar
-   ```
-
-2. **Iniciar a stack do Docker Compose**:
-   ```bash
-   docker compose up -d
-   ```
+### Inicialização Rápida
+1.  Na pasta raiz do projeto, execute o comando abaixo para construir as imagens e iniciar os serviços:
+    ```bash
+    docker compose up --build -d
+    ```
+2.  Monitore os logs de inicialização (em especial o download e carregamento dos modelos pelo DJL):
+    ```bash
+    docker compose logs -f backend
+    ```
 
 ---
 
-### Opção B: Compilar e Executar a partir do Código Fonte
-Caso queira compilar a aplicação localmente e gerar novas imagens Docker a partir dos fontes:
+## 🌐 Endereços e Acesso aos Serviços
 
-1. **Buildar e rodar o ambiente**:
-   ```bash
-   docker compose up --build -d
-   ```
-
----
-
-### 🌐 Acesso à Aplicação
-Após a inicialização (seja via Opção A ou B):
-- **Painel Frontend (Nginx/HTTPS):** Disponível em [https://localhost:8000/face-registry/](https://localhost:8000/face-registry/)
+Após o start completo da stack:
+- **Painel Front-end (Nginx/HTTPS):** Disponível em [https://localhost:8000/face-registry/](https://localhost:8000/face-registry/)
 - **Documentação REST API (Swagger UI):** Disponível em [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
 - **API REST Backend:** Rodando na porta `8080` (ex: [http://localhost:8080/api/users](http://localhost:8080/api/users)).
