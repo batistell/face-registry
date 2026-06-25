@@ -33,19 +33,19 @@ services:
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       FACE_RECOGNITION_THRESHOLD: "0.60"
-      PYTORCH_FLAVOR: cu121
-      LD_LIBRARY_PATH: /root/.djl.ai/pytorch/2.2.2-cu121-linux-x86_64
-      NVIDIA_VISIBLE_DEVICES: all
-      NVIDIA_DRIVER_CAPABILITIES: all
+      PYTORCH_FLAVOR: cpu
+      # LD_LIBRARY_PATH: /root/.djl.ai/pytorch/2.2.2-cu121-linux-x86_64
+      # NVIDIA_VISIBLE_DEVICES: all
+      # NVIDIA_DRIVER_CAPABILITIES: all
     volumes:
       - djl_cache:/root/.djl.ai
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
     depends_on:
       db:
         condition: service_healthy
