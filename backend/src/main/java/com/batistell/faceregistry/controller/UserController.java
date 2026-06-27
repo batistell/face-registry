@@ -79,9 +79,12 @@ public class UserController {
     public ResponseEntity<List<UserResponse>> getAllUsers(
             @RequestParam(value = "search", required = false) String search,
             @RequestParam(value = "startDate", required = false) String startDate,
-            @RequestParam(value = "endDate", required = false) String endDate) {
-        log.info("Recebida listagem de todos os usuários com filtros. Search: {}, StartDate: {}, EndDate: {}", search, startDate, endDate);
-        List<UserResponse> response = userService.searchUsers(search, startDate, endDate);
+            @RequestParam(value = "endDate", required = false) String endDate,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "12") int size) {
+        log.info("Recebida listagem de todos os usuários com filtros. Search: {}, StartDate: {}, EndDate: {}, Page: {}, Size: {}", 
+                search, startDate, endDate, page, size);
+        List<UserResponse> response = userService.searchUsers(search, startDate, endDate, page, size);
         return ResponseEntity.ok(response);
     }
 
@@ -90,6 +93,15 @@ public class UserController {
         log.info("Recebida busca por rostos duplicados no banco.");
         List<DuplicatePairResponse> response = userService.findDuplicateUsers();
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/version")
+    public ResponseEntity<java.util.Map<String, String>> getVersion() {
+        String version = System.getenv("VERSION");
+        if (version == null || version.isEmpty()) {
+            version = "latest";
+        }
+        return ResponseEntity.ok(java.util.Map.of("version", version));
     }
 
     @PostMapping(value = "/batch", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

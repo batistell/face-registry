@@ -56,11 +56,14 @@ export class AppComponent implements OnInit, OnDestroy {
   isActionLoading = false;
   successMsg = '';
   errorMsg = '';
+  appVersion = '';
 
   // Filtro de Busca
   searchTerm = '';
   startDateFilter = '';
   endDateFilter = '';
+  currentPage = 0;
+  pageSize = 12;
   private searchTimeout: any;
 
   // Form de Cadastro/Edição Individual
@@ -112,11 +115,23 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadUsers();
+    this.loadVersion();
     this.addBatchRow(); // Inicializa o lote com uma linha vazia
   }
 
   ngOnDestroy() {
     this.stopWebcam();
+  }
+
+  loadVersion() {
+    this.http.get<{version: string}>(`${this.apiUrl}/version`).subscribe({
+      next: (data) => {
+        this.appVersion = data.version;
+      },
+      error: () => {
+        this.appVersion = 'latest';
+      }
+    });
   }
 
   // --- Operações de API (Backend Integrado) ---
@@ -125,7 +140,10 @@ export class AppComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.errorMsg = '';
 
-    let params: any = {};
+    let params: any = {
+      page: this.currentPage.toString(),
+      size: this.pageSize.toString()
+    };
     if (this.searchTerm && this.searchTerm.trim()) {
       params.search = this.searchTerm.trim();
     }
@@ -529,6 +547,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   onSearchChange() {
+    this.currentPage = 0;
     if (this.searchTimeout) {
       clearTimeout(this.searchTimeout);
     }
@@ -541,7 +560,20 @@ export class AppComponent implements OnInit, OnDestroy {
     this.searchTerm = '';
     this.startDateFilter = '';
     this.endDateFilter = '';
+    this.currentPage = 0;
     this.loadUsers();
+  }
+
+  nextPage() {
+    this.currentPage++;
+    this.loadUsers();
+  }
+
+  prevPage() {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.loadUsers();
+    }
   }
 
   // --- Helpers de Exibição ---

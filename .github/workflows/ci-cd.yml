@@ -144,14 +144,26 @@ jobs:
             mkdir -p ~/face-registry
             cd ~/face-registry
 
+            # Update or create the .env file with the current version tag
+            if [ -f .env ]; then
+              sed -i '/^VERSION=/d' .env
+            fi
+            echo "VERSION=${{ github.sha }}" >> .env
+
+            # Export the version for the current shell session
+            export VERSION=${{ github.sha }}
+
+            # Show the version on the screen
+            echo "Deploying version: $VERSION"
+
             # Log in to GitHub Container Registry in order to pull images
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
             # Pull the new images from GHCR
             docker compose pull
 
-            # Recreate the containers with new images in background
-            docker compose up -d
+            # Recreate the containers with new images and wait for completion
+            docker compose up -d --wait
 
             # Clean up older unused docker images to free disk space
             docker image prune -f

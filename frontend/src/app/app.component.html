@@ -37,6 +37,7 @@
     <div class="sidebar-footer">
       <p class="brand-footer"><i class="fa-solid fa-flask-vial"></i> Batistell Labs</p>
       <span>Biometria & Confiança Digital</span>
+      <div class="version-display" *ngIf="appVersion">Versão: {{ appVersion }}</div>
     </div>
   </aside>
 
@@ -150,8 +151,18 @@
             <button class="btn-action delete" (click)="deleteUser(user.cpf, $event)" title="Excluir Usuário" [disabled]="isActionLoading">
               <i class="fa-solid fa-trash"></i>
             </button>
-          </div>
         </div>
+      </div>
+
+      <!-- Paginação -->
+      <div class="pagination-container" *ngIf="!isLoading && users.length > 0">
+        <button class="btn btn-secondary" [disabled]="currentPage === 0" (click)="prevPage()">
+          <i class="fa-solid fa-chevron-left"></i> Anterior
+        </button>
+        <span class="page-indicator">Página {{ currentPage + 1 }}</span>
+        <button class="btn btn-secondary" [disabled]="users.length < pageSize" (click)="nextPage()">
+          Próxima <i class="fa-solid fa-chevron-right"></i>
+        </button>
       </div>
 
       <!-- Lista Vazia -->

@@ -171,5 +171,5 @@ Para habilitar o deploy automático no seu EC2, você deve cadastrar as chaves e
 2. **CD - Build & Push:** Constrói as imagens Docker de produção para o Backend e Frontend e as publica no **GitHub Container Registry (GHCR)** utilizando o próprio token temporário da pipeline (`secrets.GITHUB_TOKEN`).
 3. **CD - Deploy no EC2:** 
    - Copia o arquivo `docker-compose.yml` local do repositório para a pasta `~/face-registry` no EC2 via SCP.
-   - Acessa o EC2 via SSH, faz login no GHCR, baixa as novas imagens (`docker compose pull`), reinicia os containers com a nova versão (`docker compose up -d`) e limpa imagens antigas para economizar espaço em disco (`docker image prune -f`).
+   - Acessa o EC2 via SSH, exporta e exibe a versão (`VERSION`), faz login no GHCR, baixa as novas imagens (`docker compose pull`), reinicia os containers e aguarda a inicialização completa de todos os serviços (`docker compose up -d --wait`), e por fim limpa imagens antigas para economizar espaço em disco (`docker image prune -f`).
 

@@ -155,12 +155,12 @@ public class UserService {
     // Lista os usuários cadastrados limitando o resultado (mantendo compatibilidade)
     @Transactional(readOnly = true)
     public List<UserResponse> getAllUsers() {
-        return searchUsers(null, null, null);
+        return searchUsers(null, null, null, 0, 100);
     }
 
     // Busca de usuários com filtros de pesquisa e data de criação ordenados por data decrescente
     @Transactional(readOnly = true)
-    public List<UserResponse> searchUsers(String searchTerm, String startDateStr, String endDateStr) {
+    public List<UserResponse> searchUsers(String searchTerm, String startDateStr, String endDateStr, int page, int size) {
         LocalDateTime startDate = null;
         LocalDateTime endDate = null;
 
@@ -181,7 +181,7 @@ public class UserService {
         }
 
         String processedSearch = (searchTerm != null && !searchTerm.trim().isEmpty()) ? searchTerm.trim() : null;
-        org.springframework.data.domain.Pageable pageable = org.springframework.data.domain.PageRequest.of(0, 100);
+        org.springframework.data.domain.Pageable pageable = org.springframework.data.domain.PageRequest.of(page, size);
 
         return userRepository.searchUsers(processedSearch, startDate, endDate, pageable).stream()
                 .map(this::toResponse)
