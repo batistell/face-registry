@@ -93,6 +93,28 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Check Secrets
+        run: |
+          echo "==== Validating Deploy Secrets ===="
+          if [ -z "${{ secrets.EC2_HOST }}" ]; then
+            echo "❌ ERROR: EC2_HOST secret is empty!"
+          else
+            echo "✅ EC2_HOST secret is populated."
+          fi
+          
+          if [ -z "${{ secrets.EC2_USER }}" ]; then
+            echo "❌ ERROR: EC2_USER secret is empty!"
+          else
+            echo "✅ EC2_USER secret is populated."
+          fi
+          
+          if [ -z "${{ secrets.EC2_SSH_KEY }}" ]; then
+            echo "❌ ERROR: EC2_SSH_KEY secret is empty!"
+          else
+            echo "✅ EC2_SSH_KEY secret is populated."
+          fi
+          echo "==================================="
+
       - name: Copy docker-compose.yml via SCP
         uses: appleboy/scp-action@v0.1.7
         with:
