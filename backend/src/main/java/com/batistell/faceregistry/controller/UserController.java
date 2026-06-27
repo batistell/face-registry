@@ -76,9 +76,12 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserResponse>> getAllUsers() {
-        log.info("Recebida listagem de todos os usuários.");
-        List<UserResponse> response = userService.getAllUsers();
+    public ResponseEntity<List<UserResponse>> getAllUsers(
+            @RequestParam(value = "search", required = false) String search,
+            @RequestParam(value = "startDate", required = false) String startDate,
+            @RequestParam(value = "endDate", required = false) String endDate) {
+        log.info("Recebida listagem de todos os usuários com filtros. Search: {}, StartDate: {}, EndDate: {}", search, startDate, endDate);
+        List<UserResponse> response = userService.searchUsers(search, startDate, endDate);
         return ResponseEntity.ok(response);
     }
 

@@ -144,3 +144,32 @@ docker compose down
 docker compose down -v
 ```
 *(Atenção: esse comando apagará todas as biometrias cadastradas e exigirá que o download dos modelos da internet ocorra novamente no próximo boot).*
+
+---
+
+## 🔁 Esteira de Integração e Entrega Contínua (CI/CD)
+
+A aplicação conta com uma esteira de CI/CD configurada via **GitHub Actions** em [.github/workflows/ci-cd.yml](file:///o:/JavaProjects/face-registry/.github/workflows/ci-cd.yml). A esteira é disparada automaticamente a cada push na branch `master`.
+
+### 🛠️ Configuração de Segredos (GitHub Secrets)
+
+Para habilitar o deploy automático no seu EC2, você deve cadastrar as chaves e credenciais de acesso no painel do seu repositório no GitHub:
+
+1. Acesse o seu repositório no GitHub.
+2. Vá em **Settings** (Configurações) -> **Secrets and variables** -> **Actions**.
+3. Clique no botão **New repository secret** (Novo segredo de repositório).
+4. Adicione as 3 variáveis a seguir:
+
+| Nome do Segredo | Descrição | Exemplo de Valor |
+| :--- | :--- | :--- |
+| `EC2_SSH_KEY` | Conteúdo do arquivo de chave privada `.pem` que dá acesso ao seu EC2. | `-----BEGIN RSA PRIVATE KEY----- \n ...` |
+| `EC2_HOST` | Endereço IP público ou DNS da sua instância EC2. | `54.210.12.34` |
+| `EC2_USER` | Usuário SSH para conexão no EC2 (padrão `ubuntu`). | `ubuntu` |
+
+### ⚙️ Como funciona a pipeline:
+1. **CI (Integração Contínua):** Roda os testes unitários do backend (`mvn test`) e realiza o build de produção do frontend Angular (`npm run build`).
+2. **CD - Build & Push:** Constrói as imagens Docker de produção para o Backend e Frontend e as publica no **GitHub Container Registry (GHCR)** utilizando o próprio token temporário da pipeline (`secrets.GITHUB_TOKEN`).
+3. **CD - Deploy no EC2:** 
+   - Copia o arquivo `docker-compose.yml` local do repositório para a pasta `~/face-registry` no EC2 via SCP.
+   - Acessa o EC2 via SSH, faz login no GHCR, baixa as novas imagens (`docker compose pull`), reinicia os containers com a nova versão (`docker compose up -d`) e limpa imagens antigas para economizar espaço em disco (`docker image prune -f`).
+

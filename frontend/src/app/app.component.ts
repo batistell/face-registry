@@ -59,6 +59,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   // Filtro de Busca
   searchTerm = '';
+  startDateFilter = '';
+  endDateFilter = '';
+  private searchTimeout: any;
 
   // Form de Cadastro/Edição Individual
   isEditMode = false;
@@ -121,7 +124,19 @@ export class AppComponent implements OnInit, OnDestroy {
   loadUsers() {
     this.isLoading = true;
     this.errorMsg = '';
-    this.http.get<UserResponse[]>(this.apiUrl).subscribe({
+
+    let params: any = {};
+    if (this.searchTerm && this.searchTerm.trim()) {
+      params.search = this.searchTerm.trim();
+    }
+    if (this.startDateFilter) {
+      params.startDate = this.startDateFilter;
+    }
+    if (this.endDateFilter) {
+      params.endDate = this.endDateFilter;
+    }
+
+    this.http.get<UserResponse[]>(this.apiUrl, { params }).subscribe({
       next: (data) => {
         this.users = data;
         this.isLoading = false;
@@ -510,11 +525,23 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   get filteredUsers() {
-    if (!this.searchTerm.trim()) return this.users;
-    const term = this.searchTerm.toLowerCase();
-    return this.users.filter(u => 
-      u.name.toLowerCase().includes(term) || u.cpf.includes(term)
-    );
+    return this.users;
+  }
+
+  onSearchChange() {
+    if (this.searchTimeout) {
+      clearTimeout(this.searchTimeout);
+    }
+    this.searchTimeout = setTimeout(() => {
+      this.loadUsers();
+    }, 400);
+  }
+
+  clearFilters() {
+    this.searchTerm = '';
+    this.startDateFilter = '';
+    this.endDateFilter = '';
+    this.loadUsers();
   }
 
   // --- Helpers de Exibição ---

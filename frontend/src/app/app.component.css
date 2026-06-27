@@ -253,8 +253,19 @@
   border-radius: 99px;
 }
 
-/* BUSCA DE USUÁRIOS */
-.search-bar-container {
+/* BUSCA E FILTROS DE USUÁRIOS */
+.filters-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.filters-container .search-bar-container {
+  flex: 1 1 300px;
+  margin-bottom: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -264,6 +275,66 @@
   padding: 0.75rem 2rem;
   gap: 1.5rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+}
+
+.date-filters-wrapper {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background: #ffffff;
+  border: 1px solid #e2e2e2;
+  border-radius: 99px;
+  padding: 0.65rem 1.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+}
+
+.date-filter-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filter-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.filter-date-input {
+  border: none;
+  background: transparent;
+  outline: none;
+  color: #1e293b;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btn-clear-filters {
+  background: none;
+  border: none;
+  color: #ef4444;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  border-radius: 99px;
+  transition: all 0.2s ease;
+}
+
+.btn-clear-filters:hover {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.filters-container .user-count {
+  margin-left: auto;
 }
 
 .search-input-wrapper {

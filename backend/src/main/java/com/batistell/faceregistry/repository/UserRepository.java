@@ -26,4 +26,18 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     
     boolean existsByCpf(String cpf);
     void deleteByCpf(String cpf);
+
+    @Query("SELECT u FROM User u WHERE " +
+           "(:searchTerm IS NULL OR :searchTerm = '' OR " +
+           " LOWER(u.name) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR " +
+           " u.cpf LIKE CONCAT('%', :searchTerm, '%')) " +
+           "AND (:startDate IS NULL OR u.createdAt >= :startDate) " +
+           "AND (:endDate IS NULL OR u.createdAt <= :endDate) " +
+           "ORDER BY u.createdAt DESC")
+    List<User> searchUsers(
+            @Param("searchTerm") String searchTerm,
+            @Param("startDate") java.time.LocalDateTime startDate,
+            @Param("endDate") java.time.LocalDateTime endDate,
+            org.springframework.data.domain.Pageable pageable
+    );
 }

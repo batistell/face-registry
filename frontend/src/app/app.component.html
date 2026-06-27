@@ -81,16 +81,45 @@
         </button>
       </div>
 
-      <!-- Barra de Busca -->
-      <div class="search-bar-container">
-        <div class="search-input-wrapper">
-          <i class="fa-solid fa-magnifying-glass search-icon"></i>
-          <input 
-            type="text" 
-            placeholder="Pesquisar por nome ou CPF..." 
-            [(ngModel)]="searchTerm" 
-            class="search-input">
+      <!-- Barra de Filtros e Busca -->
+      <div class="filters-container">
+        <div class="search-bar-container">
+          <div class="search-input-wrapper">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input 
+              type="text" 
+              placeholder="Pesquisar por nome ou CPF..." 
+              [(ngModel)]="searchTerm" 
+              (ngModelChange)="onSearchChange()"
+              class="search-input">
+          </div>
         </div>
+
+        <div class="date-filters-wrapper">
+          <div class="date-filter-group">
+            <span class="filter-label">De:</span>
+            <input 
+              type="date" 
+              [(ngModel)]="startDateFilter" 
+              (ngModelChange)="onSearchChange()"
+              class="filter-date-input">
+          </div>
+          <div class="date-filter-group">
+            <span class="filter-label">Até:</span>
+            <input 
+              type="date" 
+              [(ngModel)]="endDateFilter" 
+              (ngModelChange)="onSearchChange()"
+              class="filter-date-input">
+          </div>
+          <button class="btn-clear-filters" 
+                  *ngIf="searchTerm || startDateFilter || endDateFilter" 
+                  (click)="clearFilters()" 
+                  title="Limpar Filtros">
+            <i class="fa-solid fa-filter-circle-xmark"></i> Limpar
+          </button>
+        </div>
+
         <div class="user-count">
           <span>{{ filteredUsers.length }} usuário(s) encontrado(s)</span>
         </div>
