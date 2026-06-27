@@ -141,6 +141,7 @@ public class BiometricsVerificationTest {
         }
     }
 
+    @org.junit.jupiter.api.Disabled("Desativado para evitar sobrecarga de memória/CPU no build da pipeline CI/CD")
     @Test
     public void testIdentifyFacePerformanceOneMillionUsers() throws Exception {
         UserService targetService = org.springframework.test.util.AopTestUtils.getTargetObject(userService);
