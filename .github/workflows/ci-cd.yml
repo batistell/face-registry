@@ -89,6 +89,7 @@ jobs:
     needs: build-and-push-docker
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
+    environment: ec2
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
