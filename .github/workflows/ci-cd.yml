@@ -114,6 +114,12 @@ jobs:
           else
             echo "✅ EC2_SSH_KEY secret is populated."
           fi
+
+          if [ -z "${{ secrets.EC2_SSH_PASSPHRASE }}" ]; then
+            echo "❌ ERROR: EC2_SSH_PASSPHRASE secret is empty!"
+          else
+            echo "✅ EC2_SSH_PASSPHRASE secret is populated."
+          fi
           echo "==================================="
 
       - name: Copy docker-compose.yml via SCP
@@ -122,6 +128,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
+          passphrase: ${{ secrets.EC2_SSH_PASSPHRASE }}
           source: "docker-compose.yml"
           target: "~/face-registry"
 
@@ -131,6 +138,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
+          passphrase: ${{ secrets.EC2_SSH_PASSPHRASE }}
           script: |
             # Create project directory if it doesn't exist
             mkdir -p ~/face-registry
