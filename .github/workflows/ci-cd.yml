@@ -159,10 +159,16 @@ jobs:
             # Log in to GitHub Container Registry in order to pull images
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
+            # Stop and remove existing containers to ensure a clean state
+            echo "Stopping existing containers..."
+            docker compose down
+
             # Pull the new images from GHCR
+            echo "Pulling new images..."
             docker compose pull
 
             # Recreate the containers with new images and wait for completion
+            echo "Starting containers..."
             docker compose up -d --wait
 
             # Clean up older unused docker images to free disk space
