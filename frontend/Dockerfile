@@ -1,6 +1,8 @@
 # Stage 1: Build the Angular application
 FROM node:20-alpine AS builder
 
+ARG VERSION=latest
+
 WORKDIR /app
 
 # Copy package config and install dependencies
@@ -9,6 +11,10 @@ RUN npm ci
 
 # Copy the rest of the source code and build
 COPY frontend/ .
+
+# Substitui a versão no app.component.ts antes do build
+RUN sed -i "s/appVersion = 'v1.0.0-dev'/appVersion = '${VERSION}'/g" src/app/app.component.ts
+
 RUN npm run build -- --configuration=production --base-href /face-registry/
 
 # Stage 2: Serve the application using Nginx

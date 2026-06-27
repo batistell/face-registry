@@ -56,7 +56,7 @@ export class AppComponent implements OnInit, OnDestroy {
   isActionLoading = false;
   successMsg = '';
   errorMsg = '';
-  appVersion = '';
+  appVersion = 'v1.0.0-dev';
 
   // Filtro de Busca
   searchTerm = '';
@@ -115,23 +115,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadUsers();
-    this.loadVersion();
     this.addBatchRow(); // Inicializa o lote com uma linha vazia
   }
 
   ngOnDestroy() {
     this.stopWebcam();
-  }
-
-  loadVersion() {
-    this.http.get<{version: string}>(`${this.apiUrl}/version`).subscribe({
-      next: (data) => {
-        this.appVersion = data.version;
-      },
-      error: () => {
-        this.appVersion = 'latest';
-      }
-    });
   }
 
   // --- Operações de API (Backend Integrado) ---

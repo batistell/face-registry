@@ -75,11 +75,14 @@ jobs:
             ghcr.io/${{ github.repository }}/backend:${{ github.sha }}
 
       - name: Build and Push Frontend Image
+      # Passes the commit SHA as build-arg to embed it inside the Angular app
         uses: docker/build-push-action@v5
         with:
           context: .
           file: frontend/Dockerfile
           push: true
+          build-args: |
+            VERSION=${{ github.sha }}
           tags: |
             ghcr.io/${{ github.repository }}/frontend:latest
             ghcr.io/${{ github.repository }}/frontend:${{ github.sha }}

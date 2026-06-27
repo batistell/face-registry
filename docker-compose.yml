@@ -7,8 +7,8 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: ${DB_USER:postgres}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:postgres}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
       POSTGRES_DB: faceregistry
     volumes:
       - pgdata:/var/lib/postgresql/data
@@ -28,13 +28,13 @@ services:
       - "8080:8080"
     environment:
       SPRING_PROFILES_ACTIVE: prod
-      SPRING_DATASOURCE_URL: jdbc:postgresql://${DB_HOST:db}:5432/faceregistry
-      SPRING_DATASOURCE_USERNAME: ${DB_USER:postgres}
-      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:postgres}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${DB_HOST:-db}:5432/faceregistry
+      SPRING_DATASOURCE_USERNAME: ${DB_USER:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-postgres}
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      FACE_RECOGNITION_THRESHOLD: ${FACE_RECOGNITION_THRESHOLD:0.60}
-      FACE_DETECTION_CONF_THRESHOLD: ${FACE_DETECTION_CONF_THRESHOLD:0.50}
-      FACE_BIOMETRICS_MOCK: ${FACE_BIOMETRICS_MOCK:false}
+      FACE_RECOGNITION_THRESHOLD: ${FACE_RECOGNITION_THRESHOLD:-0.60}
+      FACE_DETECTION_CONF_THRESHOLD: ${FACE_DETECTION_CONF_THRESHOLD:-0.50}
+      FACE_BIOMETRICS_MOCK: ${FACE_BIOMETRICS_MOCK:-false}
       PYTORCH_FLAVOR: cpu
       VERSION: ${VERSION:-latest}
       # LD_LIBRARY_PATH: /root/.djl.ai/pytorch/2.2.2-cu121-linux-x86_64
