@@ -31,8 +31,8 @@ public interface UserRepository extends JpaRepository<User, UUID> {
            "(:searchTerm IS NULL OR :searchTerm = '' OR " +
            " LOWER(u.name) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR " +
            " u.cpf LIKE CONCAT('%', :searchTerm, '%')) " +
-           "AND (:startDate IS NULL OR u.createdAt >= :startDate) " +
-           "AND (:endDate IS NULL OR u.createdAt <= :endDate) " +
+           "AND (cast(:startDate as java.time.LocalDateTime) IS NULL OR u.createdAt >= :startDate) " +
+           "AND (cast(:endDate as java.time.LocalDateTime) IS NULL OR u.createdAt <= :endDate) " +
            "ORDER BY u.createdAt DESC")
     List<User> searchUsers(
             @Param("searchTerm") String searchTerm,
